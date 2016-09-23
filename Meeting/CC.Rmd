@@ -99,8 +99,9 @@ print("stemDocument(vdc[[1]])")
 3. Next Week
 1) Read and summarize `Latent Dirichlet Allocation`[@blei2003latent] by Blei, Ng, and Jordan.
 2) Get familiar with the ¡°tm¡± package by running toy dataset.
-	Q: Is there any way that I could see the function written in packages? I have tried ¡°?LDA¡±
-	Q2: Any suggestion on how to compare different methods? E.g. Two way table?
+3) Questions
+* Q: Is there any way that I could see the function written in packages? I have tried ¡°?LDA¡±
+* Q2: Any suggestion on how to compare different methods? E.g. Two way table?
 
 ```{r some-code, ref.label=all_labels()[-1], echo=FALSE, eval=FALSE}
 ```
