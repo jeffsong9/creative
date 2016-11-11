@@ -53,8 +53,8 @@ Then the following `R` packages were utilized to conduct `Latent Dirichlet Alloc
 
 \pagebreak
 
-# Data (Need revising)
-In order to compare different LDA processes, a collection of short user-generated online reviews from a popular website, the Trip Adviser, was used for evaluation. Among all restaurants in Honolulu, Hawaii registered on the Trip Adviser, the latest 10 reviews were scrapped and read into `R` [@R] using the `rvest` [@rvest] package. This dataset includes the following information of the 7700 Honolulu restaurants: restaurant name, number total reviews, average star rating, individual review title, individual review entry, individual star rating, and the date visited. In this paper, we are particularly interested in individual review entry.
+# Data Gathering (Need revising)
+In order to compare different LDA processes, a collection of short user-generated online reviews from a popular website, the Trip Adviser, was used for evaluation. Among all restaurants in Honolulu, Hawaii registered on the Trip Adviser, the latest 10 reviews were scraped and read into `R` [@R] using the `rvest` [@rvest] package. This dataset includes the following information of the 7700 Honolulu restaurants: restaurant name, number total reviews, average star rating, individual review title, individual review entry, individual star rating, and the date visited. In this paper, we are particularly interested in individual review entry.
 
 ##Procedure 1: Obtaining the page numbers for all restaurants
 The following URL: "https://www.tripadvisor.com/Restaurants-g60982-Honolulu_Oahu_Hawaii.html" in Figure \ref{fig1} leads to all 1745 restaurants registered on TripAdvisor (As of October 27th, 2016).  
@@ -70,7 +70,7 @@ The following URL: "https://www.tripadvisor.com/Restaurants-g60982-Honolulu_Oahu
 \caption{Example pages number image of the restaurants in Honolulu, Hawaii \label{fig2}}
 \end{figure}
 
-These restaurants are listed into 59 different pages as it is shown in Figure \ref{fig2}. Therefore, obtaining url of all 59 pages would be the first step to scrap each individual restaurant reviews. Note that there are 30 restaurants in each page except for the last page. The following image of Figure \ref{fig3} portraits how the html code is written for this web page.
+These restaurants are listed into 59 different pages as it is shown in Figure \ref{fig2}. Therefore, obtaining URL of all 59 pages would be the first step to scrape each individual restaurant reviews. Note that there are 30 restaurants in each page except for the last page. The following image of Figure \ref{fig3} portraits how the html code is written for this web page.
 
 \begin{figure}[htbp]
 \centering
@@ -81,13 +81,13 @@ These restaurants are listed into 59 different pages as it is shown in Figure \r
 \pagebreak
 
 ###Step 1: Read html using the 'rvest' package
-The following steps R code using the `rvest` [@rvest] package will scrap 59 url address for all restaurants in Honolulu, Hawaii.
+The following steps R code using the `rvest` [@rvest] package will scrape 59 URL address for all restaurants in Honolulu, Hawaii.
 ```{r, eval=FALSE, echo=T}
 initial.url="https://www.tripadvisor.com/Restaurants-g60982-Honolulu_Oahu_Hawaii.html"
 doc=read_html(initial.url)
 ```
 
-###Step 2: Scrap the last page number of the review pages.
+###Step 2: Scrape the last page number of the review pages.
 Note that, from Figure \ref{fig3}, the page numbers are under the node `//div [\@class="pageNumbers"]`.
 Use the `html_nodes` function in conjunction with specific node using the `xpath` in the `revst` and `XML` package respectively to obtain the information under the specific node.
 Then, apply the `html_text` function to obtain text information. 
@@ -99,8 +99,8 @@ f.page=check$pg.url %>% html_text() %>% gsub(".*\n(.*)\n", "\\1", .)
 ```
 
 ###Step 3: Generate urls for each review page.
-The general url for these pages are as the following: "https://www.tripadvisor.com/Restaurants-g60982-oa \underline{SUB} -Honolulu_Oahu_Hawaii.html#EATERY_LIST_CONTENTS".
-There are 30 restaurants in each page, and the $1^{st}$ restaurant that appears in $n^{th}$ page is actually the $(30*(n-1)+1)^{th}$ restaurant. Therefore, changing the \underline{SUB} in the general url with gsub function will allow us to create a list of all page links.
+The general URL for these pages are as the following: "https://www.tripadvisor.com/Restaurants-g60982-oa \underline{SUB} -Honolulu_Oahu_Hawaii.html#EATERY_LIST_CONTENTS".
+There are 30 restaurants in each page, and the $1^{st}$ restaurant that appears in $n^{th}$ page is actually the $(30*(n-1)+1)^{th}$ restaurant. Therefore, changing the \underline{SUB} in the general URL with gsub function will allow us to create a list of all page links.
 ```{r, eval=FALSE, echo=T}
 complete.initial.url=rbind.data.frame(rest.url=initial.url, data.frame(rest.url=sapply(c(1:(as.numeric(f.page)-1))*30, function(x) gsub("SUB", x,"https://www.tripadvisor.com/Restaurants-g60982-oaSUB-Honolulu_Oahu_Hawaii.html#EATERY_LIST_CONTENTS")), stringsAsFactors = F), stringsAsFactors = F)
 row.names(complete.initial.url)=NULL
@@ -122,13 +122,13 @@ get.pg.num=function(intial.url){
 
 
 ##Procedure 2: Obtaining url for individual restaurants.
-Once the url for each pages are retrieved, the next step is to get url for all restaurants within each pages.
-As shown in Figure \ref{fig4}, the title of the restaurant is embedded in the html node `//div [\@id="EATERY_SEARCH_RESULTS"]//h3 [\@class="title"]` and its corresponding url is embedded in `//div [\@id="EATERY_SEARCH_RESULTS"]//h3 [\@class="title"] //a [\@class="property_title"]`.
+Once the URL for each pages are retrieved, the next step is to get URL for all restaurants within each pages.
+As shown in Figure \ref{fig4}, the title of the restaurant is embedded in the html node `//div [\@id="EATERY_SEARCH_RESULTS"]//h3 [\@class="title"]` and its corresponding URL is embedded in `//div [\@id="EATERY_SEARCH_RESULTS"]//h3 [\@class="title"] //a [\@class="property_title"]`.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"each_rest_url".png}
-\caption{Example source code image of each restaurant url \label{fig4}}
+\caption{Example source code image of each restaurant URL \label{fig4}}
 \end{figure}
 
 ```{r, eval=FALSE, echo=T}
@@ -136,8 +136,8 @@ doc=read_html(pg.num.url)
 rest.path=c(ea.url = '//div [@id="EATERY_SEARCH_RESULTS"]//h3 [@class="title"] //a [@class="property_title"]',ea.rest.name= '//div [@id="EATERY_SEARCH_RESULTS"]//h3 [@class="title"]')
 apply_rest.path=lapply(rest.path, function(x) html_nodes(doc,xpath=x))
 ```
-Thus, the title of a restaurant and its url is obtained by running the above R code.
-Simple cleaning Code below would extract the title and the url of each restaurant.
+Thus, the title of a restaurant and its URL is obtained by running the above R code.
+Simple cleaning Code below would extract the title and the URL of each restaurant.
 ```{r, eval=FALSE, echo=T}
 r_url.r_name=cbind.data.frame(rest.url=gsub(".*?href=\"(.*?)\".*", "https://www.tripadvisor.com\\1",apply_rest.path[[1]]), rest.name=apply_rest.path[[2]] %>% html_text() %>% gsub("\n+([^\n]+?)\n.*", "\\1", .), stringsAsFactors=F)
 ```
@@ -153,13 +153,13 @@ rest.url=function(pg.num.url){
 ```
 
 ##Procedure 3: Obtaining individual review information for all restaurants.
-After the second procedure, url for each restaurants in Honolulu Hawaii that is registered in TripAdvisor was scrapped.
-These url provide access to a list of individual review entries of that particular given restaurant. For long individual reviews, however, full entry is not directly available from the url generated in Procedure 2.  For example, individual review illustrated in Figure \ref{fig5}, ellipsis symbol $\dots$ was used to omit reviews after `Black Sand`. Therefore, further scrapping is required to retrieve full review entry. The following steps were taken.
+After the second procedure, URL for each restaurants in Honolulu Hawaii that is registered in TripAdvisor was scraped.
+These URL provide access to a list of individual review entries of that particular given restaurant. For long individual reviews, however, full entry is not directly available from the URL generated in Procedure 2.  For example, individual review illustrated in Figure \ref{fig5}, ellipsis symbol $\dots$ was used to omit reviews after `Black Sand`. Therefore, further scraping is required to retrieve full review entry. The following steps were taken.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"each_review_url".png}
-\caption{Example source code image of individual review url \label{fig5}}
+\caption{Example source code image of individual review URL \label{fig5}}
 \end{figure}
 
 ###Step 1: Reading a given restaurant url.
@@ -169,19 +169,19 @@ As the default behavior, the `read_html` function does not properly identify its
 doc=curl(ea.rest.url, handle = new_handle("useragent" = "Mozilla/5.0")) %>%  read_html()
 ```
 
-###Step 2: Scrapping the title of an individual review and its url.
-Figure \ref{fig5} illustrates that the title of the restaurant is embedded in the html node `//div [\@id="REVIEWS"]//div [\@class="innerBubble"]//span [\@class="noQuotes"]` and its corresponding url is embedded in `//div [\@id="REVIEWS"]//div [\@class="innerBubble"]`. The code below will generate url for individual reviews after further cleaning with `gsub` function.
+###Step 2: Scraping the title of an individual review and its url.
+Figure \ref{fig5} illustrates that the title of the restaurant is embedded in the html node `//div [\@id="REVIEWS"]//div [\@class="innerBubble"]//span [\@class="noQuotes"]` and its corresponding URL is embedded in `//div [\@id="REVIEWS"]//div [\@class="innerBubble"]`. The code below will generate URL for individual reviews after further cleaning with `gsub` function.
 ```{r, eval=FALSE, echo=T}
 u.n.t.path=c(ea.url = '//div [@id="REVIEWS"]//div [@class="innerBubble"]',ea.title= '//div [@id="REVIEWS"]//div [@class="innerBubble"]//span [@class="noQuotes"]')
 apply_u.n.t.path=lapply(u.n.t.path, function(x) html_nodes(doc,xpath=x))
 u.n.t=cbind.data.frame(ea.url=gsub(".*?<a href=\"(.*?)\".*", "https://www.tripadvisor.com\\1",apply_u.n.t.path[[1]]), ea.title=apply_u.n.t.path[[2]] %>% html_text(), stringsAsFactors=F)
 ```
 
-###Step 3: Scrapping the review entry of an individual review.
+###Step 3: Scraping the review entry of an individual review.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"each_review_url2".png}
-\caption{Example source code image of individual review url \label{fig6}}
+\caption{Example source code image of individual review URL \label{fig6}}
 \end{figure}
 
 The source code and its output is presented in Figure \ref{fig6}. It is clear that the review entry is embedded in the html node `(//div [@id="REVIEWS"]//div [@class="innerBubble"]//p)[1]`. Thus, the code below was used to capture the full review entry.
@@ -242,7 +242,7 @@ final.data=lapply(1:nrow(ea.url), function(x) review.data.w.pb(x) %>% cbind(rep(
 colnames(final.data)[1]="rest.name"
 #View(final.data)
 ```
-The above code combines all the previous procedures and generates the complete dataset of all restaurants in Honolulu, Hawaii with following information: Restaurant Name, url, title, and entry of individual reviews. The combined procedure takes time, thus simple progression bar was introduced to monitor the progress. The code for the progression bar is shown below.
+The above code combines all the previous procedures and generates the complete dataset of all restaurants in Honolulu, Hawaii with following information: Restaurant Name, URL, title, and entry of individual reviews. The combined procedure takes time, thus simple progression bar was introduced to monitor the progress. The code for the progression bar is shown below.
 
 ```{r, eval=FALSE, echo=T}
 pb <- winProgressBar(title = "progress bar", min = 0, max = fin, width = 300)
@@ -258,31 +258,75 @@ review.data.w.pb=function(x){
 \caption{First 10 and the last 10 entries of the final dataset \label{fig7}}
 \end{figure}
 
-The head and the tail of the generated dataset is given in Figure \ref{fig7}.
+The head and the tail of the constructed dataset is given in Figure \ref{fig7}.
+
+\pagebreak
+
+##Procedure 5: Clean data entries for further process
+
+The raw data scraped from the web are noisy and preparation process is necessary to minimize this noise. The initial step for this cleaning process is to remove all non-Latin characters, and any other unnecessary words or characters present in the data set collected in Procedure 4.
+
+###Step 1: Removing reviews with non-latin characters
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"non-alphabet reviews".png}
+\caption{Example of reviews written in non-Latin characters \label{fig8}}
+\end{figure}
+TripAdvisor is a globally well known website and there are reviews that are written in non-Latin characters as shown in Figure \ref{fig8}. These non-Latin characters could be deleted by the following code.
+
+```{r, eval=F}
+Encoding(final.data$ea.review) <- "latin1"
+final.data$ea.review=iconv(final.data$ea.review, "latin1", "ASCII", sub="")
+Encoding(final.data$ea.title) <- "latin1"
+final.data$ea.title=iconv(final.data$ea.title, "latin1", "ASCII", sub="")
+```
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"non-alphabet reviews deleted".png}
+\caption{Example of deleting reviews written in non-Latin characters \label{fig9}}
+\end{figure}
+
+The result of deleting non-Latin characters could be found in Figure \ref{fig9}.
+
+###Step 2: Removing other unnecessary words and symbols
+Although non-Latin characters are deleted, there are remaining words and symbols remaining in the data set. Unicode such as <U+56FD>  in Figure \ref{fig9} is an example.  These words and symbols should be treated using gsub functions,
+
+```{r, eval=F}
+final.data=gsub("<.{6}>", "", final.data)
+```
 
 
+###Step 3: Removing restaurants with no review from the data set
+As illustrated in Figure \ref{fig7}, Some of the restaurants on the TripAdvisor webpage has no reviews. Moreover, cleaning processes such as step 1 and 2 may remove the entire review entry for certain reviews blank. Therefore, these reviews should be removed from the data set by running a simple function as the following.
 
+```{r, eval=F}
+#final.data=final.data[!final.data$ea.review=="No review posted",]
+final.data=final.data[which(!final.data$ea.review %in% c("No review posted", ""))
+```
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"final result data set".png}
+\caption{Head and tail part of the data set after under going the cleaning procedure \label{fig10}}
+\end{figure}
+
+As the result of Procedure 5, final data set was obtained  as illustrated in Figure \ref{fig10}.
 
 
 \pagebreak
 
-# Data Cleaning
-The raw data scrapped from the web are noisy and preparation process is necessary to minimize this noise. The initial step for this cleaning process is to remove all non-Latin characters, and change all characters to lower case letters.
-```{r remove non-latin, message=FALSE, warning=FALSE, error=FALSE}
-review=tolower(review)
-Encoding(review) <- "latin1"
-review=iconv(review, "latin1", "ASCII", sub="")
-```
+# Data Processing
 
-**Removing Stop Words**
-The second step is to remove meaningless words and words with low frequency by utilizing the `tm` [@tm] and the `RTextTools` [@RTextTools] packages in R. The listed results in Table 1 shows the importance of removing stop words prior to running LDA method.
+Before running LDA, some of the techniques may be applied in order to increase the accuracy of the process.
 
-```{r remove stop words, message=FALSE, warning=FALSE, error=FALSE}
-# vdc=VectorSource(review)
-# vdc=VCorpus(vdc)
-# dtm <- DocumentTermMatrix(vdc,control=list(stopwords=T))
-# lda=LDA(dtm,control = list(alpha = 0.1), k = 4)
-# lda.out=terms(lda,10)
+##Removing Stop Words
+Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and et cetera is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out. In this paper, stop words were deleted by utilizing the `tm` [@tm] and the `RTextTools` [@RTextTools] packages in R using the following code.
+
+```{r remove stop words, echo=F}
+vdc=VectorSource(review)
+vdc=VCorpus(vdc)
+dtm <- DocumentTermMatrix(vdc,control=list(stopwords=T))
 ```
 
 ```{r, eval=F}
@@ -298,15 +342,26 @@ kable(wo_sw, caption = "LDA output of the dataset before and after removing the 
 # print(xtable(w.sw), file="w_sw.tex", floating=FALSE)
 # print(xtable(head(wo_sw, n=10)), file="tb.tex", floating=FALSE)
 ```
-\begin{table}[ht]
-\centering
-\subfloat[Table LDA output before removing the stop words]{\label{tab:tab1a}\scalebox{1}{\input{./w_sw}}}\quad
-\subfloat[Table LDA output after removing the stop words]{\label{tab:tab1b}\scalebox{1}{\input{./wo_sw}}}
-\caption{Difference of LDA output between with and without stop words}
-\label{tab:tab1}
-\end{table}
 
-**Stemming.**
+##Stemming
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 * LDA, documents are represent as random mixtures over latent topics, where each topic is characterized by a distribution over words. (Need paraphrasing)
 
