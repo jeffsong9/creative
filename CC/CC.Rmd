@@ -318,33 +318,75 @@ As the result of Procedure 5, final data set was obtained  as illustrated in Fig
 
 # Data Processing
 
-Before running LDA, some of the techniques may be applied in order to increase the accuracy of the process.
+Inspite of applying preparation processes such as the cleaning procedure during the Data gathering phase, the following techniques could be put to use in order to enhance the accuracy of the text-mining analysis.
 
 ##Removing Stop Words
-Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and et cetera is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out. In this paper, stop words were deleted by utilizing the `tm` [@tm] and the `RTextTools` [@RTextTools] packages in R using the following code.
+Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out. In this paper, stop words were deleted by utilizing the `tm` [@tm] and the `RTextTools` [@RTextTools] packages in R using the following code.
 
-```{r remove stop words, echo=F}
-vdc=VectorSource(review)
-vdc=VCorpus(vdc)
-dtm <- DocumentTermMatrix(vdc,control=list(stopwords=T))
+```{r remove stop words, eval=F, echo=T}
+vdc=VectorSource(text)
+my.corpus = Corpus(vdc)
+my.corpus_copy = my.corpus
+my.corpus = tm_map(my.corpus, removeWords, c("the", stopwords("english"))) 
 ```
 
-```{r, eval=F}
-setwd("C:/Users/Taikgun Song/Desktop/CC Meeting")
-w_sw=read.csv("output/with_stopwords.csv")
-wo_sw=read.csv("output/with_out_stopwords.csv")
-
-kable(w_sw, caption = "LDA output of the dataset before and after removing the stop words")
-kable(wo_sw, caption = "LDA output of the dataset before and after removing the stop words")
+An example result of using the above code is as follows.
+```{r, echo=T}
+eg="This is an example of removing the stop words."
+eg_vdc=VectorSource(eg)
+eg_my.corpus = Corpus(eg_vdc)
+eg_my.corpus = tm_map(eg_my.corpus, removeWords, c("the", stopwords("english"))) 
+strwrap(eg_my.corpus[[1]])
 ```
 
-```{r, eval=F}
-# print(xtable(w.sw), file="w_sw.tex", floating=FALSE)
-# print(xtable(head(wo_sw, n=10)), file="tb.tex", floating=FALSE)
-```
+Note that stop words such as "is", "an", "the", "of" are removed from the given sentence.
 
 ##Stemming
 
+Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". These different form of words with the same root word may cause difficulties applying some text mining techniques. Therefore, stemming procedure should be introduced to reduce inflectional forms of a word to a word in its root form. The `tm` package is again used for the stemming process and its code is given as the following.
+
+```{r, eval=F, echo=T}
+vdc=VectorSource(text)
+my.corpus = Corpus(vdc)
+my.corpus = tm_map(my.corpus, stemDocument, language="english")
+```
+
+```{r, echo=T}
+eg="This is an example of stemming process where words are stemmed into its root form."
+eg_vdc=VectorSource(eg)
+eg_my.corpus = Corpus(eg_vdc)
+eg_my.corpus = tm_map(eg_my.corpus, stemDocument, language="english")
+strwrap(eg_my.corpus[[1]])
+```
+
+Note that words "exmple", "stemming", "stemmed", "words", and "its"  were reduced to "exampl", "stem"", "word", and "it".
+
+##Stop words and Stemming procedure combined
+
+A simple function as below could combine the two processes above together.
+
+```{r, echo=T}
+StopNStem=function(text){
+  vdc=VectorSource(text)
+  my.corpus = Corpus(vdc)
+  my.corpus_copy = my.corpus
+  my.corpus = tm_map(my.corpus, removeWords, c("the", stopwords("english"))) 
+  my.corpus = tm_map(my.corpus, stemDocument, language="english")
+  return(paste(strwrap(my.corpus[[1]]), sep="", collapse=""))
+}
+```
+
+```{r, echo=T}
+StopNStem("This is an example of removing the stop words. This is an example of stemming process where words are stemmed into its root form.")
+```
+
+```{r, echo=T, eval=F}
+setwd("C:/Users/Taikgun Song/Desktop/CC Meeting/CC")
+Final=read.csv("data/Final.csv", stringsAsFactors = F)
+ea.review.SWS=lapply(Final$ea.review, StopNStem) %>% do.call("rbind",.) %>% rbind.data.frame(stringsAsFactors=F)
+View(ea.review.SWS)
+write.csv(ea.review.SWS, "ea_review_SWS.csv", row.names = F)
+```
 
 
 
@@ -353,21 +395,13 @@ kable(wo_sw, caption = "LDA output of the dataset before and after removing the 
 
 
 
-
-
-
-
-
-
-
-
-
+\pagebreak
 
 * LDA, documents are represent as random mixtures over latent topics, where each topic is characterized by a distribution over words. (Need paraphrasing)
 
 LDA assumes that words are generated by topics.
 That is, word distribution $$p(w|\theta, \beta)$$
-$$p(w|\theta, \beta)=sum_{z}p(w|z,\beta)p(z|\theta)$$
+$$p(w|\theta, \beta)=\sum_{z}p(w|z,\beta)p(z|\theta)$$
 
 
 
