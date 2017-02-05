@@ -1,0 +1,152 @@
+---
+title: "Emoji Package Manual"
+author: "Tek"
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: no
+geometry: margin=0.5in
+---
+```{r hidecode, echo=FALSE}
+library(knitr)
+opts_chunk$set(echo=F, warning=FALSE, message = FALSE, tidy.opts=list(width.cutoff=40))
+```
+
+```{r library and source, include=F}
+source("utility.r")
+packages <- c("tidyverse", "gsubfn")
+ipak(packages)
+```
+
+# Emoji Data set
+```{r load data}
+uni_info=readRDS("../data/uni_info_v7.Rds")
+basic_uni_info=uni_info[!grepl("\\s",uni_info$uni_code_point),]
+# boy=readLines("../example_data_set/boy.txt")
+# boy
+```
+
+The complete Emoji data set is saved under the 'data' directory. This complete data set is read and named 'uni_info'. Some Emojis are a combination of two or more basic Emojis. For example, Emoji 'boy: light skin tone' is a combination of 'boy' (U+1F466) and 'light skin tone' (U+1F3FB). Data 'basic_uni_info' is a data set of the basic Emojis. There are many different ways to encode 'Unicode'. The data set includes the following encoding types: 'U+hexadecimal', 'UTF-8 hexadecimal', 'hexadecimal', and 'numeric character reference (NCR)'.
+
+
+
+
+
+# Hexadecimal UTF-8
+```{r utf8_hex}
+# function name should be shortened. 
+find_code_utf8_hex=function(raw_string){
+strapplyc(raw_string, "(\\\\x[[:alnum:]]{2})") %>%
+  unlist() %>% 
+  gsub("\\\\x", "",.) %>%
+  paste(collapse="") %>%
+  return()
+}
+
+# Another working title.  The name of the function should be shortened as well.
+get_code_utf8_hex=function(string){
+  code=NULL
+  while (nchar(string)!=0){
+    if (substring(string,1,1)=="e"){code=c(code,substring(string, 1, 6));
+    string=substring(string, 7, nchar(string)) # Emoji created in the late 1990s, early 2000s. Starts with an 'e' and it is 6 characters long.
+    } else if (substring(string,1,1)=="f"){code=c(code,substring(string, 1, 8));
+    string=substring(string, 9, nchar(string)) # Emoji created recently. Starts with an 'f' and it is 8 characters long.
+    } else if (substring(string,1,1)=="c"){code=c(code,substring(string, 1, 4));
+    string=substring(string, 5, nchar(string)) # Emoji created in the late 1990s. Starts with a 'c' and it is 4 characters long.
+    } else {string=substring(string, 3, nchar(string))} # Other Unicodes may exist in the string, but those won't be Emojis.
+  }
+return(code)
+}
+
+#### Need to be checked...  Some 'e' emojis are 8 char. long.  eg. e29da4ef which is the same as e29da4.
+# Plausible problem with the above algorithm (Although I have not yet seen one).
+# what if the correct emoji was...  e29da4ef, f09f988d,...    Do not understand why e29da4ef and e29da4 are the same.
+# algorith will split into e29da4, eff09f, ..
+
+
+emoji_name_hex=function(utf_8_hex){
+  if(is.na(utf_8_hex)==F){
+  subsetted=uni_info[which(uni_info$utf_8_hex==utf_8_hex),]
+  return(unique(subsetted$uni_name)) # subsetted has the entire info of a single utf-8 hex code.
+  }else{return(NA)}
+}
+```
+
+### Searching for UTF-8 hexadecimal code
+Hexadecimal UTF-8 a common way to encode Unicode Emojis. Function 'find_code_utf8_hex' will target escaped hexadecimal UTF-8 character codes in a string.  These character codes will start with an escape '\\x' followed by two digits of alphanumeric character.  For example, Emoji 'grinning face' has 'UTF-8 hex' code as '\\xf0\\x9f\\x98\\x80'. If 'grinning face' was embedded in a string, 'find_code_utf8_hex' function will generate 'f09f9880'.
+
+
+
+<!------------------------------------------------------------------>
+<!--------- Practice on how to format the manual pdf file ---------->
+<!------------------------------------------------------------------>
+
+<!-- \rule{\textwidth}{1pt} -->
+
+<!-- find_code_utf8_hex \centerline{find utf-8 hexadecimal codes} -->
+
+<!-- \rule{\textwidth}{1pt} -->
+
+<!-- ##### Description -->
+<!-- ##### Usage (Need update) -->
+<!-- find_code_utf8_hex(raw_string) -->
+<!-- ##### Arguments -->
+<!-- raw_string: A single string that contains Hexadecimal UTF-8 code(s). -->
+<!-- ##### Example -->
+```{r utf8_hex_example1, echo=T}
+eg_strng="StringStart\\xe2\\x9a\\xa0SomeString\\xf0\\x9f\\x91\\x91StringEnd"
+eg_strng %>% find_code_utf8_hex
+```
+
+<!-- \pagebreak -->
+
+### Split the UTF-8 
+Hexadecimal UTF-8 codes can be categorized into three sets based on its initial alphabet: 'c', 'e', and 'f'. UTF-8 hex that starts with a letter 'c' will be 4 characters long, 'e' will be 6 characters long, and 'f' will be 8 characters long. Function 'get_code_utf8_hex' will split the unstructured strings of UTF-8 hex codes.
+
+<!------------------------------------------------------------------>
+<!--------- Practice on how to format the manual pdf file ---------->
+<!------------------------------------------------------------------>
+
+<!-- \rule{\textwidth}{1pt} -->
+
+<!-- get_code_utf8_hex \centerline{split a string of unstructured Hexadecimal UTF-8 codes into actual codes(?)} -->
+
+<!-- \rule{\textwidth}{1pt} -->
+
+<!-- ##### Description -->
+<!-- ##### Usage (Need update) -->
+<!-- get_code_utf8_he(string) -->
+<!-- ##### Arguments -->
+<!-- string: A single string that contains unstructured Hexadecimal UTF-8 code(s). -->
+<!-- ##### Example -->
+```{r utf8_hex_example2, echo=T}
+eg_strng %>% find_code_utf8_hex %>% get_code_utf8_hex
+```
+
+<!-- \pagebreak -->
+
+### Match with the data base
+Once the UTF-8 hex codes are successfully recovered from a given string, match them with the 'uni_info' data set to retrieve its entire information. Note that NOT ALL UTF-8 hex codes that starts with 'c', 'e', of 'f' is a code for Emojis. In the example, name of the code will be captured.
+
+```{r utf8_hex_example3, echo=T}
+eg_strng %>% find_code_utf8_hex %>% get_code_utf8_hex %>% sapply(., emoji_name_hex)
+```
+
+
+Another example using strings scraped from the Twitter with hash-tag #kickass.
+
+```{r utf8_hex_example4, echo=T}
+txt2=readLines("../example_data_set/kickass.txt")
+txt2 %>% find_code_utf8_hex() %>% get_code_utf8_hex() -> check.this
+uni_info$utf_8_hex[which(check.this %in% uni_info$utf_8_hex)] %>% sapply(., emoji_name_hex) %>% unique
+```
+
+
+# What to do next
+### different types of encoding (U+hexadecimal should be the next)
+### more utility functions:
+##### translater function: automatically translates the entire string.
+##### Keyword search function: Given keyword(s) -> find unicode or vise versa.
+##### image link function: match the Emoji image, given a unicode.
+##### Unicode stat function?: if multiple strings are given, write a function that generates some statistics about Emoji?
+##### Scoring function? or maybe include in the data set: positive, nutural negative Emojis?
