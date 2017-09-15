@@ -1,0 +1,40 @@
+---
+title: "whatever"
+author: "Taikgun Song"
+header-includes:
+   - \usepackage{amsmath}
+   - \usepackage{graphicx}
+   - \usepackage{bbm}
+   - \usepackage{subcaption}
+   - \usepackage[export]{adjustbox}
+   - \usepackage{wrapfig}
+   - \usepackage{color}
+   - \usepackage{enumerate}
+output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: no
+geometry: margin=0.5in
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccccccccc}
+  \hline
+  \#inlove & Emoji & Count & \#hateher & Emoji & Count & \#marchscience & Emoji & Count \\ 
+  \hline
+U+1F60D & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F60D.png} & 297 & U+1F602 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F602.png} & 154 & U+1F52C &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F52C.png} & 13 \\ 
+U+2764 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2764.png} & 164 & U+1F644 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F644.png} & 88 & U+1F30E &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30E.png} & 11 \\ 
+U+1F495 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F495.png} & 47 & U+1F621 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F621.png} & 40 & U+1F44D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F44D.png} & 9 \\ 
+U+1F618 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F618.png} & 40 & U+1F612 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F612.png} & 38 & U+1F680 &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F680.png} & 8 \\ 
+U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} & 26 & U+1F62D &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F62D.png} & 36 & U+1F30D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30D.png} & 7 \\ 
+   \hline
+\end{tabular}
+\caption{Five most popular Emoji for each hastags} 
+\label{tab:EPopular}
+\end{table}
