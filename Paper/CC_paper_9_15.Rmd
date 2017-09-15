@@ -1,6 +1,6 @@
 ---
-title: "Emoji"
-author: "Tek"
+title: "Latent Dirichlet Allocation models considering emojis"
+author: "Taikgun Song"
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{graphicx}
@@ -13,12 +13,12 @@ header-includes:
 output:
   pdf_document:
     fig_caption: yes
-    number_sections: no
+    number_sections: yes
 geometry: margin=0.5in
 ---
 ```{r hidecode, echo=FALSE}
 library(knitr)
-opts_chunk$set(echo=F, warning=FALSE, message = FALSE, tidy.opts=list(width.cutoff=40))
+opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=list(width.cutoff=40))
 ```
 
 ```{r library and source, include=F}
@@ -27,6 +27,12 @@ pkg=c("tidytext","tidyverse", "gsubfn", "Unicode","pander","openNLP", "NLP", "to
 sapply(pkg, require, character=T)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
+
+### abstract
+
+XXX write later XXX
+
+\tableofcontents
 
 # Introduction
 
@@ -42,53 +48,52 @@ In contrast to filtering Emoji characters out, reflecting Emoji information duri
 
 The `emoji` package in `R` was written to help the above analysis.
 
+#LDA
+To address the importance or reflecting the emoji information in text data, Latent Dirichlet Allocation (LDA): a popular topic modeling method, was performed on twitter messages scraped online. LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
 
-# Emoji Data Set
+LDA is based on the two following principles:
 
-## `emoji` package in R
+\begin{enumerate}
+\item Every document is a mixture of topics
+\item Every topic is a mixture of words
+\end {enumerate}
 
-\textbf{Plan to change this part after posting the Emoji package on CRAN}
+To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc. 
 
-Emoji in a text data is encoded as a sequence of Unicode: an industrial standard that consists encoding, representation, and text expression of writing system. \textit{The Unicode Standard} is distributed by a non-profit organization the \textit{Unicode Consortium}. The current list of Emoji v5.0 is available on the [official \textit{Unicode Consortium} website](http://unicode.org/emoji/charts/full-emoji-list.html). Example illustration of the Emoji table is attached in \autoref{fig:uni_web}.  Data set of Emoji characters are available in `emoji` package.
+LDA assumes that the probability of documents are rnadom mixture over unseen topics, and document $i$ having topic $k$ follows a dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
+
+\begin{enumerate}
+\item $\theta_i \sim Dir(\alpha), i=1, \dots, M$
+\item $\theta_{i,k}$ is the probability that document $i \in \big\{1, \dots, M \big\}$ has topic $k \in \big\{1, \dots, K \big\}$.
+\item $z$ is word's topic drawn from a Multinomial distribution with parameter \textbf{$\theta$}, i.e. $z \sim Multi(\theta)$
+\item $\beta_k \sim Dir(\eta), k=1, \dots, K$
+\item $\beta_{k,v}$ is the probability of word $v \in \big\{1, \dots, V \big\}$ in topic $k \in \big\{1, \dots, K \big\}$
+\item $w$ is a word drawn from a Multinomial distribution with parameter Z and $\beta$, i.e., $w \sim Multi(z, \beta)$.
+\end{enumerate}
+
+The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
+
+$$p(w|\alpha, \beta)= \int p(\theta|\alpha)(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta))d\theta$$
+where 
+
+Graphical display of LDA is given in \autoref{fig:LDA}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=100mm]{"unicode_webpage".png}
-\caption{Glimpse of the table of Emoji on the unicode.org website \label{fig:uni_web}}
+\includegraphics[width=100mm]{"LDA_model".png}
+\caption{Graphical Model representation of LDA \label{fig:LDA}}
 \end{figure}
 
-## Generate different type of encodings using Python
-
-\textbf{A script was written R that changes between different encoding environment. Plan to include this feature in the `emoji` package.}\\
-There are multiple way of encoding Emojis on website or SNS. Unicode, Unicode escape, UTF-8hex, zerox notation, NCR are examples of commonly used encodings. As shown in \autoref{fig:uni_web}, the initial data set scraped from the \textit{Unicode Consortium} only has Unicode. The most common encoding type for online web page, however, is UTF-8 and Unicode escape. Therefore, the original Unicode sequence should be translated into different encoding types for the data set to be applied. Different types of encoding format were generated from the original Unicode via simple Python code.
-
-## Scoring
-
-The characteristic of Emoji (effectively delivers feelings and moods), naturally leads text mining with Emoji to sentiment analysis. `tidytext` package in R has three general purpose lexicon sets. The `AFINN` score words from -5 to 5 scale, `bing` assigns words in binary category(positive and negative), and `nrc`assigns words with more categories. 
+##LDA Equation goes here
 
 
 
 
 
-# Description of the Emoji Data set
-
-\textbf{The table should be updated.  It is using the v4.0 Emoji list}
-
-The complete Emoji data set is saved under the 'data' directory. This complete data set is read and named 'uni_info'. Some Emojis are a combination of two or more basic Emojis. For example, Emoji 'boy: light skin tone' is a combination of 'boy' (U+1F466) and 'light skin tone' (U+1F3FB). Data 'basic_uni_info' is a data set of the basic Emojis. There are many different ways to encode 'Unicode'. The data set includes the following encoding types: 'U+hexadecimal', 'UTF-8 hexadecimal', 'hexadecimal', and 'numeric character reference (NCR)'. The example of the data set is given in \autoref{tab:dataset}
-
-```{r show_dataset, echo=F}
-uni_info=readRDS("../data/uni_info_v8.Rds")
-egdat=head(uni_info,5)
-edgat=egdat[,-c(6:7,13)]
-
-pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 Emoji data set")
-```
-
-\pagebreak
 
 # Application
 
-###Data Set and exploratory data analysis
+## Data Set and exploratory data analysis
 
 Two samples of twitter messages with the following hastag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustraited in \autoref{tab:EProp}. 52.7% of the #inlove message strings, 29.3% of the #hateher message strings, and 7.8% of #marchscience message strings have one or more emoji information.
 
@@ -173,44 +178,7 @@ It is interesting to see "Face with tear of joy" as the most popular Emoji for h
 
 
 
-###LDA
-To address the importance or reflecting the emoji information in text data, Latent Dirichlet Allocation (LDA): a popular topic modeling method, was performed on twitter messages scraped online. LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
-
-LDA is based on the two following principles:
-
-\begin{enumerate}
-\item Every document is a mixture of topics
-\item Every topic is a mixture of words
-\end {enumerate}
-
-To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc. 
-
-LDA assumes that the probability of documents are rnadom mixture over unseen topics, and document $i$ having topic $k$ follows a dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
-
-\begin{enumerate}
-\item $\theta_i \sim Dir(\alpha), i=1, \dots, M$
-\item $\theta_{i,k}$ is the probability that document $i \in \big\{1, \dots, M \big\}$ has topic $k \in \big\{1, \dots, K \big\}$.
-\item $z$ is word's topic drawn from a Multinomial distribution with parameter \textbf{$\theta$}, i.e. $z \sim Multi(\theta)$
-\item $\beta_k \sim Dir(\eta), k=1, \dots, K$
-\item $\beta_{k,v}$ is the probability of word $v \in \big\{1, \dots, V \big\}$ in topic $k \in \big\{1, \dots, K \big\}$
-\item $w$ is a word drawn from a Multinomial distribution with parameter Z and $\beta$, i.e., $w \sim Multi(z, \beta)$.
-\end{enumerate}
-
-The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
-
-$$p(w|\alpha, \beta)= \int p(\theta|\alpha)(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta))d\theta$$
-where 
-
-Graphical display of LDA is given in \autoref{fig:LDA}.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=100mm]{"LDA_model".png}
-\caption{Graphical Model representation of LDA \label{fig:LDA}}
-\end{figure}
-
-#LDA Equation goes here
-
+##Application
 
 LDA was performed on the following three difference cases:
 
@@ -438,3 +406,47 @@ grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]],layout_matrix=cbind(1,2,3))
 
 # Conclusion
 As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode Emoji characters. These Emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
+
+
+# Appendix
+
+# `emoji` package in R
+
+## Emoji Data Set
+
+\textbf{Plan to change this part after posting the Emoji package on CRAN}
+
+Emoji in a text data is encoded as a sequence of Unicode: an industrial standard that consists encoding, representation, and text expression of writing system. \textit{The Unicode Standard} is distributed by a non-profit organization the \textit{Unicode Consortium}. The current list of Emoji v5.0 is available on the [official \textit{Unicode Consortium} website](http://unicode.org/emoji/charts/full-emoji-list.html). Example illustration of the Emoji table is attached in \autoref{fig:uni_web}.  Data set of Emoji characters are available in `emoji` package.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"unicode_webpage".png}
+\caption{Glimpse of the table of Emoji on the unicode.org website \label{fig:uni_web}}
+\end{figure}
+
+## Generate different type of encodings using Python
+
+\textbf{A script was written R that changes between different encoding environment. Plan to include this feature in the `emoji` package.}\\
+There are multiple way of encoding Emojis on website or SNS. Unicode, Unicode escape, UTF-8hex, zerox notation, NCR are examples of commonly used encodings. As shown in \autoref{fig:uni_web}, the initial data set scraped from the \textit{Unicode Consortium} only has Unicode. The most common encoding type for online web page, however, is UTF-8 and Unicode escape. Therefore, the original Unicode sequence should be translated into different encoding types for the data set to be applied. Different types of encoding format were generated from the original Unicode via simple Python code.
+
+## Scoring of Sentiment
+
+The characteristic of Emoji (effectively delivers feelings and moods), naturally leads text mining with Emoji to sentiment analysis. `tidytext` package in R has three general purpose lexicon sets. The `AFINN` score words from -5 to 5 scale, `bing` assigns words in binary category(positive and negative), and `nrc`assigns words with more categories. 
+
+
+
+
+
+## Description of the Emoji Data set
+
+\textbf{The table should be updated.  It is using the v4.0 Emoji list}
+
+The complete Emoji data set is saved under the 'data' directory. This complete data set is read and named 'uni_info'. Some Emojis are a combination of two or more basic Emojis. For example, Emoji 'boy: light skin tone' is a combination of 'boy' (U+1F466) and 'light skin tone' (U+1F3FB). Data 'basic_uni_info' is a data set of the basic Emojis. There are many different ways to encode 'Unicode'. The data set includes the following encoding types: 'U+hexadecimal', 'UTF-8 hexadecimal', 'hexadecimal', and 'numeric character reference (NCR)'. The example of the data set is given in \autoref{tab:dataset}
+
+```{r show_dataset, echo=F}
+uni_info=readRDS("../data/uni_info_v8.Rds")
+egdat=head(uni_info,5)
+edgat=egdat[,-c(6:7,13)]
+
+pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 Emoji data set")
+```
