@@ -9,6 +9,7 @@ header-includes:
    - \usepackage[export]{adjustbox}
    - \usepackage{wrapfig}
    - \usepackage{color}
+   - \usepackage{xcolor}
    - \usepackage{enumerate}
 output:
   pdf_document:
@@ -16,6 +17,9 @@ output:
     number_sections: yes
 geometry: margin=0.5in
 ---
+
+\newcommand{\hh}[1]{{\color{orange} #1}}
+
 ```{r hidecode, echo=FALSE}
 library(knitr)
 opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=list(width.cutoff=40))
@@ -37,11 +41,28 @@ XXX write later XXX
 # Introduction
 
 <!--intelligence, customer care service, social media analysis, contextual advertising, and more.-->
-Latent Dirichlet Allocation(LDA) is a popular hierarchical Bayesian model that is widely used as a topic modeling method. LDA exploit statistical inference to discover latent topic of text data, however, the method depends on the number of observations - words. This dependency on observed words lead LDA to its systematic limit is when there exists data sparcity with short text data. New communication medium such as Social Network Service(SNS) and User Generated Content(UGC) platform increased the amount of text data usage, however, the size of the document is limited to a couple hundred words. Hence, LDA model is known for its low performance on these short online text due to the data sparcity.
+Latent Dirichlet Allocation(LDA) is a popular hierarchical Bayesian model that is widely used as a topic modeling method.
 
+\hh{What is topic modeling? - go a bit more gently in your introduction.}
+
+LDA exploits statistical inference to discover latent topic of text data, however, the method depends on the number of observations - words.
+
+\hh{You are sneaking the data in through the backdoor - slow down and describe the data first.}
+
+This dependency on observed words lead LDA to its systematic limit is when there exists data sparcity with short text data.
+
+\hh{do you have a citation for that problem? Otherwise this is a statement that you would need to prove. That would be a distraction. Instead, you can argue that emojis are part of texts used on social media and are not used in the analysis.}
+
+New communication media such as Social Network Services (SNS) and User Generated Content (UGC) platform increase the amount of text data usage, however, the size of the document is limited to a couple hundred words. Hence, LDA model is known for its low performance on these short online text due to the data sparcity.
+
+\hh{OK, I'm feeling very old. Give examples for SNSs - I also don't quite see why you are separating SNS from UGC. Isn't UGC by default what makes SNS?}
+
+\hh{Give some examples for tweets you scraped -- that will automatically lead into the use of emojis.}
 xxx Bridge xxx
 
-The use of Emoji character - a pictographic information that carries class of feelings -  with other text data is a unique characteristic of online messages. Conventionally, Emoji characters have been considered as a noise and were deleted prior to applying LDA technique. In contrast with the previous procedure, this paper propose the idea of incorporating Emoji characters to enhance the performance of the LDA method on short online texts.
+The use of emojis -  pictograms that express the author's feelings -  mixed in with other text is a unique characteristic of online messages. 
+Conventionally, Emoji characters have been considered as a noise and were deleted prior to applying LDA technique. \hh{slow down!} 
+In contrast with the previous procedure, this paper propose the idea of incorporating Emoji characters to enhance the performance of the LDA method on short online texts.
 
 The use of Emoji characters have three main benefits. First, it may reduce the systematic problem of LDA with data sparcity. All Emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating Emoji characters into its English name or related keywords will increase the observation, and thus lead to better LDA results. Second, each Emoji character has a couple of pre-determined topic dimension set by the official organization. This information could be used as an auxiliary information during the topic matching process. Lastly, Emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing Emoji translation to sentiment analysis. 
 
