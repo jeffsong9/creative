@@ -117,7 +117,14 @@ LDA models a document as a mixture of topics, and then each word is drawn from o
 
 
 ## Stemming
-Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". These different form of words with the same root word may cause difficulties applying some text mining techniques. Therefore, stemming procedure should be introduced to reduce inflectional forms of a word to a word in its root form. The `tm` package is again used for the stemming process and its code is given as the following.
+
+Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". <!--These different form of words with the same root word may cause difficulties applying some text mining techniques.--> Words with same meaning but different in forms contribute to data sparcity, reducing the performance of the LDA method. The `stemming` procedure cuts inflectional forms of a word to its root form eventually increasing the frequency of word observations.
+
+The stemming process has two disadvantages. First, there are possibility of over stemming. For example, three different words "universal", "university", and "universe" have the same stemmed word "univers". The accuracy of the LDA method may decrease by putting words with different meanings into a single topic. Moreover, when the LDA output is given as a stemmed word, it is difficult to trace the stemmed word to its original form.
+
+XXX Explain why we cannot trace back to the original form XXX
+
+The `tm` package is again used for the stemming process and its code is given as the following.
 
 
 
