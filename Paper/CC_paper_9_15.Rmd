@@ -63,9 +63,6 @@ LDA is a popular method to infer semantics to model a document as a mixture of l
 
 LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
 
-was performed on twitter messages scraped online. 
-
-
 LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
 
 LDA is based on the two following principles:
@@ -109,7 +106,12 @@ As indicated in the above section, LDA assumes that documents are represented as
 
 ## Removing Stop Words
 
-Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out. 
+A natural language can be categorized as two distinctive set of words: content/lexical words and function/structure words. Content/lexical words are words with substantive meanings. Function/structure words on the other hand have little lexical meaning, but establish grammatical structure between other words within a sentence. 
+
+LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high freqeuncy. Thus, any group of non-informative words including the function/structural words should be filtered out before processing LDA method, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete stop words.
+
+
+<!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
 
 
 
