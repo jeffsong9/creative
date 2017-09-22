@@ -22,8 +22,8 @@ opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=lis
 ```
 
 ```{r library and source, include=F}
-Sys.setenv(JAVA_HOME='C:/Program Files/Java/jre1.8.0_121')
-pkg=c("tidytext","tidyverse", "gsubfn", "Unicode","pander","openNLP", "NLP", "topicmodels", "tm", "RTextTools", "gridExtra")
+# pkg=c("tidytext","tidyverse", "gsubfn", "Unicode","pander","topicmodels", "tm", "RTextTools", "gridExtra")
+pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "RTextTools", "gridExtra")
 sapply(pkg, require, character=T)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
@@ -37,19 +37,36 @@ XXX write later XXX
 # Introduction
 
 <!--intelligence, customer care service, social media analysis, contextual advertising, and more.-->
-The development of Social Network Service(SNS) and User Generated Content(UGC) platforms have been providing a new channels for its users to communicate and share opinions with the fellow community members. Hundreds and thousands of new messages are shared every day on Twitter and Facebook; product reviews are posted on Amazon and Trip Advisor. 
-The text contents of SNS and UGC is a raw information of Individual's perception and emotion. As one would expect, this distinct characteristic of SNS and UGC text data could be a valuable information in different academic disciplines and industries. As a result, different machine learning and natural language processing techniques were developed to evaluate text data.
+Latent Dirichlet Allocation(LDA) is a popular hierarchical Bayesian model that is widely used as a topic modeling method. LDA exploit statistical inference to discover latent topic of text data, however, the method depends on the number of observations - words. This dependency on observed words lead LDA to its systematic limit is when there exists data sparcity with short text data. New communication medium such as Social Network Service(SNS) and User Generated Content(UGC) platform increased the amount of text data usage, however, the size of the document is limited to a couple hundred words. Hence, LDA model is known for its low performance on these short online text due to the data sparcity.
 
-Most natural language processing(NLP) techniques require preparation procedures to improve its performance. Deleting stop words(determiners, conjunctions, prepositions, pronouns, auxiliary verbs, modals, and quantifiers) is an example of this preceding step. The result of this step increases the accuracy of the NLP by reducing the noise generated from words that does not convey any contextual meaning. In this context, Emoji(a pictographic information that carries class of feelings) in the text data has been considered as a noise and was deleted prior to applying NLP techniques. 
+xxx Bridge xxx
 
-Although deleting Emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. Emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS plaforms. Emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as Emojis when conveying emotions. For this reason, Emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting Emoji would reduce the information contained in the original text data.
+The use of Emoji character - a pictographic information that carries class of feelings -  with other text data is a unique characteristic of online messages. Conventionally, Emoji characters have been considered as a noise and were deleted prior to applying LDA technique. In contrast with the previous procedure, this paper propose the idea of incorporating Emoji characters to enhance the performance of the LDA method on short online texts.
 
-In contrast to filtering Emoji characters out, reflecting Emoji information during the evaluation have benefits. First, eacho Emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the Emoji information. Second, Emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on Emoji will provide auxiliary information.
+The use of Emoji characters have three main benefits. First, it may reduce the systematic problem of LDA with data sparcity. All Emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating Emoji characters into its English name or related keywords will increase the observation, and thus lead to better LDA results. Second, each Emoji character has a couple of pre-determined topic dimension set by the official organization. This information could be used as an auxiliary information during the topic matching process. Lastly, Emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing Emoji translation to sentiment analysis. 
+
+
+
+
+<!--The development of Social Network Service(SNS) and User Generated Content(UGC) platforms have been providing a new channels for its users to communicate and share opinions with the fellow community members. Hundreds and thousands of new messages are shared every day on Twitter and Facebook; product reviews are posted on Amazon and Trip Advisor. The text contents of SNS and UGC is a raw information of Individual's perception and emotion. As one would expect, this distinct characteristic of SNS and UGC text data could be a valuable information in different academic disciplines and industries. As a result, different machine learning and natural language processing techniques were developed to evaluate text data.
+Most natural language processing(NLP) techniques require preparation procedures to improve its performance. Deleting stop words(determiners, conjunctions, prepositions, pronouns, auxiliary verbs, modals, and quantifiers) is an example of this preceding step. The result of this step increases the accuracy of the NLP by reducing the noise generated from words that does not convey any contextual meaning. In this context, Emoji(a pictographic information that carries class of feelings) in the text data has been considered as a noise and was deleted prior to applying NLP techniques.
+Although deleting Emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. Emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS platforms. Emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as Emojis when conveying emotions. For this reason, Emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting Emoji would reduce the information contained in the original text data.
+In contrast to filtering Emoji characters out, reflecting Emoji information during the evaluation have benefits. First, each Emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the Emoji information. Second, Emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on Emoji will provide auxiliary information. -->
 
 The `emoji` package in `R` was written to help the above analysis.
 
+
+
 #LDA
-To address the importance or reflecting the emoji information in text data, Latent Dirichlet Allocation (LDA): a popular topic modeling method, was performed on twitter messages scraped online. LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
+
+LDA is a popular method to infer semantics to model a document as a mixture of latent topics.
+
+LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
+
+was performed on twitter messages scraped online. 
+
+
+LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
 
 LDA is based on the two following principles:
 
@@ -60,7 +77,7 @@ LDA is based on the two following principles:
 
 To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc. 
 
-LDA assumes that the probability of documents are rnadom mixture over unseen topics, and document $i$ having topic $k$ follows a dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
+LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
 
 \begin{enumerate}
 \item $\theta_i \sim Dir(\alpha), i=1, \dots, M$
@@ -88,6 +105,18 @@ Graphical display of LDA is given in \autoref{fig:LDA}.
 
 
 
+As indicated in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
+
+## Removing Stop Words
+
+Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out. 
+
+
+
+
+## Stemming
+Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". These different form of words with the same root word may cause difficulties applying some text mining techniques. Therefore, stemming procedure should be introduced to reduce inflectional forms of a word to a word in its root form. The `tm` package is again used for the stemming process and its code is given as the following.
+
 
 
 
@@ -95,7 +124,7 @@ Graphical display of LDA is given in \autoref{fig:LDA}.
 
 ## Data Set and exploratory data analysis
 
-Two samples of twitter messages with the following hastag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustraited in \autoref{tab:EProp}. 52.7% of the #inlove message strings, 29.3% of the #hateher message strings, and 7.8% of #marchscience message strings have one or more emoji information.
+Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustraited in \autoref{tab:EProp}. 52.7% of the #inlove message strings, 29.3% of the #hateher message strings, and 7.8% of #marchscience message strings have one or more emoji information.
 
 ```{r load_twitter_data, eval=T, echo=F}
 twitter_example_inlove=readRDS("../data/twitter_inlove.Rds")
@@ -274,7 +303,7 @@ grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]],layout_matrix=cbind(1,2
 
 
 ## LDA without Unicode
-In most text mining examples, LDA is performed after removing the unicode information. For the first case, therefore, unicode characters were removed from the raw text data set. Then, the standard procedure of stemming and stop word deletion was performed to enhance the accuracy of LDA. `tm` package was used to conduct the above procedure. 
+In most text mining examples, LDA is performed after removing the Unicode information. For the first case, therefore, Unicode characters were removed from the raw text data set. Then, the standard procedure of stemming and stop word deletion was performed to enhance the accuracy of LDA. `tm` package was used to conduct the above procedure. 
 
 ```{r cleaning_function, echo=F, eval=T}
 cleaning=function(string){
@@ -332,7 +361,7 @@ grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]],layout_matrix=
 
 
 ## LDA with name translated
-The last case was to perform LDA after traslating the unicode Emoji characters in english. `unicode` package was used to match the unicode to its name. Then the standard process of stemming and deletion of stop words where performed.
+The last case was to perform LDA after translating the Unicode Emoji characters in English. `unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.
 
 
 ```{r LDA_T, echo=F, eval=T}
@@ -421,13 +450,13 @@ Emoji in a text data is encoded as a sequence of Unicode: an industrial standard
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"unicode_webpage".png}
-\caption{Glimpse of the table of Emoji on the unicode.org website \label{fig:uni_web}}
+\caption{Glimpse of the table of Emoji on the Unicode.org website \label{fig:uni_web}}
 \end{figure}
 
 ## Generate different type of encodings using Python
 
 \textbf{A script was written R that changes between different encoding environment. Plan to include this feature in the `emoji` package.}\\
-There are multiple way of encoding Emojis on website or SNS. Unicode, Unicode escape, UTF-8hex, zerox notation, NCR are examples of commonly used encodings. As shown in \autoref{fig:uni_web}, the initial data set scraped from the \textit{Unicode Consortium} only has Unicode. The most common encoding type for online web page, however, is UTF-8 and Unicode escape. Therefore, the original Unicode sequence should be translated into different encoding types for the data set to be applied. Different types of encoding format were generated from the original Unicode via simple Python code.
+There are multiple way of encoding Emojis on website or SNS. Unicode, Unicode escape, UTF-8hex, zerox notation, NCR are examples of commonly used encoding. As shown in \autoref{fig:uni_web}, the initial data set scraped from the \textit{Unicode Consortium} only has Unicode. The most common encoding type for online web page, however, is UTF-8 and Unicode escape. Therefore, the original Unicode sequence should be translated into different encoding types for the data set to be applied. Different types of encoding format were generated from the original Unicode via simple Python code.
 
 ## Scoring of Sentiment
 
@@ -450,3 +479,10 @@ edgat=egdat[,-c(6:7,13)]
 
 pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 Emoji data set")
 ```
+
+
+# More work
+1. Check Stemming - scienc vs. science
+2. Check output again. Also, a check aggregation of short messages to avoid data sparsity.
+2. LDA explanation
+3.
