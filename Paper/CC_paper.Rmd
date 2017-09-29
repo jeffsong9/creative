@@ -71,12 +71,18 @@ Most natural language processing(NLP) techniques require preparation procedures 
 Although deleting Emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. Emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS platforms. Emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as Emojis when conveying emotions. For this reason, Emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting Emoji would reduce the information contained in the original text data.
 In contrast to filtering Emoji characters out, reflecting Emoji information during the evaluation have benefits. First, each Emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the Emoji information. Second, Emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on Emoji will provide auxiliary information. -->
 
+\hh{What do we want to learn from the messages? This is where the problem statement goes.}
+
 XXX Should the packages used to run example be introduced here with brief steps? XXX
+\hh{the packages should go to the back into a 'technical details'. }
+
 The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was written to help the above analysis.
 
 
 
 #LDA
+
+\hh{flesh this out next. Start with mathematical definitions of the data.}
 
 LDA is a popular method to infer semantics to model a document as a mixture of latent topics.
 
@@ -106,7 +112,7 @@ LDA assumes that the probability of documents are random mixture over unseen top
 
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
 
-$$p(w|\alpha, \beta)= \int p(\theta|\alpha)(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta))d\theta$$
+$$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$
 where 
 
 Graphical display of LDA is given in \autoref{fig:LDA}.
@@ -123,12 +129,15 @@ Graphical display of LDA is given in \autoref{fig:LDA}.
 
 As indicated in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
 
+\hh{stop words, stemming, ... should go into a separate section called 'Data preparation'}
+
 ## Removing Stop Words
 
 A natural language can be categorized as two distinctive set of words: content/lexical words and function/structure words. Content/lexical words are words with substantive meanings. Function/structure words on the other hand have little lexical meaning, but establish grammatical structure between other words within a sentence. 
 
-LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high freqeuncy. Thus, any group of non-informative words including the function/structural words should be filtered out before processing LDA method, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete stop words.
+LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high freqeuncy. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete stop words.
 
+\hh{give some examples following the tweets or again go back to the xkcd example}
 
 <!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
 
@@ -142,17 +151,22 @@ Due to structural and grammatical reasons of English, a family of words that are
 The stemming process has two disadvantages. First, there are possibility of over stemming. For example, three different words "universal", "university", and "universe" have the same stemmed word "univers". The accuracy of the LDA method may decrease by putting words with different meanings into a single topic. Moreover, when the LDA output is given as a stemmed word, it is difficult to trace the stemmed word to its original form.
 
 XXX Explain why we cannot trace back to the original form XXX
+\hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}
+
+\hh{include a couple of examples}
 
 The `tm` package is again used for the stemming process and its code is given as the following.
 
 
-
+\hh{n-grams and just generally features of documents}
 
 # Application
 
 ## Data Set and exploratory data analysis
 
-Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustraited in \autoref{tab:EProp}. 52.7% of the #inlove message strings, 29.3% of the #hateher message strings, and 7.8% of #marchscience message strings have one or more emoji information.
+\hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}
+
+Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
 
 ```{r load_twitter_data, eval=T, echo=F}
 twitter_example_inlove=readRDS("../data/twitter_inlove.Rds")
@@ -201,7 +215,7 @@ pander(emoji_freq, split.table = 180, style = 'rmarkdown', caption = "\\label{ta
 # print(xdate_number)
 ```
 
-For hashtag #inlove, total number of 1188 Emojis were used from 182 unique emojis. 
+For the hashtag #inlove, a total number of 1188 emojis were used, consisting of 182 unique emojis. 
 For hashtag #hateher, 695 Emojis from 112 unique Emojis were used.
 For hashtag #sciencemarch, 202 Emojis from 102 unique Emojis were used (Note that there may be multiple Emojis per Twitter message).
 Top 5 frequently used Emojis per hashtag is given in \autoref{tab:EPopular}.
@@ -219,7 +233,7 @@ U+1F618 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F618.png
 U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} & 26 & U+1F62D &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F62D.png} & 36 & U+1F30D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30D.png} & 7 \\ 
    \hline
 \end{tabular}
-\caption{Five most popular Emoji for each hastags} 
+\caption{Five most popular Emoji for each hashtag} 
 \label{tab:EPopular}
 \end{table}
 
@@ -235,7 +249,7 @@ It is interesting to see "Face with tear of joy" as the most popular Emoji for h
 
 
 
-##Application
+##Results
 
 LDA was performed on the following three difference cases:
 
