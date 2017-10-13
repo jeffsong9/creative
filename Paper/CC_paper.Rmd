@@ -1,5 +1,5 @@
 ---
-title: "Latent Dirichlet Allocation Models Considering Emojis"
+title: "Latent Dirichlet Allocation Models Considering emojis"
 author: "Taikgun Song"
 header-includes:
    - \usepackage{amsmath}
@@ -48,7 +48,7 @@ Text data contains valuable insights that may be useful for content recommendati
 
 The rapid growth in internet and telecommunication technology triggered the development of Social Network Services(SNS) platform such as Tweeter, Facebook, and blog posts. The SNS messages often include individual's perceptions, feelings, and opinions. Therefore, evaluating this primary data may be meaningful for policy makers, social science researchers, and business entrepreneurs. This electronic word-of-mouth heavily uses text data as the medium of communication. Thus, topic modeling including LDA may be ideal method for analyzing SNS text data for information retrieval tasks. 
 
-The use of emoji - a pictogram that expresses the author's feeling and emotion - mixed in with other text is a unique characteristic of SNS messages that distinguishes itself from other text data. As shown in \autoref{fig:twe}, many SNS messages can be found with Emoji embedded in the content. Conventionally, Emoji characters have been considered as a noise and were deleted prior to applying LDA techniques and other topic modeling methods. Nevertheless, one should focus on the richness of information that Emoji characters can provide. Especially consider the emotional and symbolic representation of Emoji that cannot be better expressed with alphabet characters. Therefore, in contrast to the typical topic modeling procedure, this paper propose the idea of incorporating Emoji characters to enhance the performance of the LDA method on SNS text data.
+The use of emoji - a pictogram that expresses the author's feeling and emotion - mixed in with other text is a unique characteristic of SNS messages that distinguishes itself from other text data. As shown in \autoref{fig:twe}, many SNS messages can be found with emoji embedded in the content. Conventionally, emoji characters have been considered as a noise and were deleted prior to applying LDA techniques and other topic modeling methods. Nevertheless, one should focus on the richness of information that emoji characters can provide. Especially consider the emotional and symbolic representation of emoji that cannot be better expressed with alphabet characters. Therefore, in contrast to the typical topic modeling procedure, this paper propose the idea of incorporating emoji characters to enhance the performance of the LDA method on SNS text data.
 
 
 \begin{figure}[htbp]
@@ -64,12 +64,12 @@ The use of emoji - a pictogram that expresses the author's feeling and emotion -
 <!--\hh{OK, I'm feeling very old. Give examples for SNSs - I also don't quite see why you are separating SNS from UGC. Isn't UGC by default what makes SNS?}-->
 <!--\hh{Give some examples for tweets you scraped -- that will automatically lead into the use of emojis.}-->
 
-The use of Emoji characters have three main benefits. First, it may reduce the systematic problem of LDA with data sparcity. All Emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating Emoji characters into its English name or related keywords will increase the observation, and thus lead to better LDA results. Second, each Emoji character has a couple of pre-determined topic dimension set by the official organization. This information could be used as an auxiliary information during the topic matching process. Lastly, Emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing Emoji translation to sentiment analysis. 
+The use of emoji characters have three main benefits. First, it may reduce the systematic problem of LDA with data sparcity. All emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating emoji characters into its English name or related keywords will increase the observation, and thus lead to better LDA results. Second, each emoji character has a couple of pre-determined topic dimension set by the official organization. This information could be used as an auxiliary information during the topic matching process. Lastly, emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing emoji translation to sentiment analysis. 
 
 <!--The development of Social Network Service(SNS) and User Generated Content(UGC) platforms have been providing a new channels for its users to communicate and share opinions with the fellow community members. Hundreds and thousands of new messages are shared every day on Twitter and Facebook; product reviews are posted on Amazon and Trip Advisor. The text contents of SNS and UGC is a raw information of Individual's perception and emotion. As one would expect, this distinct characteristic of SNS and UGC text data could be a valuable information in different academic disciplines and industries. As a result, different machine learning and natural language processing techniques were developed to evaluate text data.
-Most natural language processing(NLP) techniques require preparation procedures to improve its performance. Deleting stop words(determiners, conjunctions, prepositions, pronouns, auxiliary verbs, modals, and quantifiers) is an example of this preceding step. The result of this step increases the accuracy of the NLP by reducing the noise generated from words that does not convey any contextual meaning. In this context, Emoji(a pictographic information that carries class of feelings) in the text data has been considered as a noise and was deleted prior to applying NLP techniques.
-Although deleting Emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. Emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS platforms. Emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as Emojis when conveying emotions. For this reason, Emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting Emoji would reduce the information contained in the original text data.
-In contrast to filtering Emoji characters out, reflecting Emoji information during the evaluation have benefits. First, each Emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the Emoji information. Second, Emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on Emoji will provide auxiliary information. -->
+Most natural language processing(NLP) techniques require preparation procedures to improve its performance. Deleting stop words(determiners, conjunctions, prepositions, pronouns, auxiliary verbs, modals, and quantifiers) is an example of this preceding step. The result of this step increases the accuracy of the NLP by reducing the noise generated from words that does not convey any contextual meaning. In this context, emoji(a pictographic information that carries class of feelings) in the text data has been considered as a noise and was deleted prior to applying NLP techniques.
+Although deleting emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS platforms. emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as emojis when conveying emotions. For this reason, emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting emoji would reduce the information contained in the original text data.
+In contrast to filtering emoji characters out, reflecting emoji information during the evaluation have benefits. First, each emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the emoji information. Second, emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on emoji will provide auxiliary information. -->
 
 \hh{What do we want to learn from the messages? This is where the problem statement goes.}
 
@@ -84,11 +84,7 @@ The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was
 
 \hh{flesh this out next. Start with mathematical definitions of the data.}
 
-LDA is a popular method to infer semantics to model a document as a mixture of latent topics.
-
-LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
-
-LDA is a topic modeling method that allows words observed in documents to be explained by unobserved topics and that each word's creation is attributable to one of the document's topics.
+<!--Topic modeling puts effort on uncovering the semantic structure of the latent topics in a text collection. One of the popular method of topic modeling is the LDA. LDA views that a document is expressed as a mixture of topics, and a topic is a probability distribution over words where the probability distribution follows a Dirichlet distribution with some parameter $\alpha$ less than one.
 
 LDA is based on the two following principles:
 
@@ -97,7 +93,7 @@ LDA is based on the two following principles:
 \item Every topic is a mixture of words
 \end {enumerate}
 
-To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc. 
+To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc.-->
 
 LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
 
@@ -105,10 +101,19 @@ LDA assumes that the probability of documents are random mixture over unseen top
 \item $\theta_i \sim Dir(\alpha), i=1, \dots, M$
 \item $\theta_{i,k}$ is the probability that document $i \in \big\{1, \dots, M \big\}$ has topic $k \in \big\{1, \dots, K \big\}$.
 \item $z$ is word's topic drawn from a Multinomial distribution with parameter \textbf{$\theta$}, i.e. $z \sim Multi(\theta)$
-\item $\beta_k \sim Dir(\eta), k=1, \dots, K$
-\item $\beta_{k,v}$ is the probability of word $v \in \big\{1, \dots, V \big\}$ in topic $k \in \big\{1, \dots, K \big\}$
-\item $w$ is a word drawn from a Multinomial distribution with parameter Z and $\beta$, i.e., $w \sim Multi(z, \beta)$.
+\item $\phi_k \sim Dir(\beta), k=1, \dots, K$
+\item $\phi_{k,v}$ is the probability of word $v \in \big\{1, \dots, V \big\}$ in topic $k \in \big\{1, \dots, K \big\}$
+\item $w$ is a word drawn from a Multinomial distribution with parameter Z and $\phi$, i.e., $w \sim Multi(z, \phi)$.
 \end{enumerate}
+
+Then, the total probability is
+$$P(W, Z, \theta, \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
+
+
+
+
+
+<!--------------------------------------------------->
 
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
 
@@ -166,7 +171,7 @@ The `tm` package is again used for the stemming process and its code is given as
 
 \hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}
 
-Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing Emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
+Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
 
 ```{r load_twitter_data, eval=T, echo=F}
 twitter_example_inlove=readRDS("../data/twitter_inlove.Rds")
@@ -179,7 +184,7 @@ prop_emoji=cbind.data.frame(498/944, 335/1145, 93/1195)
 colnames(prop_emoji)<-c("#inlove", "#hateher", "#marchscience")
 rownames(prop_emoji)<-"Proportion"
 
-pander(prop_emoji, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EProp} Proportion of Twitter messages with Emoji")
+pander(prop_emoji, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EProp} Proportion of Twitter messages with emoji")
 ```
 
 ```{r, eval=F, echo=F}
@@ -209,22 +214,22 @@ colnames(marchscience_uni_count)<-c("#marchscience","Count")
 
 emoji_freq=cbind.data.frame(inlove_uni_count, hateher_uni_count, marchscience_uni_count)
 
-pander(emoji_freq, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EPopular} Five most popular Emoji for each hastags")
+pander(emoji_freq, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EPopular} Five most popular emoji for each hastags")
 
-# xdate_number=xtable(emoji_freq, caption = "Five most popular Emoji for each hastags", label = "tab:EPopular")
+# xdate_number=xtable(emoji_freq, caption = "Five most popular emoji for each hastags", label = "tab:EPopular")
 # print(xdate_number)
 ```
 
 For the hashtag #inlove, a total number of 1188 emojis were used, consisting of 182 unique emojis. 
-For hashtag #hateher, 695 Emojis from 112 unique Emojis were used.
-For hashtag #sciencemarch, 202 Emojis from 102 unique Emojis were used (Note that there may be multiple Emojis per Twitter message).
-Top 5 frequently used Emojis per hashtag is given in \autoref{tab:EPopular}.
+For hashtag #hateher, 695 emojis from 112 unique emojis were used.
+For hashtag #sciencemarch, 202 emojis from 102 unique emojis were used (Note that there may be multiple emojis per Twitter message).
+Top 5 frequently used emojis per hashtag is given in \autoref{tab:EPopular}.
 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{ccccccccc}
   \hline
-  \#inlove & Emoji & Count & \#hateher & Emoji & Count & \#marchscience & Emoji & Count \\ 
+  \#inlove & emoji & Count & \#hateher & emoji & Count & \#marchscience & emoji & Count \\ 
   \hline
 U+1F60D & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F60D.png} & 297 & U+1F602 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F602.png} & 154 & U+1F52C &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F52C.png} & 13 \\ 
 U+2764 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2764.png} & 164 & U+1F644 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F644.png} & 88 & U+1F30E &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30E.png} & 11 \\ 
@@ -233,7 +238,7 @@ U+1F618 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F618.png
 U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} & 26 & U+1F62D &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F62D.png} & 36 & U+1F30D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30D.png} & 7 \\ 
    \hline
 \end{tabular}
-\caption{Five most popular Emoji for each hashtag} 
+\caption{Five most popular emoji for each hashtag} 
 \label{tab:EPopular}
 \end{table}
 
@@ -241,11 +246,11 @@ U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=150mm]{"images/pop_emoji".png}
-\caption{Five most popular Emoji for each hastags \label{fig:EPopular}}
+\caption{Five most popular emoji for each hastags \label{fig:EPopular}}
 \end{figure}
 -->
 
-It is interesting to see "Face with tear of joy" as the most popular Emoji for hashtag #hateher. Although the name itself contains the word "joy", some users of this Emoji adopted this pictogram to express their mixed feeling of love and hate at the same time.
+It is interesting to see "Face with tear of joy" as the most popular emoji for hashtag #hateher. Although the name itself contains the word "joy", some users of this emoji adopted this pictogram to express their mixed feeling of love and hate at the same time.
 
 
 
@@ -256,7 +261,7 @@ LDA was performed on the following three difference cases:
 \begin{enumerate}
 \item LDA on a raw data set
 \item LDA on a data set with Unicode removed
-\item LDA on a data set with Emoji translated to text
+\item LDA on a data set with emoji translated to text
 \end{enumerate}
 
 
@@ -403,7 +408,7 @@ grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]],layout_matrix=
 
 
 ## LDA with name translated
-The last case was to perform LDA after translating the Unicode Emoji characters in English. `unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.
+The last case was to perform LDA after translating the Unicode emoji characters in English. `unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.
 
 
 ```{r LDA_T, echo=F, eval=T}
@@ -476,25 +481,25 @@ grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]],layout_matrix=cbind(1,2,3))
 ```
 
 # Conclusion
-As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode Emoji characters. These Emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
+As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
 
 
 # Appendix
 
 # `emoji` package in R
-\textbf{Plan to change this part after posting the Emoji package on CRAN}
+\textbf{Plan to change this part after posting the emoji package on CRAN}
 
-## Description of the Emoji package
+## Description of the emoji package
 
-The `Emoji` package contains information of the Emoji v5.0 from its official publisher the \href{http://unicode.org/emoji/charts/emoji-list.html}{Unicode Consortium}. The illustration of the web page is shown in \autoref{fig:uni_web}.
+The `emoji` package contains information of the emoji v5.0 from its official publisher the \href{http://unicode.org/emoji/charts/emoji-list.html}{Unicode Consortium}. The illustration of the web page is shown in \autoref{fig:uni_web}.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"images/unicode_webpage".png}
-\caption{Glimpse of the table of Emoji on the Unicode.org website \label{fig:uni_web}}
+\caption{Glimpse of the table of emoji on the Unicode.org website \label{fig:uni_web}}
 \end{figure}
 
-The data set `emoji` in the `Emoji` package contains 8 variables:
+The data set `emoji` in the `emoji` package contains 8 variables:
 
 uni_no: Official number of emojis$\\$
 uni_code: Formal Unicode of emojis$\\$
@@ -505,12 +510,12 @@ cat3: Official sub-category of emojis from cat2$\\$
 uni_keyws: Official keyword(s) of emojis$\\$
 uni_png: Image of emojis in PNG format represented in a matrix format$\\$
 
-The package has a function `emoji_info_table` that summarizes all Emoji and their information used in a single character string.
+The package has a function `emoji_info_table` that summarizes all emoji and their information used in a single character string.
 
 
 ## Scoring of Sentiment
 
-The characteristic of Emoji (effectively delivers feelings and moods), naturally leads text mining with Emoji to sentiment analysis. `tidytext` package in R has three general purpose lexicon sets. The `AFINN` score words from -5 to 5 scale, `bing` assigns words in binary category(positive and negative), and `nrc`assigns words with more categories. 
+The characteristic of emoji (effectively delivers feelings and moods), naturally leads text mining with emoji to sentiment analysis. `tidytext` package in R has three general purpose lexicon sets. The `AFINN` score words from -5 to 5 scale, `bing` assigns words in binary category(positive and negative), and `nrc`assigns words with more categories. 
 
 
 
@@ -518,7 +523,7 @@ The characteristic of Emoji (effectively delivers feelings and moods), naturally
 library(emoji)
 sample_string="Obviously #hateher  U+1f495  U+1f60f  U+1f469  @ Los Angeles, California https://www.instagram.com/p/BCbPSxxGVua/"
 emoji_info_table(sample_string) %>%
-pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:pkg}Example of the Emoji package")
+pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:pkg}Example of the emoji package")
 ```
 
 
@@ -528,7 +533,7 @@ uni_info=readRDS("../data/uni_info_v8.Rds")
 egdat=head(uni_info,5)
 edgat=egdat[,-c(6:7,13)]
 
-pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 Emoji data set")
+pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 emoji data set")
 ```
 
 
@@ -536,4 +541,4 @@ pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dat
 1. Check Stemming - scienc vs. science
 2. Check output again. Also, a check aggregation of short messages to avoid data sparsity.
 3. LDA explanation
-4. Description of the Emoji package
+4. Description of the emoji package
