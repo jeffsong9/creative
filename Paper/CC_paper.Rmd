@@ -1,5 +1,5 @@
 ---
-title: "Latent Dirichlet Allocation Models Considering emojis"
+title: "Latent Dirichlet Allocation Models Considering Emojis"
 author: "Taikgun Song"
 header-includes:
    - \usepackage{amsmath}
@@ -82,7 +82,34 @@ The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was
 
 #LDA
 
-\hh{flesh this out next. Start with mathematical definitions of the data.}
+Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words. 
+
+Let $w_{mn}$ be the $n^{th}$ word observed in the $m^{th}$ document with topic $z_{mn}$. The topic $z_{mn}$ is drawn from a distribution of topics in document $m$, denoted as $\theta_m$. Moreover, since each topic is characterized by words, word $w_{mn}$ is drawn from a distribution of topic $z_{mn}$, denoted as $\phi_{z_{mn}}$. LDA assumes that $\theta$ follows a Dirischlet distribution with parameter $\alpha$, and $\phi$ follows a Dirischlet distribution with parameter $\beta$. 
+
+The summarization of the assumptions are written below.
+
+\begin{enumerate}
+\item $M$: The total number of documents in the data set
+\item $N_m$: The number of words in the $m^{th}$ document
+\item $K$: The total number of topics in the data set
+\item $w_{mn}$: $n^{th}$ word in document $m$, $m \in \big\{1, \dots, M\big\}$ and $n \in \big\{1, \cdots, N_m\big\}$
+\item $z_{mn}$: The topic of the $w_{mn}$, $z_{mn} \in \big\{1, \dots, K \big\}$
+\item $\boldsymbol\alpha$: A vector of prior weights for each topic in a document
+\item $\theta_m$: The distribution of topics in document $m$\\
+$\theta_m \sim Dir(\boldsymbol\alpha)$
+\item $\boldsymbol\beta$: A vector of prior weights for each word in a topic
+\item $\phi_z$: The distirbution of words in topic $z$\\
+$\phi_z \sim Dir(\boldsymbol\beta)$
+\item $z_{mn} \sim Multinomial(\theta_m)$
+\item $w_{mn} \sim Multinomial(\phi_{z_{mn}})$
+\end{enumerate}
+
+The graphical display of LDA is given in \autoref{fig:LDA}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"images/LDA_model".png}
+\caption{Graphical Model representation of LDA \label{fig:LDA}}
+\end{figure}
 
 <!--Topic modeling puts effort on uncovering the semantic structure of the latent topics in a text collection. One of the popular method of topic modeling is the LDA. LDA views that a document is expressed as a mixture of topics, and a topic is a probability distribution over words where the probability distribution follows a Dirichlet distribution with some parameter $\alpha$ less than one.
 
@@ -95,38 +122,23 @@ LDA is based on the two following principles:
 
 To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc.-->
 
-LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.
-
-\begin{enumerate}
-\item $\theta_i \sim Dir(\alpha), i=1, \dots, M$
-\item $\theta_{i,k}$ is the probability that document $i \in \big\{1, \dots, M \big\}$ has topic $k \in \big\{1, \dots, K \big\}$.
-\item $z$ is word's topic drawn from a Multinomial distribution with parameter \textbf{$\theta$}, i.e. $z \sim Multi(\theta)$
-\item $\phi_k \sim Dir(\beta), k=1, \dots, K$
-\item $\phi_{k,v}$ is the probability of word $v \in \big\{1, \dots, V \big\}$ in topic $k \in \big\{1, \dots, K \big\}$
-\item $w$ is a word drawn from a Multinomial distribution with parameter Z and $\phi$, i.e., $w \sim Multi(z, \phi)$.
-\end{enumerate}
+<!--LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.-->
 
 Then, the total probability is
-$$P(W, Z, \theta, \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
+$$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
 
 
 
 
 
-<!--------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------->
 
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
 
 $$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$
 where 
 
-Graphical display of LDA is given in \autoref{fig:LDA}.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=100mm]{"images/LDA_model".png}
-\caption{Graphical Model representation of LDA \label{fig:LDA}}
-\end{figure}
 
 ##LDA Equation goes here
 
