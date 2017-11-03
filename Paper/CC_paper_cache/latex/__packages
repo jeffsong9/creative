@@ -13,5 +13,6 @@ topicmodels
 NLP
 tm
 gridExtra
+pipeR
 bindrcpp
 emoji

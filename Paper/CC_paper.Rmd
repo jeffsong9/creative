@@ -27,8 +27,7 @@ opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=lis
 ```
 
 ```{r library and source, include=F}
-# pkg=c("tidytext","tidyverse", "gsubfn", "Unicode","pander","topicmodels", "tm", "RTextTools", "gridExtra")
-pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "gridExtra")
+pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "gridExtra", "pipeR")
 sapply(pkg, require, character=T)
 '%!in%' <- function(x,y)!('%in%'(x,y))
 ```
@@ -82,9 +81,14 @@ The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was
 
 #LDA
 
-Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. In order to model this, LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words. 
 
-Let $w_{mn}$ be the $n^{th}$ word observed in the $m^{th}$ document with topic $z_{mn}$. The topic $z_{mn}$ is drawn from a distribution of topics in document $m$, denoted as $\theta_m$. Moreover, since each topic is characterized by words, word $w_{mn}$ is drawn from a distribution of words for topic $z_{mn}$, denoted as $\phi_{z_{mn}}$. LDA assumes that $\theta$ follows a Dirischlet distribution with parameter $\boldsymbol\alpha$, and $\phi$ follows a Dirischlet distribution with parameter $\boldsymbol\beta$. 
+
+
+<!--Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. In order to model this, LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words.-->
+
+Let $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. We assume that the topic of $w_{mn}$ is $z_{m}$, a topic associated with document $m$.  Assume $z_m \sim Multinomial(\theta_m)$, where $\theta_m \sim Dirichlet(\alpha)$ for all $m=1, \dots M$ and $\alpha>0$. For a given topic $z_m=k$, we assume that $w_{mn} \sim Multinomial(\phi_k), n=1, \dots, n_m, m=1, \dots, M$, where $\phi_k \sim Dirichlet(\beta_k)$, $k=1, \sim, K$.
+
+<!--Let $w_{mn}$ be the $n^{th}$ word observed in the $m^{th}$ document with topic $z_{mn}$. The topic $z_{mn}$ is drawn from a distribution of topics in document $m$, denoted as $\theta_m$. Moreover, since each topic is characterized by words, word $w_{mn}$ is drawn from a distribution of words for topic $z_{mn}$, denoted as $\phi_{z_{mn}}$. LDA assumes that $\theta$ follows a Dirischlet distribution with parameter $\boldsymbol\alpha$, and $\phi$ follows a Dirischlet distribution with parameter $\boldsymbol\beta$. -->
 
 The summarization of the assumptions are written below.
 
@@ -124,25 +128,19 @@ To illustrate, a news paper document may contain several topics such as "politic
 
 <!--LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.-->
 
-Then, the total probability is
+Then, the total probability of the model is
 $$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
-
-
-
-
-
-<!------------------------------------------------------------------------------------------------------------------->
-
+<!--
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
+$$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$-->
 
-$$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$
-where 
+Key equation for inference is to solve the posterior distribution of the hidden variables given a document.
 
-
-
-##LDA Equation goes here
+$$p(\theta$$
 
 
+
+# Preprocessing
 
 As indicated in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
 
@@ -306,7 +304,13 @@ dat=rbind.data.frame(
     mutate(tag = "marchscience"), stringsAsFactors = F
   )
 
-dat$V1 %>% tolower() %>%  cleaning0()-> dat$V1
+dat$V1 %>% 
+  tolower() %>%  
+  cleaning0() %>%  
+  gsub("[[:punct:]]", "", .) %>%
+  gsub("\"", "", .) %>%
+  gsub("\\s{2,}", "\\s", .) %>%
+  trimws()-> dat$V1
 ```
 
 ## LDA on a raw data set
@@ -318,12 +322,7 @@ stop_stem=lapply(dat$V1, StopNStem) %>%
   do.call("rbind",.) %>% 
   rbind.data.frame(stringsAsFactors=F)
 
-stop_stem %>%
-  select(V1) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s@,!.?]") ->stop_stem
-stop_stem %>% filter(word !="u") -> stop_stem
-
-stop_stem %>% 
+stop_stem$V1 %>%
   VectorSource() %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
@@ -335,12 +334,13 @@ pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:L
 
 ```{r LDAraw_graph, eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
+names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
   group_by(topic) %>%
-  top_n(10, beta) %>%
+  top_n(10, phi) %>%
   ungroup() %>%
-  arrange(topic, desc(beta)) #%>%View()
+  arrange(topic, desc(phi)) #%>%View()
 
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind",.) %>%
@@ -350,10 +350,11 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
 plot_ea_topic=function(topic_number){
 ap_top_terms %>%
   filter(topic==topic_number) %>%
-  mutate(term = reorder(term, beta)) %>%
-  ggplot(aes(term, beta))+
+  mutate(term = reorder(term, phi)) %>%
+  ggplot(aes(term, phi))+
   geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  ylab(expression(phi))
 }
 lapply(1:3, function(x) plot_ea_topic(x))-> plot_raw
 grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]],layout_matrix=cbind(1,2,3))
@@ -366,8 +367,8 @@ In most text mining examples, LDA is performed after removing the Unicode inform
 
 ```{r cleaning_function, echo=F, eval=T}
 cleaning=function(string){
-  string=gsub("U\\+[[:alnum:]]+", "", string)
-  string=gsub("u\\+[[:alnum:]]+", "", string)
+  string=gsub("U[[:alnum:]]+", "", string)
+  string=gsub("u[[:alnum:]]+", "", string)
   string=gsub("&amp;", "", string)
   string=gsub(" {2,}", " ", string)
   string=gsub("#", "", string)
@@ -378,35 +379,32 @@ cleaning=function(string){
 
 ```{r LDA_no_uni, echo=F, eval=T}
 dat2=character()
-dat2$V1<-dat$V1
-dat2$V1=cleaning(dat2$V1)
+dat2<-dat$V1
+dat2=cleaning(dat2)
 
-stop_stem=lapply(dat2$V1, StopNStem) %>% 
+stop_stem=lapply(dat2, StopNStem) %>% 
   do.call("rbind",.) %>% 
   rbind.data.frame(stringsAsFactors=F)
 
 stop_stem %>%
-  select(V1) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s@,!.?]") ->stop_stem
-
-stop_stem %>% 
   VectorSource() %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
 
-lda=LDA(dtm,control = list(alpha = 0.1), k = 3)
+lda=LDA(dtm,k = 3)
 lda.no_uni=terms(lda,5)
 pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Uni} Output of LDA with the raw data without the Unicode")
 ```
 
 ```{r LDA_no_uni_graph, eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
+names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
   group_by(topic) %>%
-  top_n(10, beta) %>%
+  top_n(10, phi) %>%
   ungroup() %>%
-  arrange(topic, desc(beta)) #%>% View()
+  arrange(topic, desc(phi)) #%>% View()
 
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
@@ -425,6 +423,7 @@ The last case was to perform LDA after translating the Unicode emoji characters 
 
 ```{r LDA_T, echo=F, eval=T}
 emoji_simple=read.csv("../data/all_emoji.csv", stringsAsFactors = F)
+emoji_simple$unicode<-gsub("[[:punct:]]", "", emoji_simple$unicode)
 
 U_to_N=function(word){
   emoji_simple %>%
@@ -441,7 +440,6 @@ U_to_N=function(word){
 check7=NULL
 for(j in 1:length(dat$V1)){
   string=dat$V1[j]
-  string=gsub(" {2}", " ", string)
   words=strsplit(string, " ")
   words=words[[1]]
   translated=""
@@ -461,27 +459,24 @@ stop_stem=lapply(check7, StopNStem) %>%
   rbind.data.frame(stringsAsFactors=F)
 
 stop_stem %>%
-  select(V1) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s@,!.?]") ->stop_stem
-
-stop_stem %>% 
   VectorSource() %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
 
-lda=LDA(dtm,control = list(alpha = 0.1), k = 3)
+lda=LDA(dtm, k = 3)
 lda.t=terms(lda,5)
 pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")
 ```
 
 ```{r LDA_T_graph, eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
+names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
   group_by(topic) %>%
-  top_n(10, beta) %>%
+  top_n(10, phi) %>%
   ungroup() %>%
-  arrange(topic, desc(beta)) # %>% View()
+  arrange(topic, desc(phi)) # %>% View()
 
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
