@@ -149,15 +149,18 @@ $$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
 $$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$-->
 
-Our interest is solving the posterior distirbution of the following equation.
+\ts{solving the posterior distribution is the key. However, this posterior distribution is intractable. Should I comment/show how to approximate the posterior distribution?}
+
+
+Our interest is solving the posterior distribution of the following equation.
 
 $$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, z, w | \alpha, \beta)}{p(w|\alpha, \beta)}$$
-\ts{Should I introduct the concept of variational distribution? The posterior distirubtion is intractable for exact inference.}
+\ts{Should I introduce the concept of variational distribution? The posterior distribution is intractable for exact inference.}
 
 
 # Data preparation
 
-As aforementioned, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
+<!--As aforementioned, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.-->
 
 \hh{stop words, stemming, ... should go into a separate section called 'Data preparation'}
 
@@ -165,7 +168,7 @@ As aforementioned, LDA assumes that documents are represented as random mixtures
 
 A natural language can be categorized as two distinctive set of words: content/lexical words and function/structure words. Content/lexical words are words with substantive meanings. Function/structure words on the other hand have little lexical meaning, but establish grammatical structure between other words within a sentence. 
 
-LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high freqeuncy. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete stop words.
+LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high frequency. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete the stop words.
 
 <!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
 
@@ -192,12 +195,12 @@ LDA models a document as a mixture of topics, and then each word is drawn from o
 
 ## Stemming
 
-Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". <!--These different form of words with the same root word may cause difficulties applying some text mining techniques.--> Words with same meaning but different in forms contribute to data sparcity, reducing the performance of the LDA method. The `stemming` procedure cuts inflectional forms of a word to its root form eventually increasing the frequency of word observations.
+Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on a root word "stem". <!--These different form of words with the same root word may cause difficulties applying some text mining techniques.--> Words with same meaning but different in forms contribute to data sparsity, reducing the performance of the LDA method. The `stemming` procedure cuts inflectional forms of a word to its root form eventually increasing the frequency of word observations.
 
-The stemming process has two disadvantages. First, there are possibility of over stemming. For example, three different words "universal", "university", and "universe" have the same stemmed word "univers". The accuracy of the LDA method may decrease by putting words with different meanings into a single topic. Moreover, when the LDA output is given as a stemmed word, it is difficult to trace the stemmed word to its original form.
+The stemming process has two disadvantages. First, there are possibility of over stemming. For example, three different words "universal", "university", and "universe" have the same stemmed word "univers". The accuracy of the LDA method may decrease by putting words with different meanings into a single topic. Moreover, when the LDA output is given as a stemmed word, it is difficult to trace the stemmed word to its original form. To overcome this problem, this paper matched the stemmed word to the most frequently used original word. Example of stemming  using the `tm` is provided in \autoref{tab:stemmed}.
 
-XXX Explain why we cannot trace back to the original form XXX
-\hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}
+<!--XXX Explain why we cannot trace back to the original form XXX
+\hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}-->
 
 \hh{include a couple of examples}
 
@@ -208,18 +211,13 @@ XXX Explain why we cannot trace back to the original form XXX
  & Original Tweet & Tweet after Stemming \\ 
   \hline
 1 & loving this misty weather, this sweater and my favorite couple & love this misti weather, this sweater and my favorit coupl\\ 
-  2 & fairytale atmosphere in lberobello  Let's go for a walk & fairytal atmospher in alberobello Let go for a \#walk\\ 
-  4 & Me when ashleytisdale puts a New music session on YouTube & Me when ashleytisdal put a New music session on YouTub\\ 
+  2 & fairytale atmosphere in alberobello  Let's go for a walk & fairytal atmospher in alberobello Let go for a walk\\ 
+  3 & Me when ashleytisdale puts a New music session on YouTube & Me when ashleytisdal put a New music session on YouTub\\ 
    \hline
 \end{tabular}
 \caption{Before and after Stemming} 
 \label{tab:stemmed}
 \end{table}
-
-
-
-
-The `tm` package is again used for the stemming process and its code is given as the following.
 
 
 \hh{n-grams and just generally features of documents}
@@ -228,7 +226,7 @@ The `tm` package is again used for the stemming process and its code is given as
 
 ## Data Set and exploratory data analysis
 
-\hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}
+\hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}$\\$
 \ts{Shiny had a problem with instant web scraps last year. I am not certain if that problem is fixed now.}
 
 Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
