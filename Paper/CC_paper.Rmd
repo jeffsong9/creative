@@ -72,11 +72,8 @@ In contrast to filtering emoji characters out, reflecting emoji information duri
 
 \hh{What do we want to learn from the messages? This is where the problem statement goes.}
 
-XXX Should the packages used to run example be introduced here with brief steps? XXX
-\hh{the packages should go to the back into a 'technical details'. }
-
-The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was written to help the above analysis.
-
+<!--\ts{Should the packages used to run example be introduced here with brief steps?}
+\hh{the packages should go to the back into a 'technical details'. }-->
 
 
 #LDA
@@ -100,8 +97,8 @@ The summarization of the assumptions are written below.
 \item $z_{mn}$: The topic of the $w_{mn}$, $z_{mn} \in \big\{1, \dots, K \big\}$
 \item $\boldsymbol\alpha$: A vector of prior weights for each topic in a document\\
 \quad $\boldsymbol\alpha$ = \big[$\alpha_1 \cdots \alpha_K$ \big]
-\item $\theta_m$: The distribution of topics in document $m$\\
-$\theta_m \sim Dir(\boldsymbol\alpha)$\\
+\item $\theta_{m, k}$: The probability of observing topic $k$ in document $m$\\
+$\boldsymbol\theta_m \sim Dir(\boldsymbol\alpha)$: The distribution of topics in document $m$\\
 \quad $\boldsymbol\theta_{M \times K}=
 \begin{bmatrix}
 \boldsymbol\theta_1= (\theta_{1,1}, \theta_{1,2}, \cdots, \theta_{1,K})\\
@@ -112,8 +109,8 @@ $\theta_m \sim Dir(\boldsymbol\alpha)$\\
 $
 \item $\boldsymbol\beta$: A vector of prior weights of the word distribution for each topic\\
 \quad $\boldsymbol\beta$ = \big[$\beta_1 \cdots \beta_N$ \big]
-\item $\phi_z$: The distirbution of words in topic $z$\\
-$\phi_z \sim Dir(\boldsymbol\beta)$\\
+\item $\phi_{z, w}$: The probability of observing word $w$ in topic $z$\\
+$\boldsymbol\phi_z \sim Dir(\boldsymbol\beta)$: The distirbution of words in topic $z$\\
 \quad $\boldsymbol\phi_{K \times N}=
 \begin{bmatrix}
 \boldsymbol\phi_1= (\phi_{1,1}, \phi_{1,2}, \cdots, \phi_{1,N})\\
@@ -146,21 +143,21 @@ To illustrate, a news paper document may contain several topics such as "politic
 
 <!--LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.-->
 
-Then, the total probability of the model is
-$$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
+<!--Then, the total probability of the model is
+$$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$-->
 <!--
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
 $$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$-->
 
-Key equation for inference is to solve the posterior distribution of the hidden variables given a document.
+Our interest is solving the posterior distirbution of the following equation.
 
-$$p(\theta$$
-
+$$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, z, w | \alpha, \beta)}{p(w|\alpha, \beta)}$$
+\ts{Should I introduct the concept of variational distribution? The posterior distirubtion is intractable for exact inference.}
 
 
 # Data preparation
 
-As aforementioned in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
+As aforementioned, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
 
 \hh{stop words, stemming, ... should go into a separate section called 'Data preparation'}
 
@@ -232,6 +229,7 @@ The `tm` package is again used for the stemming process and its code is given as
 ## Data Set and exploratory data analysis
 
 \hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}
+\ts{Shiny had a problem with instant web scraps last year. I am not certain if that problem is fixed now.}
 
 Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
 
@@ -379,7 +377,7 @@ stop_stem$V1 %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
 
-lda=LDA(dtm, k = 3)
+lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.raw=terms(lda,10)
 pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")
 ```
@@ -443,7 +441,7 @@ stop_stem %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
 
-lda=LDA(dtm,k = 3)
+lda=LDA(dtm,k = 3, control = list(alpha=1))
 lda.no_uni=terms(lda,5)
 pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Uni} Output of LDA with the raw data without the Unicode")
 ```
@@ -515,7 +513,7 @@ stop_stem %>%
   VCorpus()%>% 
   DocumentTermMatrix() ->dtm
 
-lda=LDA(dtm, k = 3)
+lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.t=terms(lda,5)
 pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")
 ```
@@ -578,8 +576,8 @@ The characteristic of emoji (effectively delivers feelings and moods), naturally
 
 
 
-```{r show_pkg_info, echo=F}
-library(emoji)
+```{r show_pkg_info, echo=F, eval=F}
+# library(emoji)
 sample_string="Obviously #hateher  U+1f495  U+1f60f  U+1f469  @ Los Angeles, California https://www.instagram.com/p/BCbPSxxGVua/"
 emoji_info_table(sample_string) %>%
 pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:pkg}Example of the emoji package")
@@ -597,6 +595,8 @@ pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dat
 
 
 # More work
+0. Technical details
+The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was written to help the above analysis.
 1. Check Stemming - scienc vs. science
 2. Check output again. Also, a check aggregation of short messages to avoid data sparsity.
 3. LDA explanation
