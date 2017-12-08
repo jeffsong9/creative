@@ -86,7 +86,7 @@ The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was
 
 <!--Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. In order to model this, LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words.-->
 
-Let $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. We assume that the topic of $w_{mn}$ is $z_{m}$, a topic associated with document $m$.  Assume $z_m \sim Multinomial(\theta_m)$, where $\theta_m \sim Dirichlet(\alpha)$ for all $m=1, \dots M$ and $\alpha>0$. For a given topic $z_m=k$, we assume that $w_{mn} \sim Multinomial(\phi_k), n=1, \dots, n_m, m=1, \dots, M$, where $\phi_k \sim Dirichlet(\beta_k)$, $k=1, \sim, K$.
+Let $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. We assume that the topic of $w_{mn}$ is $z_{m}$, a topic associated with document $m$.  Assume $z_m \sim Multinomial(\theta_m)$, where $\theta_m \sim Dirichlet(\alpha)$ for all $m=1, \dots M$ and $\alpha>0$. For a given topic $z_m=k$, we assume that $w_{mn} \sim Multinomial(\phi_k), n=1, \dots, n_m, m=1, \dots, M$, where $\phi_k \sim Dirichlet(\beta_k)$, $k=1, \dots, K$.
 
 <!--Let $w_{mn}$ be the $n^{th}$ word observed in the $m^{th}$ document with topic $z_{mn}$. The topic $z_{mn}$ is drawn from a distribution of topics in document $m$, denoted as $\theta_m$. Moreover, since each topic is characterized by words, word $w_{mn}$ is drawn from a distribution of words for topic $z_{mn}$, denoted as $\phi_{z_{mn}}$. LDA assumes that $\theta$ follows a Dirischlet distribution with parameter $\boldsymbol\alpha$, and $\phi$ follows a Dirischlet distribution with parameter $\boldsymbol\beta$. -->
 
@@ -151,7 +151,7 @@ $$p(\theta$$
 
 # Data preparation
 
-As indicated in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
+As aforementioned in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
 
 \hh{stop words, stemming, ... should go into a separate section called 'Data preparation'}
 
@@ -161,9 +161,25 @@ A natural language can be categorized as two distinctive set of words: content/l
 
 LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA method vulnerable when meaningless words such as function/structural words are present in the data set with high freqeuncy. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis, and this group of words are called the `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the work done in the paper, the `tm` package in `R` was used to delete stop words.
 
+<!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
+
+
 \hh{give some examples following the tweets or again go back to the xkcd example}
 
-<!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
+\begin{table}[ht]
+\centering
+\begin{tabular}{rll}
+  \hline
+ & Original Tweet & Tweet with Stopword Removed \\ 
+  \hline
+1 & loving this misty weather this sweater and my favorite couple & loving misty weather, sweater favorite couple\\ 
+  2 & fairytale atmosphere in alberobello Let's go for a walk& fairytale atmosphere alberobello Let's go walk\\ 
+  3 & Me when ashleytisdale puts a New music session on YouTube & Me ashleytisdale puts New music session YouTube\\ 
+   \hline
+\end{tabular}
+\caption{Example of removing stop words using the Twitter data}
+\label{tab:stopword}
+\end{table}
 
 
 
@@ -178,6 +194,24 @@ XXX Explain why we cannot trace back to the original form XXX
 \hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}
 
 \hh{include a couple of examples}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rll}
+  \hline
+ & Original Tweet & Tweet after Stemming \\ 
+  \hline
+1 & loving this misty weather, this sweater and my favorite couple & love this misti weather, this sweater and my favorit coupl\\ 
+  2 & fairytale atmosphere in lberobello  Let's go for a walk & fairytal atmospher in alberobello Let go for a \#walk\\ 
+  4 & Me when ashleytisdale puts a New music session on YouTube & Me when ashleytisdal put a New music session on YouTub\\ 
+   \hline
+\end{tabular}
+\caption{Before and after Stemming} 
+\label{tab:stemmed}
+\end{table}
+
+
+
 
 The `tm` package is again used for the stemming process and its code is given as the following.
 
