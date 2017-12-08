@@ -98,9 +98,18 @@ The summarization of the assumptions are written below.
 \item $K$: The total number of topics in the data set
 \item $w_{mn}$: $n^{th}$ word in document $m$, $m \in \big\{1, \dots, M\big\}$ and $n \in \big\{1, \cdots, N_m\big\}$
 \item $z_{mn}$: The topic of the $w_{mn}$, $z_{mn} \in \big\{1, \dots, K \big\}$
-\item $\boldsymbol\alpha$: A vector of prior weights for each topic in a document
+\item $\boldsymbol\alpha$: A vector of prior weights for each topic in a document\\
+\quad $\boldsymbol\alpha$ = \big[$\alpha_1 \cdots \alpha_K$ \big]
 \item $\theta_m$: The distribution of topics in document $m$\\
-$\theta_m \sim Dir(\boldsymbol\alpha)$
+$\theta_m \sim Dir(\boldsymbol\alpha)$\\
+\quad $\boldsymbol\theta=
+\begin{bmatrix}
+\theta_1= (\theta_{1,1}, \theta_{1,2}, \cdots, \theta_{1,K})\\
+\theta_2= (\theta_{2,1}, \theta_{2,2}, \cdots, \theta_{2,K})\\
+\vdots\\
+\theta_M
+\end{bmatrix}
+$
 \item $\boldsymbol\beta$: A vector of prior weights for each word in a topic
 \item $\phi_z$: The distirbution of words in topic $z$\\
 $\phi_z \sim Dir(\boldsymbol\beta)$
@@ -140,7 +149,7 @@ $$p(\theta$$
 
 
 
-# Preprocessing
+# Data preparation
 
 As indicated in the above section, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.
 
