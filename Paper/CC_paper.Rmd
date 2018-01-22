@@ -143,22 +143,23 @@ To illustrate, a news paper document may contain several topics such as "politic
 
 <!--LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.-->
 
-<!--Then, the total probability of the model is
-$$P(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$-->
-<!--
+Then, the total probability of the model is
+$$p(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
+
 The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is obtained by the following equation:
-$$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$-->
+$$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$
 
-\ts{solving the posterior distribution is the key. However, this posterior distribution is intractable. Should I comment/show how to approximate the posterior distribution?}
-
-
-Our interest is solving the posterior distribution of the following equation.
+On the application perspective, solving the posterior distribution is the key which is given as the following equation.
 
 $$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, z, w | \alpha, \beta)}{p(w|\alpha, \beta)}$$
-\ts{Should I introduce the concept of variational distribution? The posterior distribution is intractable for exact inference.}
+However, this posterior distribution is intractable for exact inference. 
+
+\ts{intractable.  LDA package uses Gibbs sampling approach. explain this in more details.}
 
 
 # Data preparation
+
+\ts{data comes with text format. need data preperation.}
 
 <!--As aforementioned, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.-->
 
@@ -221,6 +222,29 @@ The stemming process has two disadvantages. First, there are possibility of over
 
 
 \hh{n-grams and just generally features of documents}
+\ts{feature extraction. n-grams is just one of them and I have used uni-gram. justify why.}
+
+## n-gram
+n-gram is a neighboring sequence of n items from a collection of text data set. This item could be anything from phonemes or syllables to letters or words based on the application. An example of word-level-n-gram with text "he is a nice person" is given in \autoref{tab:ngram}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccccc}
+  \hline
+ 1-gram (unigram) & 2-gram & 3-gram & 4-gram & 5-gram\\ 
+  \hline
+he & he is & he is a & he is a nice & he is a nice person\\ 
+is & is a & is a nice & is a nice person &\\ 
+a & a nice & a nice person & &\\ 
+nice & nice person & & &\\ 
+person &  & & &\\ 
+   \hline
+\end{tabular}
+\caption{Example of word-level-n-gram}
+\label{tab:ngram}
+\end{table}
+
+
 
 # Application
 
