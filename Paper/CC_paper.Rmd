@@ -1,20 +1,21 @@
 ---
 title: "Latent Dirichlet Allocation Models Considering Emojis"
 author: "Taikgun Song"
+data: 'system.time'
 header-includes:
-   - \usepackage{amsmath}
-   - \usepackage{graphicx}
-   - \usepackage{bbm}
-   - \usepackage{subcaption}
-   - \usepackage[export]{adjustbox}
-   - \usepackage{wrapfig}
-   - \usepackage{color}
-   - \usepackage{xcolor}
-   - \usepackage{enumerate}
+- \usepackage{amsmath}
+- \usepackage{graphicx}
+- \usepackage{bbm}
+- \usepackage{subcaption}
+- \usepackage[export]{adjustbox}
+- \usepackage{wrapfig}
+- \usepackage{color}
+- \usepackage{xcolor}
+- \usepackage{enumerate}
 output:
   pdf_document:
     fig_caption: yes
-    number_sections: yes
+    number_sections: no
 geometry: margin=0.5in
 ---
 
@@ -204,6 +205,8 @@ The stemming process has two disadvantages. First, there are possibility of over
 \hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}-->
 
 \hh{include a couple of examples}
+\ts{Example of stemming provided below}
+
 
 \begin{table}[ht]
 \centering
@@ -221,11 +224,13 @@ The stemming process has two disadvantages. First, there are possibility of over
 \end{table}
 
 
-\hh{n-grams and just generally features of documents}
-\ts{feature extraction. n-grams is just one of them and I have used uni-gram. justify why.}
+\hh{n-grams and just generally features of documents}\\
+\ts{feature extraction. n-grams is just one of them and I have used uni-gram. justify why.}\\
 
 ## n-gram
-n-gram is a neighboring sequence of n items from a collection of text data set. This item could be anything from phonemes or syllables to letters or words based on the application. An example of word-level-n-gram with text "he is a nice person" is given in \autoref{tab:ngram}.
+n-gram is a neighboring sequence of n items from a collection of text data set. This item could be anything from phonemes or syllables to letters or words based on the application. Applying the concept of n-gram is important in computational linguistics is important especially with LDA, since n-gram is used as part of the prior distribution.
+
+An example of word-level-n-gram with text "he is a nice person" is given in \autoref{tab:ngram}.
 
 \begin{table}[ht]
 \centering
@@ -244,6 +249,7 @@ person &  & & &\\
 \label{tab:ngram}
 \end{table}
 
+Moreover, n-gram approach can help identify misspelled words or out-of-vocabulary words that commonly exist on the online platform. For example, the distance of the letter-level n-gram could be used to match strings.
 
 
 # Application
@@ -253,6 +259,7 @@ person &  & & &\\
 \hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}$\\$
 \ts{Shiny had a problem with instant web scraps last year. I am not certain if that problem is fixed now.}
 
+\ts{Update the the dataset? I can always scrape a new sets of data and reflect the dates information.}
 Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
 
 ```{r load_twitter_data, eval=T, echo=F}
@@ -419,17 +426,18 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")
 
-plot_ea_topic=function(topic_number){
+plot_ea_topic=function(topic_number, y_lim){
 ap_top_terms %>%
   filter(topic==topic_number) %>%
   mutate(term = reorder(term, phi)) %>%
   ggplot(aes(term, phi))+
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
-  ylab(expression(phi))
+  ylab(expression(phi))+
+  ylim(0, y_lim)
 }
-lapply(1:3, function(x) plot_ea_topic(x))-> plot_raw
-grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]],layout_matrix=cbind(1,2,3))
+lapply(1:3, function(x) plot_ea_topic(x, 0.05))-> plot_raw
+grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ```
 
 
@@ -483,8 +491,8 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")
 
-lapply(1:3, function(x) plot_ea_topic(x))-> plot_no_uni
-grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]],layout_matrix=cbind(1,2,3))
+lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
+grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ```
 
 
@@ -555,8 +563,8 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")
 
-lapply(1:3, function(x) plot_ea_topic(x))-> plot_t
-grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]],layout_matrix=cbind(1,2,3))
+lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
+grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ```
 
 # Conclusion

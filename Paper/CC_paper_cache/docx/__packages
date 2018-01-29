@@ -1,0 +1,17 @@
+base
+knitr
+tidytext
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+pander
+topicmodels
+NLP
+tm
+gridExtra
+pipeR
+bindrcpp
