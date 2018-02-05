@@ -15,3 +15,5 @@ tm
 gridExtra
 pipeR
 bindrcpp
+stringr
+forcats

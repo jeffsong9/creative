@@ -31,6 +31,7 @@ opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=lis
 pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "gridExtra", "pipeR")
 sapply(pkg, require, character=T)
 '%!in%' <- function(x,y)!('%in%'(x,y))
+source("req.R")
 ```
 
 ### abstract
@@ -272,7 +273,6 @@ twitter_example_marchscience=readRDS("../data/twitter_marchscience.Rds")
 prop_emoji=cbind.data.frame(498/944, 335/1145, 93/1195)
 colnames(prop_emoji)<-c("#inlove", "#hateher", "#marchscience")
 rownames(prop_emoji)<-"Proportion"
-
 pander(prop_emoji, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EProp} Proportion of Twitter messages with emoji")
 ```
 
@@ -355,41 +355,34 @@ LDA was performed on the following three difference cases:
 
 
 ```{r application setup, echo=F, eval=T}
-StopNStem=function(text){
-  vdc=VectorSource(text)
-  my.corpus = Corpus(vdc)
-  my.corpus_copy = my.corpus
-  my.corpus = tm_map(my.corpus, removeWords, c("the", stopwords("english"))) 
-  my.corpus = tm_map(my.corpus, stemDocument, language="english")
-  return(paste(strwrap(my.corpus[[1]]), sep="", collapse=""))
-}
-
-cleaning0=function(string){
-  string=gsub("&amp;", "", string)
-  string=gsub("#", "", string)
-  string=gsub("&lt;", "<", string)   # <3
-  string=gsub(" [:./[:alnum:]]+.com[/[:alnum:]]*", " ", string)
-  string=gsub(" http[:./[:alnum:]]+", " ", string)
-  string=gsub(" {2,}", " ", string)
-  return(string)
-}
+# dat=rbind.data.frame(
+#   readRDS("../Data/twitter_inlove.Rds") %>% 
+#     mutate(tag = "inlove"),
+#   readRDS("../Data/twitter_hateher.Rds")%>% 
+#     mutate(tag = "hateher"),
+#   readRDS("../data/twitter_marchscience.Rds") %>%
+#     mutate(tag = "marchscience"), stringsAsFactors = F
+#   )
 
 dat=rbind.data.frame(
-  readRDS("../Data/twitter_inlove.Rds") %>% 
-    mutate(tag = "inlove"),
-  readRDS("../Data/twitter_hateher.Rds")%>% 
-    mutate(tag = "hateher"),
-  readRDS("../data/twitter_marchscience.Rds") %>%
-    mutate(tag = "marchscience"), stringsAsFactors = F
+  readRDS("../data/twitter_inlove.Rds") %>% .$V1 %>% paste0(collapse=" "),
+    # mutate(tag = "inlove"),
+  readRDS("../data/twitter_hateher.Rds")%>% .$V1 %>% paste0(collapse=" "),
+    # mutate(tag = "hateher"),
+  readRDS("../data/twitter_marchscience.Rds") %>%.$V1 %>% paste0(collapse=" "),
+  stringsAsFactors = F
+    # mutate(tag = "marchscience"), stringsAsFactors = F
   )
+names(dat)<-"V1"
 
-dat$V1 %>% 
-  tolower() %>%  
+dat$V1 %>>% 
+  tolower() %>>%
+  clean_abb() %>>%
   cleaning0() %>%  
   gsub("[[:punct:]]", "", .) %>%
   gsub("\"", "", .) %>%
   gsub("\\s{2,}", "\\s", .) %>%
-  trimws()-> dat$V1
+  trimws()-> dat1
 ```
 
 ## LDA on a raw data set
@@ -397,7 +390,7 @@ The second case was to run LDA on a raw data set. Stemming and stop word deletio
 
 
 ```{r LDAraw, echo=F, eval=T}
-stop_stem=lapply(dat$V1, StopNStem) %>% 
+stop_stem=lapply(dat1, StopNStem) %>% 
   do.call("rbind",.) %>% 
   rbind.data.frame(stringsAsFactors=F)
 
@@ -421,23 +414,36 @@ ap_top_terms <- ap_topics %>%
   ungroup() %>%
   arrange(topic, desc(phi)) #%>%View()
 
+# ap_top_terms<-ap_top_terms[-11,] #Two topic 1 with same phi
+
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind",.) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")
 
-plot_ea_topic=function(topic_number, y_lim){
+# plot_ea_topic=function(topic_number, y_lim){
+# ap_top_terms %>%
+#   filter(topic==topic_number) %>%
+#   mutate(term = reorder(term, phi)) %>%
+#   ggplot(aes(term, phi))+
+#   geom_bar(stat = "identity") +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+#   ylab(expression(phi))+
+#   ylim(0, y_lim)
+# }
+# lapply(1:3, function(x) plot_ea_topic(x, 0.1))-> plot_raw
+# grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ap_top_terms %>%
-  filter(topic==topic_number) %>%
-  mutate(term = reorder(term, phi)) %>%
-  ggplot(aes(term, phi))+
-  geom_bar(stat = "identity") +
+  mutate(order = row_number())->ap_top_terms2
+ap_top_terms2 %>>%
+  ggplot(aes(x = order, y = phi))+ 
+  geom_bar(stat='identity', na.rm=T)+ 
+  # facet_grid(~topic, scales = "free", space = "free") +
+  facet_wrap(~topic, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
-  ylim(0, y_lim)
-}
-lapply(1:3, function(x) plot_ea_topic(x, 0.05))-> plot_raw
-grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
+
 ```
 
 
@@ -445,22 +451,16 @@ grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]], nrow=1)#,layout_matrix
 ## LDA without Unicode
 In most text mining examples, LDA is performed after removing the Unicode information. For the first case, therefore, Unicode characters were removed from the raw text data set. Then, the standard procedure of stemming and stop word deletion was performed to enhance the accuracy of LDA. `tm` package was used to conduct the above procedure. 
 
-```{r cleaning_function, echo=F, eval=T}
-cleaning=function(string){
-  string=gsub("U[[:alnum:]]+", "", string)
-  string=gsub("u[[:alnum:]]+", "", string)
-  string=gsub("&amp;", "", string)
-  string=gsub(" {2,}", " ", string)
-  string=gsub("#", "", string)
-  string=gsub("&lt;", "<", string)   # <3
-  return(string)
-}
-```
-
 ```{r LDA_no_uni, echo=F, eval=T}
-dat2=character()
-dat2<-dat$V1
-dat2=cleaning(dat2)
+dat$V1 %>>% 
+  tolower() %>>%
+  cleaning_u_plus() %>>%
+  clean_abb() %>>%
+  cleaning0() %>%  
+  gsub("[[:punct:]]", "", .) %>%
+  gsub("\"", "", .) %>%
+  gsub("\\s{2,}", "\\s", .) %>%
+  trimws()->dat2
 
 stop_stem=lapply(dat2, StopNStem) %>% 
   do.call("rbind",.) %>% 
@@ -491,8 +491,19 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")
 
-lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
-grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
+# lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
+# grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
+ap_top_terms %>%
+  mutate(order = row_number())->ap_top_terms2
+ap_top_terms2 %>>%
+  ggplot(aes(x = order, y = phi))+ 
+  geom_bar(stat='identity', na.rm=T)+ 
+  # facet_grid(~topic, scales = "free", space = "free") +
+  facet_wrap(~topic, scales = "free") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  ylab(expression(phi))+
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
+
 ```
 
 
@@ -503,7 +514,7 @@ The last case was to perform LDA after translating the Unicode emoji characters 
 
 ```{r LDA_T, echo=F, eval=T}
 emoji_simple=read.csv("../data/all_emoji.csv", stringsAsFactors = F)
-emoji_simple$unicode<-gsub("[[:punct:]]", "", emoji_simple$unicode)
+# emoji_simple$unicode<-gsub("[[:punct:]]", "", emoji_simple$unicode)
 
 U_to_N=function(word){
   emoji_simple %>%
@@ -519,19 +530,28 @@ U_to_N=function(word){
 ```{r aaa, echo=F, eval=T}
 check7=NULL
 for(j in 1:length(dat$V1)){
-  string=dat$V1[j]
+  string=dat$V1[j] %>% tolower()
   words=strsplit(string, " ")
   words=words[[1]]
   translated=""
   for(i in 1:length(words)){
     translated=paste(translated, U_to_N(words[i]), collapse = " ")
+    # print(paste0(j,"-", i))
   }
-  check7=rbind(check7, tolower(translated))
+  check7=rbind(check7, translated)
   # print(j)
 }
 
-cbind.data.frame(dat, check7, stringsAsFactors=F)->check8
-names(check8)<-c("raw_string", "emoji_present", "string_translated")
+check7 %>%
+  clean_abb() %>>%
+  cleaning0() %>%  
+  gsub("[[:punct:]]", "", .) %>%
+  gsub("\"", "", .) %>%
+  gsub("\\s{2,}", "\\s", .) %>%
+  trimws()-> check7
+
+# cbind.data.frame(dat, check7, stringsAsFactors=F)->check8
+# names(check8)<-c("raw_string", "emoji_present", "string_translated")
 # saveRDS(check8, "../Data/twitter_all.Rds")
 
 stop_stem=lapply(check7, StopNStem) %>% 
@@ -563,8 +583,23 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   select(everything(), -contains("topic")) %>%
   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")
 
-lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
-grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
+# lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
+# grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
+
+
+
+ap_top_terms %>%
+  mutate(order = row_number())->ap_top_terms2
+ap_top_terms2 %>>%
+  ggplot(aes(x = order, y = phi))+ 
+  geom_bar(stat='identity', na.rm=T)+ 
+  # facet_grid(~topic, scales = "free", space = "free") +
+  facet_wrap(~topic, scales = "free") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  ylab(expression(phi))+
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
+
+
 ```
 
 # Conclusion
