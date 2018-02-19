@@ -78,9 +78,17 @@ In contrast to filtering emoji characters out, reflecting emoji information duri
 \hh{the packages should go to the back into a 'technical details'. }-->
 
 
-#LDA
+# Latent Dirichlet Allocation (LDA)
 
-Let $M$ be the total number of documents in the data set, and $N_m$ be the number of words in the $m^{th}$ document. Let $K$ be the total number of topics in the data. Define $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. LDA assumes the distribution of $w_{mn}$ to follow a Multinomial distribution with parameter $\phi_{z, w}$. $\phi_{z, w}$ is a probability of observing word $w$ in topic $z$. The model assumes that the distribution of words in topic $z$, i.e., $\boldsymbol\phi_{z}$, follows a Dirichelt distribution with prior $\boldsymbol\beta = \big[\beta_1 \cdots \beta_N \big]$. Let $z_mn$ be the topic of assigned to the word $w_{mn}$. Then, the model assumes $\boldsymbol{z_m}$ to follow a Multinomial distribution with parameter $\boldsymbol\theta_m$, where $\boldsymbol\theta_m$ is the distribution of topics in document $m$. The distribution of $\boldsymbol\theta_m$ is assumed to follow a Dirichlet distribution with a prior $\boldsymbol{\alpha} = \big[\alpha_1 \cdots \alpha_K \big]$. 
+At its core Latent Dirchlet Allocation is a generative statistical model, that identifies posterior probabilities of words belonging to previously unidentified topics, and topics belonging to documents. The underlying model is generally not analytically tractable, but uses a Gibbs sampling approach instead. Here, we are deriving the  posterior distributions involved in more detail.
+A graphical overview of LDA is given in \autoref{fig:LDA}.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=100mm]{"images/LDA_model".png}
+\caption{Graphical Model representation of LDA \label{fig:LDA} in plate notation.}
+\end{figure}
+
+Let $M$ be the total number of documents in the data set, and $N_m$ be the number of words in the $m^{th}$ document. Let $K$ be the total number of topics in the data. Define $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. LDA assumes the distribution of $w_{mn}$ to follow a Multinomial distribution with parameter $\phi_{z, w}$. $\phi_{z, w}$ is a probability of observing word $w$ in topic $z$. The model assumes that the distribution of words in topic $z$, i.e., $\boldsymbol\phi_{z}$, follows a Dirichlet distribution with prior $\boldsymbol\beta = \big[\beta_1 \cdots \beta_N \big]$. Let $z_mn$ be the topic of assigned to the word $w_{mn}$. Then, the model assumes $\boldsymbol{z_m}$ to follow a Multinomial distribution with parameter $\boldsymbol\theta_m$, where $\boldsymbol\theta_m$ is the distribution of topics in document $m$. The distribution of $\boldsymbol\theta_m$ is assumed to follow a Dirichlet distribution with a prior $\boldsymbol{\alpha} = \big[\alpha_1 \cdots \alpha_K \big]$. 
 
 
 <!--Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. In order to model this, LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words.-->
@@ -112,7 +120,7 @@ $
 \item $\boldsymbol\beta$: A vector of prior weights of the word distribution for each topic\\
 \quad $\boldsymbol\beta$ = \big[$\beta_1 \cdots \beta_N$ \big]
 \item $\phi_{z, w}$: The probability of observing word $w$ in topic $z$\\
-$\boldsymbol\phi_z \sim Dir(\boldsymbol\beta)$: The distirbution of words in topic $z$\\
+$\boldsymbol\phi_z \sim Dir(\boldsymbol\beta)$: The distribution of words in topic $z$\\
 \quad $\boldsymbol\phi_{K \times N}=
 \begin{bmatrix}
 \boldsymbol\phi_1= (\phi_{1,1}, \phi_{1,2}, \cdots, \phi_{1,N})\\
@@ -125,12 +133,6 @@ $
 \item $w_{mn} \sim Multinomial(\phi_{z_{mn}})$
 \end{enumerate}
 
-The graphical display of LDA is given in \autoref{fig:LDA}.
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=100mm]{"images/LDA_model".png}
-\caption{Graphical Model representation of LDA \label{fig:LDA}}
-\end{figure}
 
 <!--Topic modeling puts effort on uncovering the semantic structure of the latent topics in a text collection. One of the popular method of topic modeling is the LDA. LDA views that a document is expressed as a mixture of topics, and a topic is a probability distribution over words where the probability distribution follows a Dirichlet distribution with some parameter $\alpha$ less than one.
 
