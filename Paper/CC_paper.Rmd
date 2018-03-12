@@ -468,7 +468,8 @@ ap_per_word_per_topic %>%
 plot_this %>%
   filter(term %in% {ap_top_terms$term %>% unique()})->use_this
 ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  geom_point(aes(fill = term),size = 3,shape = 21)+ 
+  geom_point(color = 'red') +
+  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
   # ggtitle(“LDA RAW”) +
   theme_rgbw() +
   theme(legend.position = c(0,1),legend.justification = c(1, 1))+
@@ -488,7 +489,6 @@ emojis %>%
   cbind.data.frame(emojis,.) %>%
   .[,c(1,5,6)]->emojis
 test<-emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[2]))))]]
-
 ```
 
 ```{r ternary_plot_via_ggtern}
@@ -510,7 +510,7 @@ save_raster_tern
 ```
 
 
-```{r ternary_plot_via_ggplot2}
+```{r ternary_plot_via_ggplot2, fig.cap="\\label{fig:raw_tern}Ternary plot of the LDA output including the raw unicode characters"}
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 # g<-rasterGrob(test, interpolate = T)
@@ -533,7 +533,7 @@ save_annotation_custom=use_this2%>%
 for(i in 1:nrow(emojis)){
   save_annotation_custom+
   emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
-    rasterGrob(interpolate = T) %>%
+    grid::rasterGrob(interpolate = T) %>%
     annotation_custom(
       xmin =floor(emojis$x[i]*10)/10, 
       xmax =ceiling(emojis$x[i]*10)/10, 
@@ -606,7 +606,7 @@ ap_top_terms2 %>>%
 
 ```
 
-```{r LDA_no_uni_ternary, eval=T, echo=F}
+```{r LDA_no_uni_ternary, eval=T, echo=F, fig.cap="\\label{fig:no_tern}Ternary plot of the LDA output excluding all unicode characters"}
 ap_topics %>%
   group_by(term) %>%
   mutate(sum_prob=sum(phi)) %>%
@@ -723,11 +723,9 @@ ap_top_terms2 %>>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
   scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
-
-
 ```
 
-```{r LDA_T_ternary, eval=T, echo=F}
+```{r LDA_T_ternary, eval=T, echo=F, fig.cap="\\label{fig:trans_tern}Ternary plot of the LDA output after translating all unicode characters"}
 ap_topics %>%
   group_by(term) %>%
   mutate(sum_prob=sum(phi)) %>%
@@ -753,6 +751,12 @@ ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
   theme(legend.position = c(0,1),legend.justification = c(1, 1))+
   geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
+
+## Results and Discussion
+The results of LDA output for each cases are reported in \autoref{fig:raw_tern}, \autoref{fig:no_tern}, \autoref{fig:trans_tern}. The result of \autoref{fig:raw_tern} show that including emoji information as a raw unicode character not only enriches semantic(?) information, but also makes the peformance of LDA better.
+
+- it aggregates, otherwise separated, n-gram words into a single character.
+
 
 # Conclusion
 As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
