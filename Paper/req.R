@@ -1,3 +1,14 @@
+ipak <- function(pkg){
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) 
+    install.packages(new.pkg, dependencies = TRUE)
+  sapply(pkg, require, character.only = TRUE)
+}
+pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "gridExtra", "pipeR", "ggtern", "tidyr", "png", "grid", "ggrepel")
+ipak(pkg)
+'%!in%' <- function(x,y)!('%in%'(x,y))
+# if ("emojidata" %in% installed.packages()[, "Package"]==F){devtools::install_github("TekSong/emojidata")}
+
 StopNStem=function(text){
   text %>>%
     VectorSource() %>>%

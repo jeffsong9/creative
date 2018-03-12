@@ -28,11 +28,10 @@ opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=lis
 ```
 
 ```{r library and source, include=F}
-pkg=c("tidytext","tidyverse", "pander","topicmodels", "tm", "gridExtra", "pipeR", "ggtern", "tidyr")
-sapply(pkg, require, character=T)
-'%!in%' <- function(x,y)!('%in%'(x,y))
 source("req.R")
-# Sys.setlocale('LC_ALL','C')
+library(ggrepel)
+Sys.setlocale('LC_ALL','C')
+load("../data/emojidata.rda")
 ```
 
 ### abstract
@@ -446,7 +445,7 @@ ap_top_terms2 %>>%
   facet_wrap(~topic, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))
 ```
 
 ```{r LDAraw_ternary, eval=T, echo=F}
@@ -469,11 +468,81 @@ ap_per_word_per_topic %>%
 plot_this %>%
   filter(term %in% {ap_top_terms$term %>% unique()})->use_this
 ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
+  geom_point(aes(fill = term),size = 3,shape = 21)+ 
   # ggtitle(“LDA RAW”) +
   theme_rgbw() +
   theme(legend.position = c(0,1),legend.justification = c(1, 1))+
-  geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))#, z = `3`, label=term))
+  geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))->tern_plot_text#, z = `3`, label=term))
+ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
+  geom_point(aes(),size = 3,shape = 21)+ 
+  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
+  # ggtitle(“LDA RAW”) +
+  theme_rgbw() +
+  theme(legend.position = c(0,1),legend.justification = c(1, 1))->tern_plot_no_text
+crd=coord_tern()
+emojis=use_this[grepl("^u[[:alnum:]]{4,5}$", use_this$term),] %>% as.data.frame(stringsAsFactors=F)
+names(emojis)<-c("term", "x", "y", "z")
+emojis %>%
+  select(-term) %>%
+  tlr2xy(crd) %>%
+  cbind.data.frame(emojis,.) %>%
+  .[,c(1,5,6)]->emojis
+test<-emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[2]))))]]
+
+```
+
+```{r ternary_plot_via_ggtern}
+save_raster_tern<-tern_plot_no_text
+for(i in 1:nrow(emojis)){
+  save_raster_tern+
+  emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
+    annotation_raster_tern(
+      xmin =floor(emojis$x[i]*10)/10, 
+      xmax =ceiling(emojis$x[i]*10)/10, 
+      ymin =floor(emojis$y[i]*10)/10, 
+      ymax = ceiling(emojis$y[i]*10)/10,
+      interpolate = FALSE)->save_raster_tern
+}
+save_raster_tern
+# tern_plot_no_text+
+#   annotation_raster_tern(test, xmin = 0.3, xmax = .4, ymin = 0.7, ymax =0.8,
+# interpolate = FALSE)
+```
+
+
+```{r ternary_plot_via_ggplot2}
+use_this2<-as.data.frame(use_this)
+names(use_this2)<-c("term", "x", "y", "z")
+# g<-rasterGrob(test, interpolate = T)
+# use_this2%>%
+#   select(-term) %>%
+#   tlr2xy(crd)%>%
+#   cbind(use_this) %>%
+#   ggplot(aes(x=x, y=y))+
+#   geom_point()+
+#   annotation_custom(g, xmin = 0.4, xmax = 0.5, ymin = 0.7, ymax = 0.8)+
+#   theme(aspect.ratio = 0.9)
+save_annotation_custom=use_this2%>%
+  select(-term) %>%
+  tlr2xy(crd)%>%
+  cbind(use_this) %>%
+  ggplot(aes(x=x, y=y))+
+  geom_point(aes(x=x, y=y), color = 'red') +
+  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme(aspect.ratio = 0.9)
+for(i in 1:nrow(emojis)){
+  save_annotation_custom+
+  emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
+    rasterGrob(interpolate = T) %>%
+    annotation_custom(
+      xmin =floor(emojis$x[i]*10)/10, 
+      xmax =ceiling(emojis$x[i]*10)/10, 
+      ymin =floor(emojis$y[i]*10)/10, 
+      ymax = ceiling(emojis$y[i]*10)/10)->save_annotation_custom
+}
+tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
+save_annotation_custom+
+  geom_path(data=tri, aes(x, y))
 ```
 
 
