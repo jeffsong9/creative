@@ -30,6 +30,7 @@ opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=F, tidy.opts=list(w
 ```{r library and source, include=F}
 source("req.R")
 library(ggrepel)
+library(tinytex)
 Sys.setlocale('LC_ALL','C')
 load("../data/emojidata.rda")
 ```
@@ -356,6 +357,8 @@ LDA was performed on the following three difference cases:
 \item LDA on a data set with emoji translated to text
 \end{enumerate}
 
+A ternary plot is a triangular graph that displays three variables with respect to its proportion that sum to one. Ternary plots were used to illustrate the LDA ouput of the three different cases listed above. Each corner of the triangle represents the topic determined by the LDA method. The conditional probability of a topic given a word was calculated for all words in the corpus. The calcualted conditional probability was used as the proportion to construct the ternary plot.
+
 
 ```{r application setup, echo=F, eval=T}
 # dat=rbind.data.frame(
@@ -417,11 +420,11 @@ ap_top_terms <- ap_topics %>%
 
 # ap_top_terms<-ap_top_terms[-11,] #Two topic 1 with same phi
 
-split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
-  do.call("cbind",.) %>%
-  select(everything(), -contains("topic")) %>%
-  mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")->LDArawp
+## split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
+#   do.call("cbind",.) %>%
+#   select(everything(), -contains("topic")) %>%
+#   mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
+#   pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")->LDArawp
 
 # plot_ea_topic=function(topic_number, y_lim){
 # ap_top_terms %>%
@@ -781,7 +784,7 @@ save_annotation_custom+
 
 ## MARKER START
 
-```{r test1, out.width='.33\\linewidth', fig.width=3, fig.height=3, fig.cap='Ternary Plot'}
+```{r test1, out.width='.33\\linewidth', fig.width=3, fig.height=3, fig.cap='Ternary Plot', eval=F}
 #- \usepackage{subfig}
 #, fig.subcap=c('Raw Unicode', 'Unicode Deleted', 'Unicode Translated into English'),  fig.scap=NA
 fig_raw_tern
@@ -806,7 +809,7 @@ The first case was to run LDA on a raw data set. Different number of topic dimen
 
 ```{r, echo=F}
 LDAraw
-LDArawp
+# LDArawp
 raw_bar
 ```
 
