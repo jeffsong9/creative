@@ -27,7 +27,7 @@ library(knitr)
 opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=F, tidy.opts=list(width.cutoff=40))
 ```
 
-```{r library and source, include=F}
+```{r library_and_source, include=F}
 source("req.R")
 library(ggrepel)
 library(tinytex)
@@ -215,7 +215,7 @@ Stemming has two disadvantages. First, there is the possibility of over stemming
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{rll}
+\begin{tabular}{rp{.3\textwidth}p{.3\textwidth}}
   \hline
  & Original Tweet & Tweet after Stemming \\ 
   \hline
@@ -356,6 +356,8 @@ LDA was performed on the following three difference cases:
 \item LDA on a data set with Unicode removed
 \item LDA on a data set with emoji translated to text
 \end{enumerate}
+
+\pagebreak
 
 A ternary plot is a triangular graph that displays three variables with respect to its proportion that sum to one. Ternary plots were used to illustrate the LDA ouput of the three different cases listed above. Each corner of the triangle represents the topic determined by the LDA method. The conditional probability of a topic given a word was calculated for all words in the corpus. The calcualted conditional probability was used as the proportion to construct the ternary plot.
 
