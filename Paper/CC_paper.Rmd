@@ -16,7 +16,7 @@ output:
   pdf_document:
     fig_caption: yes
     number_sections: no
-geometry: margin=0.5in
+geometry: margin=1in
 ---
 
 \newcommand{\hh}[1]{{\color{orange} #1}}
@@ -24,7 +24,7 @@ geometry: margin=0.5in
 
 ```{r hidecode, echo=FALSE}
 library(knitr)
-opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=TRUE, tidy.opts=list(width.cutoff=40))
+opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=F, tidy.opts=list(width.cutoff=40))
 ```
 
 ```{r library and source, include=F}
@@ -388,14 +388,12 @@ dat$V1 %>>%
   trimws()-> dat1
 ```
 
-## LDA on a raw data set
-The first case was to run LDA on a raw data set. Different number of topic dimensions were tested and the result of 3 topic dimension with 10 terms is provided in \autoref{tab:LDArawp}. The bar chart in \autoref{fig:raw_bar} showed that LDA successfully distinguished the corpus into three different topics. The bar chart illustrated that Topic 1 is related to 'Science March', Topic 2 is related to 'Hate her', and Topic 3 is related to 'Love her'. In order to visualize the probability of a word given topic, a ternary plot was constructed in \autoref{fig:raw_tern}.  The ternary plot showed that four different groups of words: three groups of words were strongly affiliated with one of the topics. These groups of words were clustered at the end of each vertices. The other group of words was located at the center of the triangle which represented words that are not associated with a specific topic. According to this ternary plot, emoji characters had strong connection with a particular topic.
-
+## LDA on a raw data set MARKER
 
 ```{r LDAraw, echo=F, eval=T}
 stop_stem=lapply(dat1, StopNStem) %>% 
   do.call("rbind",.) %>% 
-  rbind.data.frame(stringsAsFactors=F)
+  as.data.frame(stringsAsFactors=F)
 
 stop_stem$V1 %>%
   VectorSource() %>%
@@ -404,7 +402,7 @@ stop_stem$V1 %>%
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.raw=terms(lda,10)
-pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")
+pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")->LDAraw
 ```
 
 ```{r LDAraw_graph,  fig.cap="\\label{fig:raw_bar}Bar chart of the LDA output with the raw unicode characters", eval=T, echo=F}
@@ -422,7 +420,8 @@ ap_top_terms <- ap_topics %>%
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind",.) %>%
   select(everything(), -contains("topic")) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")
+  mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
+  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")->LDArawp
 
 # plot_ea_topic=function(topic_number, y_lim){
 # ap_top_terms %>%
@@ -445,7 +444,7 @@ ap_top_terms2 %>>%
   facet_wrap(~topic, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->raw_bar
 ```
 
 ```{r LDAraw_ternary, eval=T, echo=F}
@@ -491,7 +490,7 @@ emojis %>%
 test<-emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[2]))))]]
 ```
 
-```{r ternary_plot_via_ggtern}
+```{r ternary_plot_via_ggtern, eval=F}
 save_raster_tern<-tern_plot_no_text
 for(i in 1:nrow(emojis)){
   save_raster_tern+
@@ -542,14 +541,11 @@ for(i in 1:nrow(emojis)){
 }
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
-  geom_path(data=tri, aes(x, y))
+  geom_path(data=tri, aes(x, y))->fig_raw_tern
 ```
 
 
-
-
-## LDA without Unicode
-In most text mining examples, LDA is performed after removing the Unicode information. For the second case, Unicode characters were removed from the raw text data set before performing LDA. The result of the LDA with three topic dimensions is provided in \autoref{tab:LDA_Unip}. The bar-chart in \autoref{fig:no_bar} demonstrated that the LDA method did not distinguish the three topics well. Topic 1 turned out to be a mixture of 'Hate Her' and 'Science March', Topic 2 had all three topics, and Topic 3 was associated with 'Hate Her' and 'Love Her'. Ternary plot constructed in \autoref{fig:no_tern} shows that the output from the LDA was located at the center of the ternary plot. This indicates that words had weak connection to any topic dimensions.
+## LDA without Unicode MARKER
 
 ```{r LDA_no_uni, echo=F, eval=T}
 dat$V1 %>>% 
@@ -564,7 +560,7 @@ dat$V1 %>>%
 
 stop_stem=lapply(dat2, StopNStem) %>% 
   do.call("rbind",.) %>% 
-  rbind.data.frame(stringsAsFactors=F)
+  as.data.frame(stringsAsFactors=F)
 
 stop_stem %>%
   VectorSource() %>%
@@ -573,7 +569,7 @@ stop_stem %>%
 
 lda=LDA(dtm,k = 3, control = list(alpha=1))
 lda.no_uni=terms(lda,5)
-pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Uni} Output of LDA with the raw data without the Unicode")
+pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_uni} Output of LDA with the raw data without the Unicode")->LDA_no_uni
 ```
 
 ```{r LDA_no_uni_graph, fig.cap="\\label{fig:no_bar}Ternary plot of the LDA output including the raw unicode characters", eval=T, echo=F}
@@ -589,7 +585,8 @@ ap_top_terms <- ap_topics %>%
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
   select(everything(), -contains("topic")) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")
+    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
+  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")->LDA_no_unip
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
 # grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
@@ -602,11 +599,10 @@ ap_top_terms2 %>>%
   facet_wrap(~topic, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
-
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->no_bar
 ```
 
-```{r LDA_no_uni_ternary, eval=T, echo=F, fig.cap="\\label{fig:no_tern}Ternary plot of the LDA output excluding all unicode characters"}
+```{r LDA_no_uni_ternary, eval=T, echo=F}
 ap_topics %>%
   group_by(term) %>%
   mutate(sum_prob=sum(phi)) %>%
@@ -625,16 +621,32 @@ ap_per_word_per_topic %>%
 
 plot_this %>%
   filter(term %in% {ap_top_terms$term %>% unique()})->use_this
-ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
-  # ggtitle(“LDA RAW”) +
-  theme_rgbw() +
-  theme(legend.position = c(0,1),legend.justification = c(1, 1))+
-  geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
+# ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
+#   # geom_point(aes(fill = term),size = 3,shape = 21)+ 
+#   # ggtitle(“LDA RAW”) +
+#   theme_rgbw() +
+#   theme(legend.position = c(0,1),legend.justification = c(1, 1))+
+#   geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
 
-## LDA with name translated
-The last case was to perform LDA after translating the Unicode emoji characters in English. <!--`unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.--> The output of LDA with translation is provided in \autoref{tab:LDA_tp}. The bar-chart in \autoref{fig:trans_bar} revealed that the performance of the LDA method was ineffective.  Words from 'Hate Her' and 'Science March' were assigned to Topic 1, top words in Topic 2 were from 'Love Her', 'Hate Her', and 'Science March', and top words in Topic 3 were composed with words from 'Hate Her' and 'Love Her'. The ternary plot in \autoref{fig:trans_tern} also showed that there were no strong relationship between the words and a specific topic. 
+```{r no_ternary_plot_via_ggplot2, echo=F, fig.cap="\\label{fig:no_tern}Ternary plot of the LDA output excluding all unicode characters"}
+use_this2<-as.data.frame(use_this)
+names(use_this2)<-c("term", "x", "y", "z")
+save_annotation_custom=use_this2%>%
+  select(-term) %>%
+  tlr2xy(crd)%>%
+  cbind(use_this) %>%
+  ggplot(aes(x=x, y=y))+
+  geom_point(aes(x=x, y=y), color = 'red') +
+  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme(aspect.ratio = 0.9)
+tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
+save_annotation_custom+
+  geom_path(data=tri, aes(x, y))->fig_no_tern
+```
+
+## LDA with name translated MARKER
+
 ```{r LDA_T, echo=F, eval=T}
 emoji_simple=read.csv("../data/all_emoji.csv", stringsAsFactors = F)
 # emoji_simple$unicode<-gsub("[[:punct:]]", "", emoji_simple$unicode)
@@ -688,7 +700,7 @@ stop_stem %>%
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.t=terms(lda,5)
-pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")
+pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")->LDA_t
 ```
 
 ```{r LDA_T_graph, eval=T, echo=F, fig.cap="\\label{fig:trans_bar}Ternary plot of the LDA output after translating all unicode characters"}
@@ -704,7 +716,8 @@ ap_top_terms <- ap_topics %>%
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
   select(everything(), -contains("topic")) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")
+    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
+  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")->LDA_Tp
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
 # grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
@@ -720,10 +733,10 @@ ap_top_terms2 %>>%
   facet_wrap(~topic, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0)) 
+  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->trans_bar
 ```
 
-```{r LDA_T_ternary, eval=T, echo=F, fig.cap="\\label{fig:trans_tern}Ternary plot of the LDA output after translating all unicode characters"}
+```{r LDA_T_ternary, eval=T, echo=F}
 ap_topics %>%
   group_by(term) %>%
   mutate(sum_prob=sum(phi)) %>%
@@ -742,13 +755,81 @@ ap_per_word_per_topic %>%
 
 plot_this %>%
   filter(term %in% {ap_top_terms$term %>% unique()})->use_this
-ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
-  # ggtitle(“LDA RAW”) +
-  theme_rgbw() +
-  theme(legend.position = c(0,1),legend.justification = c(1, 1))+
-  geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
+ # ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
+ # geom_point(aes(fill = term),size = 3,shape = 21)+
+ # ggtitle(“LDA RAW”) +
+ # theme_rgbw() +
+ # theme(legend.position = c(0,1),legend.justification = c(1, 1))+
+ # geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
+
+```{r trans_ternary_plot_via_ggplot2, echo=F, fig.cap="\\label{fig:trans_tern}Ternary plot of the LDA output after translating all unicode characters"}
+use_this2<-as.data.frame(use_this)
+names(use_this2)<-c("term", "x", "y", "z")
+save_annotation_custom=use_this2%>%
+  select(-term) %>%
+  tlr2xy(crd)%>%
+  cbind(use_this) %>%
+  ggplot(aes(x=x, y=y))+
+  geom_point(aes(x=x, y=y), color = 'red') +
+  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme(aspect.ratio = 0.9)
+tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
+save_annotation_custom+
+  geom_path(data=tri, aes(x, y))->fig_trans_tern
+```
+
+## MARKER START
+
+```{r test1, out.width='.33\\linewidth', fig.width=3, fig.height=3, fig.cap='Ternary Plot'}
+#- \usepackage{subfig}
+#, fig.subcap=c('Raw Unicode', 'Unicode Deleted', 'Unicode Translated into English'),  fig.scap=NA
+fig_raw_tern
+fig_no_tern
+fig_trans_tern
+```
+
+
+```{r, echo=F}
+grid.arrange(
+  fig_raw_tern,
+  fig_no_tern,
+  fig_trans_tern,
+  nrow=1
+)
+```
+
+
+
+## LDA on a raw data set
+The first case was to run LDA on a raw data set. Different number of topic dimensions were tested and the result of 3 topic dimension with 10 terms is provided in \autoref{tab:LDArawp}. The bar chart in \autoref{fig:raw_bar} showed that LDA successfully distinguished the corpus into three different topics. The bar chart illustrated that Topic 1 is related to 'Science March', Topic 2 is related to 'Hate her', and Topic 3 is related to 'Love her'. In order to visualize the probability of a word given topic, a ternary plot was constructed in \autoref{fig:raw_tern}.  The ternary plot showed that four different groups of words: three groups of words were strongly affiliated with one of the topics. These groups of words were clustered at the end of each vertices. The other group of words was located at the center of the triangle which represented words that are not associated with a specific topic. According to this ternary plot, emoji characters had strong connection with a particular topic.
+
+```{r, echo=F}
+LDAraw
+LDArawp
+raw_bar
+```
+
+
+## LDA without Unicode
+In most text mining examples, LDA is performed after removing the Unicode information. For the second case, Unicode characters were removed from the raw text data set before performing LDA. The result of the LDA with three topic dimensions is provided in \autoref{tab:LDA_no_unip}. The bar-chart in \autoref{fig:no_bar} demonstrated that the LDA method did not distinguish the three topics well. Topic 1 turned out to be a mixture of 'Hate Her' and 'Science March', Topic 2 had all three topics, and Topic 3 was associated with 'Hate Her' and 'Love Her'. Ternary plot constructed in \autoref{fig:no_tern} shows that the output from the LDA was located at the center of the ternary plot. This indicates that words had weak connection to any topic dimensions.
+
+```{r, echo=F}
+LDA_no_uni
+LDA_no_unip
+no_bar
+```
+
+## LDA with name translated
+The last case was to perform LDA after translating the Unicode emoji characters in English. <!--`unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.--> The output of LDA with translation is provided in \autoref{tab:LDA_tp}. The bar-chart in \autoref{fig:trans_bar} revealed that the performance of the LDA method was ineffective.  Words from 'Hate Her' and 'Science March' were assigned to Topic 1, top words in Topic 2 were from 'Love Her', 'Hate Her', and 'Science March', and top words in Topic 3 were composed with words from 'Hate Her' and 'Love Her'. The ternary plot in \autoref{fig:trans_tern} also showed that there were no strong relationship between the words and a specific topic. 
+
+```{r, echo=F}
+LDA_t
+LDA_Tp
+trans_bar
+```
+
+
 
 ## Discussion
 The results of LDA outputs showed that LDA performed the best with emoji information embedded as raw Unicode characters. The method well distinguished the words assigned to three topics as shown in \autoref{fig:raw_bar}, \autoref{fig:no_bar}, and \autoref{fig:trans_bar}. The ternary plot in \autoref{fig:raw_tern}, \autoref{fig:no_tern}, and \autoref{fig:trans_tern} also supported the claim by illustrating the strength of the relationship between a word and the three topics. Emoji are rich in information, thus deleting the entire character led to great information loss and consequently affected the output of the LDA in case two. 
