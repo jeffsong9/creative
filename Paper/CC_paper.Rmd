@@ -6,17 +6,20 @@ header-includes:
 - \usepackage{amsmath}
 - \usepackage{graphicx}
 - \usepackage{bbm}
-- \usepackage{subcaption}
+#- \usepackage{subcaption}
 - \usepackage[export]{adjustbox}
 - \usepackage{wrapfig}
 - \usepackage{color}
 - \usepackage{xcolor}
 - \usepackage{enumerate}
+- \usepackage{subfig}
 output:
   pdf_document:
     fig_caption: yes
     number_sections: no
-geometry: margin=1in
+documentclass: article
+classoption: letterpaper
+#geometry: margin=1in
 ---
 
 \newcommand{\hh}[1]{{\color{orange} #1}}
@@ -24,13 +27,12 @@ geometry: margin=1in
 
 ```{r hidecode, echo=FALSE}
 library(knitr)
-opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=F, tidy.opts=list(width.cutoff=40))
+opts_chunk$set(echo=F, warning=FALSE, message = FALSE, cache=T, tidy.opts=list(width.cutoff=40))
 ```
 
 ```{r library_and_source, include=F}
 source("req.R")
 library(ggrepel)
-library(tinytex)
 Sys.setlocale('LC_ALL','C')
 load("../data/emojidata.rda")
 ```
@@ -308,9 +310,6 @@ colnames(marchscience_uni_count)<-c("#marchscience","Count")
 emoji_freq=cbind.data.frame(inlove_uni_count, hateher_uni_count, marchscience_uni_count)
 
 pander(emoji_freq, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:EPopular} Five most popular emoji for each hastags")
-
-# xdate_number=xtable(emoji_freq, caption = "Five most popular emoji for each hastags", label = "tab:EPopular")
-# print(xdate_number)
 ```
 
 For the hashtag #inlove, a total number of 1188 emojis were used, consisting of 182 unique emojis. 
@@ -363,15 +362,6 @@ A ternary plot is a triangular graph that displays three variables with respect 
 
 
 ```{r application setup, echo=F, eval=T}
-# dat=rbind.data.frame(
-#   readRDS("../Data/twitter_inlove.Rds") %>% 
-#     mutate(tag = "inlove"),
-#   readRDS("../Data/twitter_hateher.Rds")%>% 
-#     mutate(tag = "hateher"),
-#   readRDS("../data/twitter_marchscience.Rds") %>%
-#     mutate(tag = "marchscience"), stringsAsFactors = F
-#   )
-
 dat=rbind.data.frame(
   readRDS("../data/twitter_inlove.Rds") %>% .$V1 %>% paste0(collapse=" "),
     # mutate(tag = "inlove"),
@@ -533,6 +523,7 @@ save_annotation_custom=use_this2%>%
   ggplot(aes(x=x, y=y))+
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme_bw()+
   theme(aspect.ratio = 0.9)
 for(i in 1:nrow(emojis)){
   save_annotation_custom+
@@ -644,6 +635,7 @@ save_annotation_custom=use_this2%>%
   ggplot(aes(x=x, y=y))+
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme_bw()+
   theme(aspect.ratio = 0.9)
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
@@ -778,6 +770,7 @@ save_annotation_custom=use_this2%>%
   ggplot(aes(x=x, y=y))+
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+  theme_bw()+
   theme(aspect.ratio = 0.9)
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
@@ -786,16 +779,14 @@ save_annotation_custom+
 
 ## MARKER START
 
-```{r test1, out.width='.33\\linewidth', fig.width=3, fig.height=3, fig.cap='Ternary Plot', eval=F}
-#- \usepackage{subfig}
-#, fig.subcap=c('Raw Unicode', 'Unicode Deleted', 'Unicode Translated into English'),  fig.scap=NA
+```{r test1, out.width='.33\\linewidth', fig.width=3, fig.height=3, fig.cap='Ternary Plot', eval=T, fig.subcap=c('Raw Unicode', 'Unicode Deleted', 'Unicode Translated into English'),  fig.scap=NA}
 fig_raw_tern
 fig_no_tern
 fig_trans_tern
 ```
 
 
-```{r, echo=F}
+```{r, echo=F, eval=F}
 grid.arrange(
   fig_raw_tern,
   fig_no_tern,
@@ -845,7 +836,7 @@ Moreover, emoji characters aggregates- otherwise separated- n-gram words into a 
 # Conclusion
 As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
 
-
+<!--
 # Appendix
 
 # `emoji` package in R
@@ -906,3 +897,4 @@ The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was
 2. Check output again. Also, a check aggregation of short messages to avoid data sparsity.
 3. LDA explanation
 4. Description of the emoji package
+-->
