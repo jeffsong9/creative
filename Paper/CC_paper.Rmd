@@ -768,9 +768,9 @@ save_annotation_custom+
 
 <!--## MARKER START-->
 
-```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output Displayed as a Ternary Plot for each Methods', eval=T, fig.subcap=c('\\label{fig:raw_tern}Ternary plot of the LDA output including the raw unicode characters', '\\label{fig:no_tern}Ternary plot of the LDA output excluding all unicode characters', '\\label{fig:trans_tern}Ternary plot of the LDA output after translating all unicode characters'),  fig.scap=NA}
-fig_raw_tern
+```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output Displayed as a Ternary Plot for each Methods', eval=T, fig.subcap=c('\\label{fig:no_tern}Excluding All Unicode Characters', '\\label{fig:raw_tern}With Raw Unicode Characters', '\\label{fig:trans_tern}Translating All Unicode Characters'),  fig.scap=NA}
 fig_no_tern
+fig_raw_tern
 fig_trans_tern
 ```
 
