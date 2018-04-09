@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6650 64-bit) (preloaded format=pdflatex 2018.4.9)  9 APR 2018 11:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6650 64-bit) (preloaded format=pdflatex 2018.4.9)  9 APR 2018 14:03
 entering extended mode
 **./CC_paper.tex
 (CC_paper.tex
@@ -796,232 +796,191 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 [1
 
 {C:/Users/Taikgun Song/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<"images/t_w_E".png, id=110, 404.00937pt x 408.02437pt>
+<"images/t_w_E".png, id=91, 404.00937pt x 408.02437pt>
 File: "images/t_w_E".png Graphic file (type png)
 <use "images/t_w_E".png>
 Package pdftex.def Info: "images/t_w_E".png  used on input line 155.
 (pdftex.def)             Requested size: 284.53073pt x 287.35837pt.
-<"images/LDA_model".png, id=112, 455.20062pt x 268.50313pt>
+<"images/LDA_model".png, id=93, 455.20062pt x 268.50313pt>
 File: "images/LDA_model".png Graphic file (type png)
 <use "images/LDA_model".png>
 Package pdftex.def Info: "images/LDA_model".png  used on input line 185.
 (pdftex.def)             Requested size: 284.53441pt x 167.83452pt.
 [2 <./images/t_w_E.png>] [3 <./images/LDA_model.png>]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 289.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 284.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Overfull \hbox (61.46692pt too wide) in paragraph at lines 299--308
- [][] 
- []
-
-[4]
-Overfull \hbox (99.3836pt too wide) in paragraph at lines 340--349
- [][] 
- []
-
-[5]
-<images/U+1F60D.png, id=162, 72.27pt x 72.27pt>
+) [4] [5]
+<images/U+1F60D.png, id=142, 72.27pt x 72.27pt>
 File: images/U+1F60D.png Graphic file (type png)
 <use images/U+1F60D.png>
-Package pdftex.def Info: images/U+1F60D.png  used on input line 434.
+Package pdftex.def Info: images/U+1F60D.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F602.png, id=163, 72.27pt x 72.27pt>
+<images/U+1F602.png, id=143, 72.27pt x 72.27pt>
 File: images/U+1F602.png Graphic file (type png)
 <use images/U+1F602.png>
-Package pdftex.def Info: images/U+1F602.png  used on input line 434.
+Package pdftex.def Info: images/U+1F602.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F52C.png, id=164, 72.27pt x 72.27pt>
+<images/U+1F52C.png, id=144, 72.27pt x 72.27pt>
 File: images/U+1F52C.png Graphic file (type png)
 <use images/U+1F52C.png>
-Package pdftex.def Info: images/U+1F52C.png  used on input line 434.
+Package pdftex.def Info: images/U+1F52C.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+2764.png, id=165, 72.27pt x 72.27pt>
+<images/U+2764.png, id=145, 72.27pt x 72.27pt>
 File: images/U+2764.png Graphic file (type png)
 <use images/U+2764.png>
-Package pdftex.def Info: images/U+2764.png  used on input line 435.
+Package pdftex.def Info: images/U+2764.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F644.png, id=166, 72.27pt x 72.27pt>
+<images/U+1F644.png, id=146, 72.27pt x 72.27pt>
 File: images/U+1F644.png Graphic file (type png)
 <use images/U+1F644.png>
-Package pdftex.def Info: images/U+1F644.png  used on input line 435.
+Package pdftex.def Info: images/U+1F644.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F30E.png, id=167, 72.27pt x 72.27pt>
+<images/U+1F30E.png, id=147, 72.27pt x 72.27pt>
 File: images/U+1F30E.png Graphic file (type png)
 <use images/U+1F30E.png>
-Package pdftex.def Info: images/U+1F30E.png  used on input line 435.
+Package pdftex.def Info: images/U+1F30E.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F495.png, id=168, 72.27pt x 72.27pt>
+<images/U+1F495.png, id=148, 72.27pt x 72.27pt>
 File: images/U+1F495.png Graphic file (type png)
 <use images/U+1F495.png>
-Package pdftex.def Info: images/U+1F495.png  used on input line 436.
+Package pdftex.def Info: images/U+1F495.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F621.png, id=169, 72.27pt x 72.27pt>
+<images/U+1F621.png, id=149, 72.27pt x 72.27pt>
 File: images/U+1F621.png Graphic file (type png)
 <use images/U+1F621.png>
-Package pdftex.def Info: images/U+1F621.png  used on input line 436.
+Package pdftex.def Info: images/U+1F621.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F44D.png, id=170, 72.27pt x 72.27pt>
+<images/U+1F44D.png, id=150, 72.27pt x 72.27pt>
 File: images/U+1F44D.png Graphic file (type png)
 <use images/U+1F44D.png>
-Package pdftex.def Info: images/U+1F44D.png  used on input line 436.
+Package pdftex.def Info: images/U+1F44D.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F618.png, id=171, 72.27pt x 72.27pt>
+<images/U+1F618.png, id=151, 72.27pt x 72.27pt>
 File: images/U+1F618.png Graphic file (type png)
 <use images/U+1F618.png>
-Package pdftex.def Info: images/U+1F618.png  used on input line 437.
+Package pdftex.def Info: images/U+1F618.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F612.png, id=172, 72.27pt x 72.27pt>
+<images/U+1F612.png, id=152, 72.27pt x 72.27pt>
 File: images/U+1F612.png Graphic file (type png)
 <use images/U+1F612.png>
-Package pdftex.def Info: images/U+1F612.png  used on input line 437.
+Package pdftex.def Info: images/U+1F612.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F680.png, id=173, 72.27pt x 72.27pt>
+<images/U+1F680.png, id=153, 72.27pt x 72.27pt>
 File: images/U+1F680.png Graphic file (type png)
 <use images/U+1F680.png>
-Package pdftex.def Info: images/U+1F680.png  used on input line 437.
+Package pdftex.def Info: images/U+1F680.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+2728.png, id=174, 72.27pt x 72.27pt>
+<images/U+2728.png, id=154, 72.27pt x 72.27pt>
 File: images/U+2728.png Graphic file (type png)
 <use images/U+2728.png>
-Package pdftex.def Info: images/U+2728.png  used on input line 438.
+Package pdftex.def Info: images/U+2728.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F62D.png, id=175, 72.27pt x 72.27pt>
+<images/U+1F62D.png, id=155, 72.27pt x 72.27pt>
 File: images/U+1F62D.png Graphic file (type png)
 <use images/U+1F62D.png>
-Package pdftex.def Info: images/U+1F62D.png  used on input line 438.
+Package pdftex.def Info: images/U+1F62D.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F30D.png, id=176, 72.27pt x 72.27pt>
+<images/U+1F30D.png, id=156, 72.27pt x 72.27pt>
 File: images/U+1F30D.png Graphic file (type png)
 <use images/U+1F30D.png>
-Package pdftex.def Info: images/U+1F30D.png  used on input line 438.
+Package pdftex.def Info: images/U+1F30D.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
 [6 <./images/U+1F60D.png> <./images/U+1F602.png> <./images/U+1F52C.png> <./imag
 es/U+2764.png> <./images/U+1F644.png> <./images/U+1F30E.png> <./images/U+1F495.
 png> <./images/U+1F621.png> <./images/U+1F44D.png> <./images/U+1F618.png> <./im
 ages/U+1F612.png> <./images/U+1F680.png> <./images/U+2728.png> <./images/U+1F62
 D.png> <./images/U+1F30D.png>]
-<CC_paper_files/figure-latex/test1-1.pdf, id=201, 216.81pt x 216.81pt>
+<CC_paper_files/figure-latex/test1-1.pdf, id=181, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-1.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-1.pdf  used on input
- line 480.
-(pdftex.def)             Requested size: 155.0279pt x 155.0279pt.
-<CC_paper_files/figure-latex/test1-2.pdf, id=202, 216.81pt x 216.81pt>
+ line 452.
+(pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
+<CC_paper_files/figure-latex/test1-2.pdf, id=182, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-2.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-2.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-2.pdf  used on input
- line 480.
-(pdftex.def)             Requested size: 155.0279pt x 155.0279pt.
-<CC_paper_files/figure-latex/test1-3.pdf, id=203, 216.81pt x 216.81pt>
+ line 452.
+(pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
+<CC_paper_files/figure-latex/test1-3.pdf, id=183, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-3.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-3.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-3.pdf  used on input
- line 480.
-(pdftex.def)             Requested size: 155.0279pt x 155.0279pt.
+ line 452.
+(pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
 
-Overfull \hbox (5.32864pt too wide) in paragraph at lines 480--480
+Overfull \hbox (5.31047pt too wide) in paragraph at lines 452--452
 [][][][][][] 
  []
 
 
-LaTeX Warning: Reference `tab:LDArawp' on page 7 undefined on input line 487.
+LaTeX Warning: Reference `tab:LDArawp' on page 7 undefined on input line 459.
 
 
-LaTeX Warning: Reference `fig:raw_bar' on page 7 undefined on input line 488.
+LaTeX Warning: Reference `fig:raw_bar' on page 7 undefined on input line 460.
 
+<CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf, id=185, 469.755pt x 325.215
+pt>
+File: CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `fig:raw_tern' on page 7 undefined on input line 493.
-
+<use CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf>
+Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf  use
+d on input line 496.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [7 <./CC_paper_files/figure-latex/test1-1.pdf> <./CC_paper_files/figure-latex/t
 est1-2.pdf> <./CC_paper_files/figure-latex/test1-3.pdf>]
-<CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=243, 469.755pt x 325.215
+
+LaTeX Warning: Reference `fig:no_bar' on page 8 undefined on input line 504.
+
+[8 <./CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=239, 469.755pt x 325.215
 pt>
 File: CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 
 <use CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf  use
-d on input line 524.
+d on input line 556.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-LaTeX Warning: Reference `fig:no_bar' on page 8 undefined on input line 532.
+LaTeX Warning: Reference `tab:LDA_tp' on page 9 undefined on input line 562.
 
 
-LaTeX Warning: Reference `fig:no_tern' on page 8 undefined on input line 537.
+LaTeX Warning: Reference `fig:trans_bar' on page 9 undefined on input line 562.
 
-[8 <./CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=257, 469.755pt x 325.215
+
+[9 <./CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf>]
+<CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=252, 469.755pt x 325.215
 pt>
 File: CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 
 <use CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf  use
-d on input line 584.
+d on input line 612.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-LaTeX Warning: Reference `tab:LDA_tp' on page 9 undefined on input line 590.
-
-
-LaTeX Warning: Reference `fig:trans_bar' on page 9 undefined on input line 590.
-
-
-
-LaTeX Warning: Reference `fig:trans_tern' on page 9 undefined on input line 595
-.
-
-[9 <./CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<CC_paper_files/figure-latex/unnamed-chunk-6-1.pdf, id=268, 469.755pt x 325.215
-pt>
-File: CC_paper_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-
-<use CC_paper_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-6-1.pdf  use
-d on input line 640.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[10]
-
-LaTeX Warning: Reference `fig:raw_bar' on page 11 undefined on input line 647.
-
-
-LaTeX Warning: Reference `fig:no_bar' on page 11 undefined on input line 647.
-
-
-LaTeX Warning: Reference `fig:trans_bar' on page 11 undefined on input line 648
-.
-
-
-LaTeX Warning: Reference `fig:raw_tern' on page 11 undefined on input line 648.
-
-
-
-LaTeX Warning: Reference `fig:no_tern' on page 11 undefined on input line 649.
-
-
-LaTeX Warning: Reference `fig:trans_tern' on page 11 undefined on input line 64
-9.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 679.
-[11 <./CC_paper_files/figure-latex/unnamed-chunk-6-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 679.
+[10 <./CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 650.
+[11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 650.
 (CC_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 679.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 679.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 650.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 650.
 Package rerunfilecheck Info: File `CC_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 301F6001922313791FB6A27A98CE0C63;2825.
+(rerunfilecheck)             Checksum: 43E7F3390A7AF9F2ABAF40CD6183799A;2066.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 679.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 650.
  ) 
 Here is how much of TeX's memory you used:
- 14910 strings out of 492990
- 222214 string characters out of 3136347
- 338675 words of memory out of 3000000
- 18387 multiletter control sequences out of 15000+200000
- 71313 words of font info for 93 fonts, out of 3000000 for 9000
+ 14908 strings out of 492990
+ 222137 string characters out of 3136347
+ 337856 words of memory out of 3000000
+ 18383 multiletter control sequences out of 15000+200000
+ 71564 words of font info for 96 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,12n,96p,486b,499s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 61i,12n,96p,751b,497s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/M
 iKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
 nc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
@@ -1039,9 +998,9 @@ c/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb><C:
 /Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
 e1/public/lm/lmtt10.pfb>
-Output written on CC_paper.pdf (11 pages, 608476 bytes).
+Output written on CC_paper.pdf (11 pages, 606362 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
- 10508 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 343 PDF objects out of 1000 (max. 8388607)
+ 58 named destinations out of 1000 (max. 500000)
+ 10476 words of extra memory for PDF output out of 12000 (max. 10000000)
 
