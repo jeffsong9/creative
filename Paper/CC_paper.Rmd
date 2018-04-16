@@ -39,7 +39,7 @@ load("../data/emojidata.rda")
 
 ### abstract
 
-XXX write later XXX
+In this research, we compared the performance of <!--a popular topic modeling method--> the Latent Dirichlet Allocation (LDA) by examining the effect of Emoji characters. We explored the impact of the Emoji characters with respect to LDA by conducting LDA under three different cases: (1) LDA with raw text data, (2) LDA with Emoji characters deleted, and (3) LDA after trasnalting the Emoji characters into English. Using Twitter text messages of three different hastags, out analyses revealed that case (1) LDA with raw text data identified the topics the best. Our results highlight that an Emoji character aggregates information of n-gram words and the loss of information by deleting the Emoji or translating the Emoji into multi-gram English words significantly reduces the LDA performance.
 
 \tableofcontents
 
@@ -518,7 +518,16 @@ save_annotation_custom=use_this2%>%
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
   theme_bw()+
-  theme(aspect.ratio = 0.9)
+  theme(aspect.ratio = 0.9,
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank())
 for(i in 1:nrow(emojis)){
   save_annotation_custom+
   emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
@@ -625,7 +634,16 @@ save_annotation_custom=use_this2%>%
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
   theme_bw()+
-  theme(aspect.ratio = 0.9)
+  theme(aspect.ratio = 0.9,
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank())
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
   geom_path(data=tri, aes(x, y))->fig_no_tern
@@ -760,7 +778,16 @@ save_annotation_custom=use_this2%>%
   geom_point(aes(x=x, y=y), color = 'red') +
   ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
   theme_bw()+
-  theme(aspect.ratio = 0.9)
+  theme(aspect.ratio = 0.9,
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.border=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank())
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
   geom_path(data=tri, aes(x, y))->fig_trans_tern
@@ -768,10 +795,10 @@ save_annotation_custom+
 
 <!--## MARKER START-->
 
-```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output Displayed as a Ternary Plot for each Methods', eval=T, fig.subcap=c('\\label{fig:no_tern}Excluding All Unicode Characters', '\\label{fig:raw_tern}With Raw Unicode Characters', '\\label{fig:trans_tern}Translating All Unicode Characters'),  fig.scap=NA}
+```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output Displayed as a Ternary Plot for each Methods', eval=T, fig.subcap=c('\\label{fig:trans_tern}Translating All Unicode Characters', '\\label{fig:no_tern}Excluding All Unicode Characters', '\\label{fig:raw_tern}With Raw Unicode Characters'),  fig.scap=NA}
+fig_trans_tern
 fig_no_tern
 fig_raw_tern
-fig_trans_tern
 ```
 
 
@@ -805,14 +832,19 @@ trans_bar
 
 
 
-## Discussion
+## Discussion \& Conclusion
 The results of LDA outputs showed that LDA performed the best with emoji information embedded as raw Unicode characters. The method well distinguished the words assigned to three topics as shown in \autoref{fig:TPlot}. The ternary plot in \autoref{fig:raw_tern}, \autoref{fig:no_tern}, and \autoref{fig:trans_tern} also supported the claim by illustrating the strength of the relationship between a word and the three topics. Emoji are rich in information, thus deleting the entire character led to great information loss and consequently affected the output of the LDA in case two. 
 
 Moreover, emoji characters aggregates- otherwise separated- n-gram words into a single character. For example, commonly used Unicode characters in the data set such as 'U+1F602', 'U+1F644', 'U+1F60D', 'U+1F618', 'U+2764', and 'U+1F495' can be translated to English as 'face with tears of joy', 'face with rolling eyes', 'smiling face with heart eyes', 'face blowing a kiss', 'red heart', and 'two hearts' respectively. Although the meaning of each emoji characters are different, their multi-gram translations share words such as 'face', and 'heart'. Also, it produces a few meaningless as a byproduct of translation. Since LDA methods are affected by the frequency of words in the data set, the effect of the translation method as alluded to above may affect the performance of the LDA as shown in case three.
 
 
 # Conclusion
-As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in words. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.
+As the result of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in a single word. 
+
+
+
+
+<!--The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.-->
 
 <!--
 # Appendix
