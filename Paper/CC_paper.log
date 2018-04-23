@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6650 64-bit) (preloaded format=pdflatex 2018.4.9)  23 APR 2018 14:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6650 64-bit) (preloaded format=pdflatex 2018.4.9)  23 APR 2018 14:43
 entering extended mode
 **./CC_paper.tex
 (CC_paper.tex
@@ -756,35 +756,35 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 (CC_paper.toc
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 1.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 1.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 1.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 1.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1.
+(Font)              <10> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1.
+(Font)              <7> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1.
-LaTeX Font Info:    Try loading font information for U+msa on input line 1.
+(Font)              <5> on input line 4.
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\mt-msa.cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 1.
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\microtype\mt-msb.cfg"
@@ -796,212 +796,212 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 [1
 
 {C:/Users/Taikgun Song/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<"images/t_w_E".png, id=85, 404.00937pt x 408.02437pt>
+<"images/t_w_E".png, id=82, 404.00937pt x 408.02437pt>
 File: "images/t_w_E".png Graphic file (type png)
 <use "images/t_w_E".png>
-Package pdftex.def Info: "images/t_w_E".png  used on input line 165.
+Package pdftex.def Info: "images/t_w_E".png  used on input line 155.
 (pdftex.def)             Requested size: 284.53073pt x 287.35837pt.
-[2 <./images/t_w_E.png>]
-<"images/LDA_model".png, id=92, 455.20062pt x 268.50313pt>
+<"images/LDA_model".png, id=84, 455.20062pt x 268.50313pt>
 File: "images/LDA_model".png Graphic file (type png)
 <use "images/LDA_model".png>
-Package pdftex.def Info: "images/LDA_model".png  used on input line 195.
+Package pdftex.def Info: "images/LDA_model".png  used on input line 185.
 (pdftex.def)             Requested size: 284.53441pt x 167.83452pt.
-[3 <./images/LDA_model.png>]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 294.
+[2 <./images/t_w_E.png>] [3 <./images/LDA_model.png>]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 284.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [4] [5]
-<images/U+1F60D.png, id=137, 72.27pt x 72.27pt>
+<images/U+1F60D.png, id=134, 72.27pt x 72.27pt>
 File: images/U+1F60D.png Graphic file (type png)
 <use images/U+1F60D.png>
-Package pdftex.def Info: images/U+1F60D.png  used on input line 425.
+Package pdftex.def Info: images/U+1F60D.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F602.png, id=138, 72.27pt x 72.27pt>
+<images/U+1F602.png, id=135, 72.27pt x 72.27pt>
 File: images/U+1F602.png Graphic file (type png)
 <use images/U+1F602.png>
-Package pdftex.def Info: images/U+1F602.png  used on input line 425.
+Package pdftex.def Info: images/U+1F602.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F52C.png, id=139, 72.27pt x 72.27pt>
+<images/U+1F52C.png, id=136, 72.27pt x 72.27pt>
 File: images/U+1F52C.png Graphic file (type png)
 <use images/U+1F52C.png>
-Package pdftex.def Info: images/U+1F52C.png  used on input line 425.
+Package pdftex.def Info: images/U+1F52C.png  used on input line 415.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+2764.png, id=140, 72.27pt x 72.27pt>
+<images/U+2764.png, id=137, 72.27pt x 72.27pt>
 File: images/U+2764.png Graphic file (type png)
 <use images/U+2764.png>
-Package pdftex.def Info: images/U+2764.png  used on input line 426.
+Package pdftex.def Info: images/U+2764.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F644.png, id=141, 72.27pt x 72.27pt>
+<images/U+1F644.png, id=138, 72.27pt x 72.27pt>
 File: images/U+1F644.png Graphic file (type png)
 <use images/U+1F644.png>
-Package pdftex.def Info: images/U+1F644.png  used on input line 426.
+Package pdftex.def Info: images/U+1F644.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F30E.png, id=142, 72.27pt x 72.27pt>
+<images/U+1F30E.png, id=139, 72.27pt x 72.27pt>
 File: images/U+1F30E.png Graphic file (type png)
 <use images/U+1F30E.png>
-Package pdftex.def Info: images/U+1F30E.png  used on input line 426.
+Package pdftex.def Info: images/U+1F30E.png  used on input line 416.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F495.png, id=143, 72.27pt x 72.27pt>
+<images/U+1F495.png, id=140, 72.27pt x 72.27pt>
 File: images/U+1F495.png Graphic file (type png)
 <use images/U+1F495.png>
-Package pdftex.def Info: images/U+1F495.png  used on input line 427.
+Package pdftex.def Info: images/U+1F495.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F621.png, id=144, 72.27pt x 72.27pt>
+<images/U+1F621.png, id=141, 72.27pt x 72.27pt>
 File: images/U+1F621.png Graphic file (type png)
 <use images/U+1F621.png>
-Package pdftex.def Info: images/U+1F621.png  used on input line 427.
+Package pdftex.def Info: images/U+1F621.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F44D.png, id=145, 72.27pt x 72.27pt>
+<images/U+1F44D.png, id=142, 72.27pt x 72.27pt>
 File: images/U+1F44D.png Graphic file (type png)
 <use images/U+1F44D.png>
-Package pdftex.def Info: images/U+1F44D.png  used on input line 427.
+Package pdftex.def Info: images/U+1F44D.png  used on input line 417.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F618.png, id=146, 72.27pt x 72.27pt>
+<images/U+1F618.png, id=143, 72.27pt x 72.27pt>
 File: images/U+1F618.png Graphic file (type png)
 <use images/U+1F618.png>
-Package pdftex.def Info: images/U+1F618.png  used on input line 428.
+Package pdftex.def Info: images/U+1F618.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F612.png, id=147, 72.27pt x 72.27pt>
+<images/U+1F612.png, id=144, 72.27pt x 72.27pt>
 File: images/U+1F612.png Graphic file (type png)
 <use images/U+1F612.png>
-Package pdftex.def Info: images/U+1F612.png  used on input line 428.
+Package pdftex.def Info: images/U+1F612.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F680.png, id=148, 72.27pt x 72.27pt>
+<images/U+1F680.png, id=145, 72.27pt x 72.27pt>
 File: images/U+1F680.png Graphic file (type png)
 <use images/U+1F680.png>
-Package pdftex.def Info: images/U+1F680.png  used on input line 428.
+Package pdftex.def Info: images/U+1F680.png  used on input line 418.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+2728.png, id=149, 72.27pt x 72.27pt>
+<images/U+2728.png, id=146, 72.27pt x 72.27pt>
 File: images/U+2728.png Graphic file (type png)
 <use images/U+2728.png>
-Package pdftex.def Info: images/U+2728.png  used on input line 429.
+Package pdftex.def Info: images/U+2728.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F62D.png, id=150, 72.27pt x 72.27pt>
+<images/U+1F62D.png, id=147, 72.27pt x 72.27pt>
 File: images/U+1F62D.png Graphic file (type png)
 <use images/U+1F62D.png>
-Package pdftex.def Info: images/U+1F62D.png  used on input line 429.
+Package pdftex.def Info: images/U+1F62D.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
-<images/U+1F30D.png, id=151, 72.27pt x 72.27pt>
+<images/U+1F30D.png, id=148, 72.27pt x 72.27pt>
 File: images/U+1F30D.png Graphic file (type png)
 <use images/U+1F30D.png>
-Package pdftex.def Info: images/U+1F30D.png  used on input line 429.
+Package pdftex.def Info: images/U+1F30D.png  used on input line 419.
 (pdftex.def)             Requested size: 14.09203pt x 14.09203pt.
 [6 <./images/U+1F60D.png> <./images/U+1F602.png> <./images/U+1F52C.png> <./imag
 es/U+2764.png> <./images/U+1F644.png> <./images/U+1F30E.png> <./images/U+1F495.
 png> <./images/U+1F621.png> <./images/U+1F44D.png> <./images/U+1F618.png> <./im
 ages/U+1F612.png> <./images/U+1F680.png> <./images/U+2728.png> <./images/U+1F62
 D.png> <./images/U+1F30D.png>]
-<CC_paper_files/figure-latex/test1-1.pdf, id=176, 252.945pt x 252.945pt>
+<CC_paper_files/figure-latex/test1-1.pdf, id=173, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-1.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-1.pdf  used on input
- line 462.
+ line 452.
 (pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
-<CC_paper_files/figure-latex/test1-2.pdf, id=177, 252.945pt x 252.945pt>
+<CC_paper_files/figure-latex/test1-2.pdf, id=174, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-2.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-2.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-2.pdf  used on input
- line 462.
+ line 452.
 (pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
-<CC_paper_files/figure-latex/test1-3.pdf, id=178, 252.945pt x 252.945pt>
+<CC_paper_files/figure-latex/test1-3.pdf, id=175, 252.945pt x 252.945pt>
 File: CC_paper_files/figure-latex/test1-3.pdf Graphic file (type pdf)
 <use CC_paper_files/figure-latex/test1-3.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/test1-3.pdf  used on input
- line 462.
+ line 452.
 (pdftex.def)             Requested size: 155.02184pt x 155.02184pt.
 
-Overfull \hbox (5.31047pt too wide) in paragraph at lines 462--462
+Overfull \hbox (5.31047pt too wide) in paragraph at lines 452--452
 [][][][][][] 
  []
 
 
-LaTeX Warning: Reference `tab:LDArawp' on page 7 undefined on input line 469.
+LaTeX Warning: Reference `tab:LDArawp' on page 7 undefined on input line 459.
 
 
-LaTeX Warning: Reference `fig:raw_bar' on page 7 undefined on input line 470.
+LaTeX Warning: Reference `fig:raw_bar' on page 7 undefined on input line 460.
 
-<CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf, id=180, 469.755pt x 325.215
+<CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf, id=177, 469.755pt x 325.215
 pt>
 File: CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 
 <use CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf  use
-d on input line 506.
+d on input line 496.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [7 <./CC_paper_files/figure-latex/test1-1.pdf> <./CC_paper_files/figure-latex/t
 est1-2.pdf> <./CC_paper_files/figure-latex/test1-3.pdf>]
 
-LaTeX Warning: Reference `fig:no_bar' on page 8 undefined on input line 514.
+LaTeX Warning: Reference `fig:no_bar' on page 8 undefined on input line 504.
 
 [8 <./CC_paper_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=232, 469.755pt x 325.215
+<CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf, id=229, 469.755pt x 325.215
 pt>
 File: CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 
 <use CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf  use
-d on input line 565.
+d on input line 555.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-LaTeX Warning: Reference `tab:LDA_tp' on page 9 undefined on input line 571.
+LaTeX Warning: Reference `tab:LDA_tp' on page 9 undefined on input line 561.
 
 
-LaTeX Warning: Reference `fig:trans_bar' on page 9 undefined on input line 571.
+LaTeX Warning: Reference `fig:trans_bar' on page 9 undefined on input line 561.
 
 
 [9 <./CC_paper_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=245, 469.755pt x 325.215
+<CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf, id=242, 469.755pt x 325.215
 pt>
 File: CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 
 <use CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf>
 Package pdftex.def Info: CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf  use
-d on input line 622.
+d on input line 612.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [10 <./CC_paper_files/figure-latex/unnamed-chunk-5-1.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 667.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 657.
 [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 667.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 657.
 (CC_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 667.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 667.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 657.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 657.
 Package rerunfilecheck Info: File `CC_paper.out' has not changed.
-(rerunfilecheck)             Checksum: F95BCD734766D3F34393BB4C46D6501F;2050.
+(rerunfilecheck)             Checksum: 5E88FF404CAE2A7656600D6AC891849C;1988.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 667.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 657.
  ) 
 Here is how much of TeX's memory you used:
- 14899 strings out of 492990
- 222058 string characters out of 3136347
- 338837 words of memory out of 3000000
- 18381 multiletter control sequences out of 15000+200000
- 71313 words of font info for 93 fonts, out of 3000000 for 9000
+ 14918 strings out of 492990
+ 222325 string characters out of 3136347
+ 338872 words of memory out of 3000000
+ 18383 multiletter control sequences out of 15000+200000
+ 78018 words of font info for 103 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,12n,96p,643b,497s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 61i,12n,96p,814b,498s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Files/M
 iKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
 nc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}<C:/Program 
 Files/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi5.pfb><C:/Program Files/M
-iKTeX 2.9/fonts/type1/public/lm/lmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/lm/lmmib10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lm
-mib7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/lm/lmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/lm/lmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/lm/lmtt10.pfb>
-Output written on CC_paper.pdf (11 pages, 601038 bytes).
+c/lm/lmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/lm/lmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/lm/lmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmi
+b10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmmib7.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/lm/lmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/
+Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/lm/lmri12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/lm/lmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmtt10.pfb>
+Output written on CC_paper.pdf (11 pages, 655750 bytes).
 PDF statistics:
- 337 PDF objects out of 1000 (max. 8388607)
- 57 named destinations out of 1000 (max. 500000)
- 10468 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 340 PDF objects out of 1000 (max. 8388607)
+ 56 named destinations out of 1000 (max. 500000)
+ 12508 words of extra memory for PDF output out of 14400 (max. 10000000)
 

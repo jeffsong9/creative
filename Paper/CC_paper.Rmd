@@ -16,7 +16,7 @@ header-includes:
 output:
   pdf_document:
     fig_caption: yes
-    number_sections: no
+    number_sections: yes
 documentclass: article
 classoption: letterpaper
 #geometry: margin=1in
@@ -37,9 +37,10 @@ Sys.setlocale('LC_ALL','C')
 load("../data/emojidata.rda")
 ```
 
-### abstract
-
+\begin{abstract}
 In this research, we compared the performance of <!--a popular topic modeling method--> the Latent Dirichlet Allocation (LDA) by examining the effect of emoji characters. We explored the impact of the emoji characters with respect to LDA by conducting LDA under three different cases: (1) LDA with raw text data, (2) LDA with Emoji characters deleted, and (3) LDA after trasnalting the emoji characters into English. Using Twitter text messages of three different hastags, out analyses revealed that case (1) LDA with raw text data identified the topics the best. Our results highlight that an emoji character aggregates information of n-gram words and the loss of information by deleting the emoji or translating the Emoji into multi-gram English words significantly reduces the LDA performance.
+\end{abstract}
+
 
 \tableofcontents
 
@@ -802,7 +803,7 @@ fig_raw_tern
 ```
 
 
-## LDA on a raw data set
+### LDA on a raw data set
 The first case was to run LDA on a raw data set. Different number of topic dimensions were tested and the result of 3 topic dimension with 10 terms is provided in \autoref{tab:LDArawp}. The bar chart in \autoref{fig:raw_bar} showed that LDA successfully distinguished the corpus into three different topics. The bar chart illustrated that Topic 1 is related to 'Science March', Topic 2 is related to 'Hate her', and Topic 3 is related to 'In Love'. In order to visualize the probability of a word given topic, a ternary plot was constructed in \autoref{fig:raw_tern}.  The ternary plot showed that four different groups of words: three groups of words were strongly affiliated with one of the topics. These groups of words were clustered at the end of each vertices. The other group of words was located at the center of the triangle which represented words that are not associated with a specific topic. According to this ternary plot, emoji characters had strong connection with a particular topic.
 
 ```{r, echo=F}
@@ -812,7 +813,7 @@ raw_bar
 ```
 
 
-## LDA without Unicode
+### LDA without Unicode
 In most text mining examples, LDA is performed after removing the Unicode information. For the second case, Unicode characters were removed from the raw text data set before performing LDA. The result of the LDA with three topic dimensions is provided in \autoref{tab:LDA_no_unip}. The bar-chart in \autoref{fig:no_bar} demonstrated that the LDA method did not distinguish the three topics well. Topic 1 turned out to be a mixture of 'Hate Her' and 'Science March', Topic 2 had all three topics, and Topic 3 was associated with 'Hate Her' and 'In Love'. Ternary plot constructed in \autoref{fig:no_tern} shows that the output from the LDA was located at the center of the ternary plot. This indicates that words had weak connection to any topic dimensions.
 
 ```{r, echo=F}
@@ -821,7 +822,7 @@ LDA_no_unip
 no_bar
 ```
 
-## LDA with name translated
+### LDA with name translated
 The last case was to perform LDA after translating the Unicode emoji characters in English. <!--`unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.--> The output of LDA with translation is provided in \autoref{tab:LDA_tp}. The bar-chart in \autoref{fig:trans_bar} revealed that the performance of the LDA method was ineffective.  Words from 'Hate Her' and 'Science March' were assigned to Topic 1, top words in Topic 2 were from 'In Love', 'Hate Her', and 'Science March', and top words in Topic 3 were composed with words from 'Hate Her' and 'In Love'. The ternary plot in \autoref{fig:trans_tern} also showed that there were no strong relationship between the words and a specific topic. 
 
 ```{r, echo=F}
@@ -832,7 +833,7 @@ trans_bar
 
 
 
-## Conclusion and Discussion 
+# Conclusion and Discussion 
 Using Twitter text messages of three different hastags, we examined the performance of LDA with respect to emoji characters. Overall, our results suggest that LDA with raw emoji characters embedded in the text data performed the best. While the LDA method when all emojis were deleted and the LDA method when all emojis were translated genertated ternary plots \autoref{fig:trans_tern} and  \autoref{fig:no_tern} where words were clusterd at the center of the graphs. This indicate that the LDA method was not able to assign words into three unknown topics.  On the other hand, \autoref{fig:raw_tern} showed that three clusters of words were plotted at each end point of the triangle for method when raw unicode characters were used for the LDA method. These plots indicate that LDA performed the best when the raw unicode characters were used for the analysis.<!--The results of LDA outputs showed that LDA performed the best with emoji information embedded as raw Unicode characters. The method well distinguished the words assigned to three topics as shown in \autoref{fig:TPlot}. The ternary plot in \autoref{fig:raw_tern}, \autoref{fig:no_tern}, and \autoref{fig:trans_tern} also supported the claim by illustrating the strength of the relationship between a word and the three topics.-->
 
 One explanation of the outcome is that translating emoji characters into English affects the performance of LDA by introducing new words with sparsity issue or words that could be assigned to multiple different topics. Emoji characters aggregate -- otherwise separated -- n-gram words into a single character. For example, commonly used Unicode characters in the data set such as 'U+1F602', 'U+1F644', 'U+1F60D', 'U+1F618', 'U+2764', and 'U+1F495' can be translated to English as 'face with tears of joy', 'face with rolling eyes', 'smiling face with heart eyes', 'face blowing a kiss', 'red heart', and 'two hearts' respectively. 
