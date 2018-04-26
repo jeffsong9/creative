@@ -38,8 +38,10 @@ load("../data/emojidata.rda")
 ```
 
 \begin{abstract}
-
 Latent Dirichlet Allocation (LDA) is a popular topic modeling technique for natural language processing. Emoji is a pictogram that is commonly used on Social Networking Service (SNS) such as Twitter and Instagram. Conventionally, emoji characters were deleted before applying LDA to text data from SNS. In this research, we compared the performance of the LDA under three different cases: (1) LDA with text data including emojis as unicode characters, (2) LDA with emoji characters excluded from the data, and (3) LDA after trasnalting the emoji characters into English. Using Twitter text messages of three different hastags, our analyses revealed that case (1) LDA with text data including emojis as unicode characters identified the topics the best. Our result highlights that an emoji character aggregates information of n-gram words into a uni-gram word which significantly enhances the performance of LDA by preventing the loss of information during the exclusion or translation process.
+
+Emoji characters have an increasing role in our interactions on social media, allowing us to express a range of feelings in just a single (Unicode) character. This makes emojis a rich source of information in textual analyses. 
+We compare the performance of  Latent Dirichlet Allocation (LDA) in the presence of emojis. We explore the impact of  emojis by conducting LDA in three different scenarios:  (1) Standard practice in LDA is to delete any non ASCII characters (including emojis), (2) LDA with Emojis left in their raw text form, and (3) LDA after translating the emoji characters into their English counterpart. Using Twitter text messages from three different hashtags, our analyses reveals that case (2) LDA with Emojis left in their raw text form identifies these topics the best. Our results highlight that emoji characters are similar in  information to selected n-gram words and the loss of information by deleting  emojis or translating them into (multi-gram) English words significantly reduces the LDA performance.
 \end{abstract}
 
 \tableofcontents
