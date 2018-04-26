@@ -39,8 +39,7 @@ load("../data/emojidata.rda")
 
 \begin{abstract}
 
-
-In this research, we compared the performance of  the Latent Dirichlet Allocation (LDA) by examining the effect of emoji characters. We explored the impact of the emoji characters with respect to LDA by conducting LDA under three different cases: (1) LDA with raw text data, (2) LDA with Emoji characters deleted, and (3) LDA after trasnalting the emoji characters into English. Using Twitter text messages of three different hastags, out analyses revealed that case (1) LDA with raw text data identified the topics the best. Our results highlight that an emoji character aggregates information of n-gram words and the loss of information by deleting the emoji or translating the Emoji into multi-gram English words significantly reduces the LDA performance.
+Latent Dirichlet Allocation (LDA) is a popular topic modeling technique for natural language processing. Emoji is a pictogram that is commonly used on Social Networking Service (SNS) such as Twitter and Instagram. Conventionally, emoji characters were deleted before applying LDA to text data from SNS. In this research, we compared the performance of the LDA under three different cases: (1) LDA with text data including emojis as unicode characters, (2) LDA with emoji characters excluded from the data, and (3) LDA after trasnalting the emoji characters into English. Using Twitter text messages of three different hastags, our analyses revealed that case (1) LDA with text data including emojis as unicode characters identified the topics the best. Our result highlights that an emoji character aggregates information of n-gram words into a uni-gram word which significantly enhances the performance of LDA by preventing the loss of information during the exclusion or translation process.
 \end{abstract}
 
 \tableofcontents
@@ -48,9 +47,8 @@ In this research, we compared the performance of  the Latent Dirichlet Allocatio
 # Introduction
 
 
-Text data contains valuable insights that is useful for content recommendation, <!--information retrieval tasks,--> customer care service, social media analysis, and others.  However, the information is usually hidden within the text and has to be extracted using a modeling approach. Topic modeling is a text-mining method that extracts information from a text by identifying latent semantic structures in the text body. One of the most widely used topic modeling methods is the Latent Dirichlet Allocation(LDA).  LDA is a hierarchical Bayesian model which assumes that each of the documents in a collection consists of a mixture of topics, and these topics are responsible for the choice of words in each document. Topics, are the latent part of the document set and one can only observe words collected in the documents. LDA uses statistical inference to discover structure given the words and documents by calculating the relative importance of topics in documents and words in topics.
+Text data contains valuable insights that is useful for content recommendation, customer care service, social media analysis, and others.  However, the information is usually hidden within the text and has to be extracted using a modeling approach. Topic modeling is a text-mining method that extracts information from a text by identifying latent semantic structures in the text body. One of the most widely used topic modeling methods is the Latent Dirichlet Allocation(LDA).  LDA is a hierarchical Bayesian model which assumes that each of the documents in a collection consists of a mixture of topics, and these topics are responsible for the choice of words in each document. Topics, are the latent part of the document set and one can only observe words collected in the documents. LDA uses statistical inference to discover structure given the words and documents by calculating the relative importance of topics in documents and words in topics.
 
-<!--\hh{What is topic modeling? - go a bit more gently in your introduction.}-->
 
 The rapid growth in internet and telecommunication technology triggered the development of Social Network Services(SNS) platform such as Tweeter, Facebook, and blog posts. The SNS messages often include individual's perceptions, feelings, and opinions. Evaluating this data may be meaningful for policy makers, social science researchers, and business entrepreneurs. This electronic word-of-mouth heavily uses text data as the medium of communication. Thus, topic modeling including LDA may be ideal method for analyzing SNS text data for information retrieval tasks. 
 
@@ -64,24 +62,7 @@ The use of emoji - a pictogram that expresses the author's feeling and emotion -
 \end{figure}
 
 
-<!--, however, the size of the document is limited to a couple hundred words.Hence, LDA model is known for its low performance on these short online text due to the data sparcity.-->
-<!--The nature of the method depending on the number of observations - words - lead LDA to its systematic limit is when there exists data sparcity with short text data.
-\hh{do you have a citation for that problem? Otherwise this is a statement that you would need to prove. That would be a distraction. Instead, you can argue that emojis are part of texts used on social media and are not used in the analysis.}-->
-<!--\hh{OK, I'm feeling very old. Give examples for SNSs - I also don't quite see why you are separating SNS from UGC. Isn't UGC by default what makes SNS?}-->
-<!--\hh{Give some examples for tweets you scraped -- that will automatically lead into the use of emojis.}-->
-
 The use of emoji characters has three main benefits. First, it reduces the systematic problem of LDA with data sparsity. All emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating emoji characters into English text and related keywords increases the amount of the text observed, and thus leads to better LDA results. Second, each emoji character has a set of pre-determined topic dimension assigned to it by the official organization. This information can be used as auxiliary information during the topic matching process. Lastly, the emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing emoji translation to sentiment analysis. 
-
-<!--The development of Social Network Service(SNS) and User Generated Content(UGC) platforms have been providing a new channels for its users to communicate and share opinions with the fellow community members. Hundreds and thousands of new messages are shared every day on Twitter and Facebook; product reviews are posted on Amazon and Trip Advisor. The text contents of SNS and UGC is a raw information of Individual's perception and emotion. As one would expect, this distinct characteristic of SNS and UGC text data could be a valuable information in different academic disciplines and industries. As a result, different machine learning and natural language processing techniques were developed to evaluate text data.
-Most natural language processing(NLP) techniques require preparation procedures to improve its performance. Deleting stop words(determiners, conjunctions, prepositions, pronouns, auxiliary verbs, modals, and quantifiers) is an example of this preceding step. The result of this step increases the accuracy of the NLP by reducing the noise generated from words that does not convey any contextual meaning. In this context, emoji(a pictographic information that carries class of feelings) in the text data has been considered as a noise and was deleted prior to applying NLP techniques.
-Although deleting emoji Unicode before NLP is a standard operation, unlike deleting stop words, this does take away information that might have modest contribution to the context. emoji, originally driven from Japanese word e(picture) + moji(character), is a pictograph that has become widely used on internet web pages and on SNS platforms. emoji, much like its close relative emoticon, could provide visual representation of not only solid objects, but also emotions through facial expressions and symbols related to feelings and moods. Communication via traditional text characters, such as words in alphabets, may not be as effective and efficient as emojis when conveying emotions. For this reason, emoji gained popularity after 1990 especially after cell phones and internet came to wide use. Therefore, simply deleting emoji would reduce the information contained in the original text data.
-In contrast to filtering emoji characters out, reflecting emoji information during the evaluation have benefits. First, each emoji has pre-determined topic dimension set by the official organization. Therefore, crude topic matching may be accomplished using the emoji information. Second, emoji may be helpful for sentiment analysis. Being closely related to emotions and mood, sentiment analysis on emoji will provide auxiliary information. -->
-
-<!--\hh{What do we want to learn from the messages? This is where the problem statement goes.}-->
-
-<!--\ts{Should the packages used to run example be introduced here with brief steps?}
-\hh{the packages should go to the back into a 'technical details'. }-->
-
 
 # Latent Dirichlet Allocation (LDA)
 
@@ -90,17 +71,12 @@ A graphical overview of LDA is given in \autoref{fig:LDA}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"images/LDA_model".png}
-\caption{Graphical Model representation of LDA \label{fig:LDA} in plate notation.}
+\caption{Graphical model representation of LDA \label{fig:LDA} in plate notation.}
 \end{figure}
 
 Let $M$ be the total number of documents in the data set, and $N_m$ be the number of words in the $m^{th}$ document. Let $K$ be the total number of topics in the data. Define $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. LDA assumes the distribution of $w_{mn}$ to follow a Multinomial distribution with parameter $\phi_{z, w}$. $\phi_{z, w}$ is a probability of observing word $w$ in topic $z$. The model assumes that the distribution of words in topic $z$, i.e., $\boldsymbol\phi_{z}$, follows a Dirichlet distribution with prior $\boldsymbol\beta = \big[\beta_1 \cdots \beta_N \big]$. Let $z_mn$ be the topic of assigned to the word $w_{mn}$. Then, the model assumes $\boldsymbol{z_m}$ to follow a Multinomial distribution with parameter $\boldsymbol\theta_m$, where $\boldsymbol\theta_m$ is the distribution of topics in document $m$. The distribution of $\boldsymbol\theta_m$ is assumed to follow a Dirichlet distribution with a prior $\boldsymbol{\alpha} = \big[\alpha_1 \cdots \alpha_K \big]$. 
 
-
-<!--Assume that there is a text data consisting $M$ number of documents. Further assume that there are $K$ number of topics in the data set. In a text data, words are the only observable variable, and other variables such as the topic variable is hidden. In order to model this, LDA assumes that documents are represented as random mixtures over latent topic, and each topic is realized in terms of words.-->
-<!--\ts{I would like to keep the below paragraph and bullet points for now.}-->
 Let $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. We assume that the topic of $w_{mn}$ is $z_{m}$, a topic associated with document $m$.  Assume $z_m \sim Multinomial(\boldsymbol\theta_m)$, where $\boldsymbol\theta_m \sim Dirichlet(\boldsymbol\alpha)$ for all $m=1, \dots M$ and $\alpha>0$. For a given topic $z_m=k$, we assume that $w_{mn} \sim Multinomial(\boldsymbol\phi_k), n=1, \dots, n_m, m=1, \dots, M$, where $\boldsymbol\phi_k \sim Dirichlet(\boldsymbol\beta)$, $k=1, \dots, K$.
-
-<!--Let $w_{mn}$ be the $n^{th}$ word observed in the $m^{th}$ document with topic $z_{mn}$. The topic $z_{mn}$ is drawn from a distribution of topics in document $m$, denoted as $\theta_m$. Moreover, since each topic is characterized by words, word $w_{mn}$ is drawn from a distribution of words for topic $z_{mn}$, denoted as $\phi_{z_{mn}}$. LDA assumes that $\theta$ follows a Dirischlet distribution with parameter $\boldsymbol\alpha$, and $\phi$ follows a Dirischlet distribution with parameter $\boldsymbol\beta$. -->
 
 The summarization of the assumptions are written below.
 
@@ -139,19 +115,6 @@ $
 \end{enumerate}
 
 
-<!--Topic modeling puts effort on uncovering the semantic structure of the latent topics in a text collection. One of the popular method of topic modeling is the LDA. LDA views that a document is expressed as a mixture of topics, and a topic is a probability distribution over words where the probability distribution follows a Dirichlet distribution with some parameter $\alpha$ less than one.
-
-LDA is based on the two following principles:
-
-\begin{enumerate}
-\item Every document is a mixture of topics
-\item Every topic is a mixture of words
-\end {enumerate}
-
-To illustrate, a news paper document may contain several topics such as "politics", "economy", "spots", "entertainment", and etc. For a given topic "politics", common words may be "government", "trump", "president", "congress", and etc.-->
-
-<!--LDA assumes that the probability of documents are random mixture over unseen topics, and document $i$ having topic $k$ follows a Dirichlet distribution with some parameter $\alpha$. That is, if the probability of document $i$ having topic $k$ is denoted as $\theta_{i,k}$, then $\theta_i \sim Dir(\alpha)$. The second assumption says each topic is a mixture of words, and that the distribution of $n^{th}$ word will follow a multinomial distribution conditioned on the topic z. The probability of word given a topic is denoted as $\beta$.  Then $\beta$ has a Dirichlet distribution with parameter $\eta$.-->
-
 Then, the total probability of the model is given as the product of the conditional probabilities
 $$p(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
 
@@ -161,17 +124,9 @@ $$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p
 The posterior distribution is given as the following equation, however, it is intractable for exact inference and Gibbs sampling is used to infer the variables.
 
 $$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, z, w | \alpha, \beta)}{p(w|\alpha, \beta)}$$
-<!--However, this posterior distribution is intractable for exact inference. 
-\ts{intractable.  LDA package uses Gibbs sampling approach. explain this in more details.}-->
 
 
 # Data preparation
-
-<!--\ts{data comes with text format. need data preparation.}-->
-
-<!--As aforementioned, LDA assumes that documents are represented as random mixtures over latent topics and each topic is characterized by a distribution over words. Therefore, the frequency of each word influence the outcome of the LDA.-->
-
-<!--\hh{stop words, stemming, ... should go into a separate section called 'Data preparation'}-->
 
 ## Removing Stop Words
 
@@ -179,10 +134,6 @@ A natural language can be categorized as two distinctive set of words: content/l
 
 LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA vulnerable to high frequency function/structural words. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis. This group of words is called `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the analysis done here, the `tm` package in `R` was used to delete the stop words.
 
-<!--Stop words are a group of natural language words that are essential in construction of grammatical structure of English. For example, words such as "a", "an", "the", "that", "these", "my", "his", "most", "with", and \textit{et cetera} is an example of stop words. Although these words are crucial elements of English structure, however, these stop words are less important when it comes to the purpose of delivering the meanings. Also, high frequency and abundance nature of these stop words makes little value in helping text mining techniques, and thus be filtered out.-->
-
-
-<!--\hh{give some examples following the tweets or again go back to the xkcd example}-->
 
 \begin{table}[ht]
 \centering
@@ -204,18 +155,9 @@ LDA models a document as a mixture of topics, and then each word is drawn from o
 
 ## Stemming
 
-Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on the root "stem". <!--These different form of words with the same root word may cause difficulties applying some text mining techniques.--> Words with the same meaning but different forms contribute to data sparsity, reducing the performance of the LDA method. `Stemming` cuts inflectional forms of a word to its root form and increases the frequency of observed stems.
+Due to structural and grammatical reasons of English, a family of words that are driven from a single root word is used in different forms. For example, words such as "stems", "stemmer", "stemming", and "stemmed" are all based on the root "stem".  Words with the same meaning but different forms contribute to data sparsity, reducing the performance of the LDA method. `Stemming` cuts inflectional forms of a word to its root form and increases the frequency of observed stems.
 
 Stemming has two disadvantages. First, there is the possibility of over stemming. For example, three different words "universal", "university", and "universe" have the same stemmed word "univers". The accuracy of the LDA method may decrease by putting words with different meanings into a single topic. Moreover, when the LDA output is given as a stemmed word, it is difficult to trace the stemmed word back to its original form. To overcome this problem, this paper matched the stemmed word to the most frequently used original word. Example of stemming  using the `tm` is provided in \autoref{tab:stemmed}.
-
-<!--\hh{Is there something we can do about overstemming?}-->
-
-<!--XXX Explain why we cannot trace back to the original form XXX
-\hh{there's different ways to resolve that - most times we use the most frequent word/version for  this stem.}-->
-
-<!--\hh{include a couple of examples}-->
-<!--\ts{Example of stemming provided below}-->
-
 
 \begin{table}[ht]
 \centering
@@ -232,9 +174,6 @@ Stemming has two disadvantages. First, there is the possibility of over stemming
 \label{tab:stemmed}
 \end{table}
 
-
-<!--\hh{n-grams and just generally features of documents}-->
-<!--\ts{feature extraction. n-grams is just one of them and I have used uni-gram. justify why.}-->
 
 ## n-gram
 n-gram is a neighboring sequence of n items from a collection of text data set. This item could be anything from phonemes or syllables to letters or words based on the application. Applying the concept of n-gram is important in computational linguistics is important especially with LDA, since n-gram is used as part of the prior distribution.
@@ -265,11 +204,7 @@ Moreover, n-gram approach can help identify misspelled words or out-of-vocabular
 
 ## Data Set and exploratory data analysis
 
-<!--\hh{more info on the data: use dates - should we wrap this into a shiny app down the road?}-->
-<!--\ts{Shiny had a problem with instant web scraps last year. I am not certain if that problem is fixed now.}-->
-
-<!--\ts{Update the the dataset? I can always scrape a new sets of data and reflect the dates information.}-->
-Two samples of twitter messages with the following hash-tag #inlove and #hateher were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
+Three samples of Twitter messages with the following hash-tag #inlove, #hateher, and #marchscience were scraped. The data set contains 944 #inlove messages, 1145 #hateher messages, and 1195 #marchscience messages. The proportion of Twitter messages containing emoji characters per hashtag is illustrated in \autoref{tab:EProp}. 52.7% of the #inlove tweets, 29.3% of the #hateher tweets, and 7.8% of #marchscience tweets make use of one or more emojis.
 
 ```{r load_twitter_data, eval=T, echo=F}
 twitter_example_inlove=readRDS("../data/twitter_inlove.Rds")
@@ -316,8 +251,8 @@ pander(emoji_freq, split.table = 180, style = 'rmarkdown', caption = "\\label{ta
 
 For the hashtag #inlove, a total number of 1188 emojis were used, consisting of 182 unique emojis. 
 For hashtag #hateher, 695 emojis from 112 unique emojis were used.
-For hashtag #sciencemarch, 202 emojis from 102 unique emojis were used (Note that there may be multiple emojis per Twitter message).
-Top 5 frequently used emojis per hashtag is given in \autoref{tab:EPopular}.
+For hashtag #sciencemarch, 202 emojis from 102 unique emojis were used<!--(Note that there may be multiple emojis per Twitter message)-->.
+Top 5 frequently used emojis per hashtag is given in \autoref{tab:EPopular}. It was interesting to see "Face with tear of joy" as the most popular emoji for hashtag #hateher. Although the name itself contains the word "joy", some users of this emoji adopted this pictogram to express their mixed feeling of love and hate at the same time.
 
 \begin{table}[htbp]
 \centering
@@ -336,29 +271,19 @@ U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} 
 \label{tab:EPopular}
 \end{table}
 
-<!--
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=150mm]{"images/pop_emoji".png}
-\caption{Five most popular emoji for each hastags \label{fig:EPopular}}
-\end{figure}
--->
+Two hashtag #inlove and #hateher were selected since the two topics should contain the opposite sentiments. The hastag #sciencemarch was used as a control topic, thus making all hashtags distinctive. If the performance of the LDA is effective, then the composition words assgined to each latent topic should have similar characteristics based on the three initial hastags.
 
-It is interesting to see "Face with tear of joy" as the most popular emoji for hashtag #hateher. Although the name itself contains the word "joy", some users of this emoji adopted this pictogram to express their mixed feeling of love and hate at the same time.
-
-
+\pagebreak
 
 ##Results
 
 LDA was performed on the following three difference cases:
 
 \begin{enumerate}
-\item LDA on a raw data set
-\item LDA on a data set with Unicode removed
-\item LDA on a data set with emoji translated to text
+\item LDA on a data set with emoji characters deleted
+\item LDA on a data set with emoji characters as unicode
+\item LDA on a data set with emoji translated into English
 \end{enumerate}
-
-\pagebreak
 
 A ternary plot is a triangular graph that displays three variables with respect to its proportion that sum to one. Ternary plots were used to illustrate the LDA ouput of the three different cases listed above. Each corner of the triangle represents the topic determined by the LDA method. The conditional probability of a topic given a word was calculated for all words in the corpus. The calcualted conditional probability was used as the proportion to construct the ternary plot.
 
@@ -399,10 +324,11 @@ stop_stem$V1 %>%
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.raw=terms(lda,10)
-pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")->LDAraw
+# pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")->LDAraw
 ```
 
-```{r LDAraw_graph,  fig.cap="\\label{fig:raw_bar}Bar chart of the LDA output with the raw unicode characters", eval=T, echo=F}
+
+```{r LDAraw_graph,  eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
@@ -413,12 +339,13 @@ ap_top_terms <- ap_topics %>%
   arrange(topic, desc(phi)) #%>%View()
 
 # ap_top_terms<-ap_top_terms[-11,] #Two topic 1 with same phi
-
+# 
  # split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
  #  do.call("cbind",.) %>%
  #  select(everything(), -contains("topic")) %>%
  #  mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
- #  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic")->LDArawp
+ #   xtable()
+ #  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic") %>%#->LDArawp
 
 # plot_ea_topic=function(topic_number, y_lim){
 # ap_top_terms %>%
@@ -500,7 +427,7 @@ save_raster_tern
 ```
 
 
-```{r ternary_plot_via_ggplot2, fig.cap="\\label{fig:raw_tern}Ternary plot of the LDA output including the raw unicode characters"}
+```{r ternary_plot_via_ggplot2, fig.pos='h', fig.cap="\\label{fig:raw_tern}Ternary plot of the LDA output including the raw unicode characters"}
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 # g<-rasterGrob(test, interpolate = T)
@@ -570,10 +497,10 @@ stop_stem %>%
 
 lda=LDA(dtm,k = 3, control = list(alpha=1))
 lda.no_uni=terms(lda,5)
-pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_uni} Output of LDA with the raw data without the Unicode")->LDA_no_uni
+# pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_uni} Output of LDA with the raw data without the Unicode")->LDA_no_uni
 ```
 
-```{r LDA_no_uni_graph, fig.cap="\\label{fig:no_bar}", eval=T, echo=F}
+```{r LDA_no_uni_graph, eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
@@ -586,8 +513,8 @@ ap_top_terms <- ap_topics %>%
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
   select(everything(), -contains("topic")) %>%
-    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")->LDA_no_unip
+    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) ->LDA_no_unip#%>%
+  # pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")->LDA_no_unip
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
 # grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
@@ -625,7 +552,7 @@ plot_this %>%
 #   geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
 
-```{r no_ternary_plot_via_ggplot2, echo=F, fig.cap="\\label{fig:no_tern}"}
+```{r no_ternary_plot_via_ggplot2, echo=F, fig.pos='h', fig.cap="\\label{fig:no_tern}"}
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 save_annotation_custom=use_this2%>%
@@ -706,10 +633,10 @@ stop_stem %>%
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.t=terms(lda,5)
-pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")->LDA_t
+# pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")->LDA_t
 ```
 
-```{r LDA_T_graph, eval=T, echo=F, fig.cap="\\label{fig:trans_bar}"}
+```{r LDA_T_graph, eval=T, echo=F}
 ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
@@ -722,8 +649,8 @@ ap_top_terms <- ap_topics %>%
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
   do.call("cbind", .) %>%
   select(everything(), -contains("topic")) %>%
-    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
-  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")->LDA_Tp
+    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`)))->LDA_Tp #%>%
+  # pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")->LDA_Tp
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
 # grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
@@ -769,7 +696,7 @@ plot_this %>%
  # geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
 
-```{r trans_ternary_plot_via_ggplot2, echo=F, fig.cap="\\label{fig:trans_tern}"}
+```{r trans_ternary_plot_via_ggplot2, echo=F, fig.pos='h', fig.cap="\\label{fig:trans_tern}"}
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 save_annotation_custom=use_this2%>%
@@ -797,114 +724,87 @@ save_annotation_custom+
 
 <!--## MARKER START-->
 
-```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output Displayed as a Ternary Plot for each Methods', eval=T, fig.subcap=c('\\label{fig:trans_tern}Translating All Unicode Characters', '\\label{fig:no_tern}Excluding All Unicode Characters', '\\label{fig:raw_tern}With Raw Unicode Characters'),  fig.scap=NA}
+```{r test1, out.width='.33\\linewidth', fig.width=3.5, fig.height=3.5, fig.cap='\\label{fig:TPlot}LDA Output displayed as a ternary plot for each methods', eval=T, fig.subcap=c('\\label{fig:trans_tern} Emoji translated in English', '\\label{fig:no_tern} All emoji characters excluded', '\\label{fig:raw_tern} All emoji characters included'),  fig.pos='h', fig.scap=NA}
 fig_trans_tern
 fig_no_tern
 fig_raw_tern
 ```
 
+The first Figure\autoref{fig:trans_tern} have words clustered at the center of the ternary plot. The second Figure \autoref{fig:no_tern} have words spreaded our more than Figure\autoref{fig:trans_tern}, but not as much as the Figure \autoref{fig:raw_tern}. The last Figure\autoref{fig:raw_tern} have four distinctive clusters. Three at each end point of the triangle, and a small cluster at the center. The ternary plot in \ref{fig:TPlot} indicate that the performance of the LDA on the last \ref{fig:raw_tern} was the best since it successfully assigned words with similar characteristics to each laten topics, and a group of general words at the center of the ternary plot.
 
-### LDA on a raw data set
-The first case was to run LDA on a raw data set. Different number of topic dimensions were tested and the result of 3 topic dimension with 10 terms is provided in \autoref{tab:LDArawp}. The bar chart in \autoref{fig:raw_bar} showed that LDA successfully distinguished the corpus into three different topics. The bar chart illustrated that Topic 1 is related to 'Science March', Topic 2 is related to 'Hate her', and Topic 3 is related to 'In Love'. In order to visualize the probability of a word given topic, a ternary plot was constructed in \autoref{fig:raw_tern}.  The ternary plot showed that four different groups of words: three groups of words were strongly affiliated with one of the topics. These groups of words were clustered at the end of each vertices. The other group of words was located at the center of the triangle which represented words that are not associated with a specific topic. According to this ternary plot, emoji characters had strong connection with a particular topic.
+
+\pagebreak
+
+### LDA with emoji characters deleted
+The current standard practice in natural language processing removes emoji characters from the text data. For the first case, therefore, all emoji characters provided as unicode were removed from the data set before performing LDA. The result of the LDA with three topic dimensions is provided in \autoref{tab:LDA_no_unip}. The bar-chart in \autoref{fig:no_bar} demonstrated that the LDA method did not successfully distinguish the three topics well. The words in Topic 1 turned out to be a mixture of 'Hate Her' and 'Science March', Topic 2 had all three topics, and Topic 3 was associated with 'Hate Her' and 'In Love'. Ternary plot constructed in \autoref{fig:no_tern} showed that the output from the LDA was located at the center of the ternary plot. This indicates that words are weakly connected to all topic dimensions supporting that LDA was not effective.
 
 ```{r, echo=F}
-LDAraw
-#LDArawp
-raw_bar
+# pander(lda.no_uni, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_uni} Output of LDA with the raw data without the Unicode")
+LDA_no_unip %>% head(5) %>% pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} LDA output of conditional probability of word given topic when emoji characters are deleted")
 ```
 
-
-### LDA without Unicode
-In most text mining examples, LDA is performed after removing the Unicode information. For the second case, Unicode characters were removed from the raw text data set before performing LDA. The result of the LDA with three topic dimensions is provided in \autoref{tab:LDA_no_unip}. The bar-chart in \autoref{fig:no_bar} demonstrated that the LDA method did not distinguish the three topics well. Topic 1 turned out to be a mixture of 'Hate Her' and 'Science March', Topic 2 had all three topics, and Topic 3 was associated with 'Hate Her' and 'In Love'. Ternary plot constructed in \autoref{fig:no_tern} shows that the output from the LDA was located at the center of the ternary plot. This indicates that words had weak connection to any topic dimensions.
-
-```{r, echo=F}
-LDA_no_uni
-LDA_no_unip
+```{r, fig.cap="\\label{fig:no_bar} Graphical display of Table 6", fig.pos='h', fig.height=4, echo=F}
 no_bar
 ```
 
-### LDA with name translated
-The last case was to perform LDA after translating the Unicode emoji characters in English. <!--`unicode` package was used to match the Unicode to its name. Then the standard process of stemming and deletion of stop words where performed.--> The output of LDA with translation is provided in \autoref{tab:LDA_tp}. The bar-chart in \autoref{fig:trans_bar} revealed that the performance of the LDA method was ineffective.  Words from 'Hate Her' and 'Science March' were assigned to Topic 1, top words in Topic 2 were from 'In Love', 'Hate Her', and 'Science March', and top words in Topic 3 were composed with words from 'Hate Her' and 'In Love'. The ternary plot in \autoref{fig:trans_tern} also showed that there were no strong relationship between the words and a specific topic. 
+\pagebreak
+
+### LDA with emoji translated in English
+Each emoji characters can be translated into a multi-gram English word. Thus, LDA was practiced on the data with English translated version of the emoji characters. The output of LDA with translation is provided in \autoref{tab:LDA_Tp}. The bar-chart in \autoref{fig:trans_bar} revealed that the performance of the LDA method was ineffective.  Words from 'Hate Her' and 'Science March' were assigned to Topic 1, top words in Topic 2 were from 'In Love', 'Hate Her', and 'Science March', and top words in Topic 3 were composed with words from 'Hate Her' and 'In Love'. The ternary plot in \autoref{fig:trans_tern} also showed that there were no strong relationship between the words and a specific topic. 
 
 ```{r, echo=F}
-LDA_t
-LDA_Tp
+# pander(lda.t, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_t} Output of LDA with translated Unicode")
+LDA_Tp %>%  head(5) %>% pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Conditional probability of word given topic when emoji characters are translated into English")
+```
+
+```{r, fig.cap="\\label{fig:trans_bar} Graphical display of Table 7", fig.pos='h', fig.height=4,echo=F}
 trans_bar
 ```
 
+\pagebreak
 
+### LDA with emoji characters as unicode
+For the last case, LDA was performed with the data set including emoji characters as unicode. The \autoref{tab:LDAraw} and \autoref{fig:raw_bar} showed that LDA successfully distinguished the corpus into three different topics. The bar chart illustrated that Topic 1 is related to 'Science March', Topic 2 is related to 'Hate her', and Topic 3 is related to 'In Love'. In order to visualize the probability of a word given topic, a ternary plot was constructed in \autoref{fig:raw_tern}.  The ternary plot showed that four different groups of words: three groups of words were strongly affiliated with one of the topics. These groups of words were clustered at the end of each vertices. The other group of words was located at the center of the triangle which represented words that are not associated with a specific topic. According to this ternary plot, emoji characters had strong connection with a particular topic.
+
+```{r echo=F}
+# pander(lda.raw, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDAraw} Output LDA with the raw data")
+```
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rllllll}
+  \hline
+ & 1.term & 1.phi & 2.term & 2.phi & 3.term & 3.phi \\ 
+  \hline
+1 & inlov & 0.0910 & sciencemarch & 0.0881 & hateh & 0.1003 \\ 
+  2 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F60D.png} & 0.0302 & scienc & 0.0322 & \includegraphics[width=0.02\textwidth, height=60mm]{images/U+1F602.png} & 0.0139 \\ 
+  3 & love & 0.0241 & march & 0.0182 & just & 0.0108 \\ 
+  4 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+2764.png} & 0.0163 & will & 0.0092 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F644.png} & 0.0085 \\ 
+  5 & beauti & 0.0073 & join & 0.0087 & get & 0.0061 \\ 
+  6 & just & 0.0062 & marchforsci & 0.0082 & like & 0.0061 \\ 
+  7 & new & 0.0060 & saturday & 0.0081 & bitch & 0.0055 \\ 
+  8 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F495.png} & 0.0049 & sign & 0.0063 & cbb & 0.0042 \\ 
+  9 & happi & 0.0045 & april & 0.0058 & one & 0.0040 \\ 
+  10 & inlove… & 0.0043 & scientist & 0.0056 & want & 0.0039 \\ 
+   \hline
+\end{tabular}
+\caption{LDA output including emoji characters as unicode} 
+\label{tab:LDAraw}
+\end{table}
+
+```{r, fig.cap="\\label{fig:raw_bar} Graphical display of Table 8", fig.pos='h', fig.height=4, echo=F}
+raw_bar
+```
+
+\pagebreak
 
 # Conclusion and Discussion 
-Using Twitter text messages of three different hastags, we examined the performance of LDA with respect to emoji characters. Overall, our results suggest that LDA with raw emoji characters embedded in the text data performed the best. While the LDA method when all emojis were deleted and the LDA method when all emojis were translated genertated ternary plots \autoref{fig:trans_tern} and  \autoref{fig:no_tern} where words were clusterd at the center of the graphs. This indicate that the LDA method was not able to assign words into three unknown topics.  On the other hand, \autoref{fig:raw_tern} showed that three clusters of words were plotted at each end point of the triangle for method when raw unicode characters were used for the LDA method. These plots indicate that LDA performed the best when the raw unicode characters were used for the analysis.<!--The results of LDA outputs showed that LDA performed the best with emoji information embedded as raw Unicode characters. The method well distinguished the words assigned to three topics as shown in \autoref{fig:TPlot}. The ternary plot in \autoref{fig:raw_tern}, \autoref{fig:no_tern}, and \autoref{fig:trans_tern} also supported the claim by illustrating the strength of the relationship between a word and the three topics.-->
+Using Twitter text messages of three different hastags, we examined the performance of LDA considering three different cases with emoji characters. Overall, our results from \ref{fig:TPlot} suggest that LDA with emoji characters embedded in the text data as unicode performed the best. \ref{fig:raw_tern} was not only able to assign similar words to each latent topic but also determined terms that were used among all topics such as "just", "one", and "like" and displayed at the center of the plot. <!--While the LDA when all emojis were deleted and the LDA method when all emojis were translated genertated ternary plots \autoref{fig:trans_tern} and  \autoref{fig:no_tern} where words were clusterd at the center of the graphs. This indicate that the LDA method was not able to assign words into three unknown topics.  On the other hand, \autoref{fig:raw_tern} showed that three clusters of words were plotted at each end point of the triangle for method when raw unicode characters were used for the LDA method. These plots indicate that LDA performed the best when the raw unicode characters were used for the analysis.-->
 
 One explanation of the outcome is that translating emoji characters into English affects the performance of LDA by introducing new words with sparsity issue or words that could be assigned to multiple different topics. Emoji characters aggregate -- otherwise separated -- n-gram words into a single character. For example, commonly used Unicode characters in the data set such as 'U+1F602', 'U+1F644', 'U+1F60D', 'U+1F618', 'U+2764', and 'U+1F495' can be translated to English as 'face with tears of joy', 'face with rolling eyes', 'smiling face with heart eyes', 'face blowing a kiss', 'red heart', and 'two hearts' respectively. 
 
-The translation approach introduces new words, and even after removing stopwords and stemming, the distribution of words in the data set changes. For example, the multi-gram translations share words such as 'face', and 'heart' are used in emoji characters that have different meaning. Also, it produces a few meaningless as a byproduct of translation. Since LDA methods are affected by the frequency of words in the data set, the effect of the translation method as alluded to above may affect the performance of the LDA as shown in case three.
+The translation approach introduces new words, and even after removing stopwords and stemming, the distribution of words in the data set changes. This approach may increase the number of words with insignificant meanings or it may introduce data sparsity for words that are important for topic modeling. As alluded to previously, the multi-gram translations share words such as 'face' for multiple emojis that may not have the same characteristic. Since LDA methods are affected by the frequency of words in the data set, the effect of the translation method as aforementioned above may affect the performance of the LDA as shown in case three. Since only uni-gram-level LDA was examined in this paper, a multi-gram-level LDA with English translated emoji maybe considered as a future research topic.
 
+Moreover, deleting emoji characters will lead to information loss in the text data. Emoji are rich in contextual information, thus deleting the entire emoji characters lead to a greater information loss and consequently affected the output of the LDA. The comparison of the \ref{fig:no_tern} and \ref{fig:raw_tern} supports this claim.
 
-Moreover, deleting emoji characters will lead to information loss in the text data. Emoji are rich in information, thus deleting the entire emoji characters lead to a greater information loss and consequently affected the output of the LDA. The comparison of the \autoref{fig:no_tern} and \autoref{fig:raw_tern} supports this claim.
-
-<!--of the exploratory analysis indicates, user-generated-contents may contain Unicode emoji characters. These emoji characters sometimes carry mixture of condensed information that is difficult to express in a single word. The result of the output from the LDA indicates that words such as "heart" that would have been neglected using the traditional method may be saved when the Unicode characters are translated into meanings.-->
-
-<!--
-# Appendix
-
-# `emoji` package in R
-\textbf{Plan to change this part after posting the emoji package on CRAN}
-
-## Description of the emoji package
-
-The `emoji` package contains information of the emoji v5.0 from its official publisher the \href{http://unicode.org/emoji/charts/emoji-list.html}{Unicode Consortium}. The illustration of the web page is shown in \autoref{fig:uni_web}.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=100mm]{"images/unicode_webpage".png}
-\caption{Glimpse of the table of emoji on the Unicode.org website \label{fig:uni_web}}
-\end{figure}
-
-The data set `emoji` in the `emoji` package contains 8 variables:
-
-uni_no: Official number of emojis$\\$
-uni_code: Formal Unicode of emojis$\\$
-uni_name: Official name of emojis$\\$
-cat1: Official category of emojis$\\$
-cat2: Official sub-category of emojis from cat1$\\$
-cat3: Official sub-category of emojis from cat2$\\$
-uni_keyws: Official keyword(s) of emojis$\\$
-uni_png: Image of emojis in PNG format represented in a matrix format$\\$
-
-The package has a function `emoji_info_table` that summarizes all emoji and their information used in a single character string.
-
-
-## Scoring of Sentiment
-
-The characteristic of emoji (effectively delivers feelings and moods), naturally leads text mining with emoji to sentiment analysis. `tidytext` package in R has three general purpose lexicon sets. The `AFINN` score words from -5 to 5 scale, `bing` assigns words in binary category(positive and negative), and `nrc`assigns words with more categories. 
-
-
-
-```{r show_pkg_info, echo=F, eval=F}
-# library(emoji)
-sample_string="Obviously #hateher  U+1f495  U+1f60f  U+1f469  @ Los Angeles, California https://www.instagram.com/p/BCbPSxxGVua/"
-emoji_info_table(sample_string) %>%
-pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:pkg}Example of the emoji package")
-```
-
-
-
-```{r show_dataset, echo=F, eval=F}
-uni_info=readRDS("../data/uni_info_v8.Rds")
-egdat=head(uni_info,5)
-edgat=egdat[,-c(6:7,13)]
-
-pander(edgat, split.table = 180, style = 'rmarkdown', caption = "\\label{tab:dataset}Information of 5 emoji data set")
-```
-
-
-# More work
-0. Technical details
-The `tm`, `topicmodels`, `emoji`, `tidytext`, and `tidyverse` package in `R` was written to help the above analysis.
-1. Check Stemming - scienc vs. science
-2. Check output again. Also, a check aggregation of short messages to avoid data sparsity.
-3. LDA explanation
-4. Description of the emoji package
--->
+In conclusion, this paper provided several insights that have implication for the performance of the LDA considering emoji characters. Considering that emojis are widely used on various SNS platforms and these SNS data are becoming importat as marketing and social studies, our reults suggest that emoji characters should be kept as unicode characters throughout the LDA analysis. 
