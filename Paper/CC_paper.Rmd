@@ -1,9 +1,9 @@
 ---
-title: "Latent Dirichlet Allocation Models Considering Emojis"
+  title: "Latent Dirichlet Allocation Models Considering Emojis"
 author: "Taikgun Song"
 data: 'system.time'
 header-includes:
-- \usepackage{amsmath}
+  - \usepackage{amsmath}
 - \usepackage{graphicx}
 - \usepackage{bbm}
 #- \usepackage{subcaption}
@@ -15,8 +15,8 @@ header-includes:
 - \usepackage{subfig}
 output:
   pdf_document:
-    fig_caption: yes
-    number_sections: yes
+  fig_caption: yes
+number_sections: yes
 documentclass: article
 classoption: letterpaper
 #geometry: margin=1in
@@ -38,10 +38,7 @@ load("../data/emojidata.rda")
 ```
 
 \begin{abstract}
-Latent Dirichlet Allocation (LDA) is a popular topic modeling technique for natural language processing. Emoji is a pictogram that is commonly used on Social Networking Service (SNS) such as Twitter and Instagram. Conventionally, emoji characters were deleted before applying LDA to text data from SNS. In this research, we compared the performance of the LDA under three different cases: (1) LDA with text data including emojis as unicode characters, (2) LDA with emoji characters excluded from the data, and (3) LDA after translating the emoji characters into English. Using Twitter text messages of three different hastags, our analyses revealed that case (1) LDA with text data including emojis as unicode characters identified the topics the best. Our result highlights that an emoji character aggregates information of n-gram words into a uni-gram word which significantly enhances the performance of LDA by preventing the loss of information during the exclusion or translation process.
-
-Emoji characters have an increasing role in our interactions on social media, allowing us to express a range of feelings in just a single (Unicode) character. This makes emojis a rich source of information in textual analyses. 
-We compare the performance of  Latent Dirichlet Allocation (LDA) in the presence of emojis. We explore the impact of  emojis by conducting LDA in three different scenarios:  (1) Standard practice in LDA is to delete any non ASCII characters (including emojis), (2) LDA with Emojis left in their raw text form, and (3) LDA after translating the emoji characters into their English counterpart. Using Twitter text messages from three different hashtags, our analyses reveals that case (2) LDA with Emojis left in their raw text form identifies these topics the best. Our results highlight that emoji characters are similar in  information to selected n-gram words and the loss of information by deleting  emojis or translating them into (multi-gram) English words significantly reduces the LDA performance.
+Latent Dirichlet Allocation (LDA) is a popular topic modeling technique for natural language processing. However, in social networking services (SNS), such as Twitter and Instagram, we often use emojis to communicate feelings and emotions in a pictorial form rather than words. Conventionally, emoji characters are deleted before applying an analysis to  text data from SNS. In this paper, we compare the performance of  LDA under three different scenarios: (1) LDA with text data including emojis as unicode characters, (2) LDA with emoji characters excluded from the data, and (3) LDA after translating the emoji characters into English. Using Twitter text messages of three different hashtags, our analyses reveal that case (1) LDA with text data including emojis as unicode characters identified the topics the best. Our result highlights that an emoji character aggregates information of n-grams into a uni-gram word which significantly enhances the performance of LDA by preventing the loss of information during the exclusion or translation process.
 \end{abstract}
 
 \tableofcontents
@@ -49,12 +46,12 @@ We compare the performance of  Latent Dirichlet Allocation (LDA) in the presence
 # Introduction
 
 
-Text data contains valuable insights that is useful for content recommendation, customer care service, social media analysis, and others.  However, the information is usually hidden within the text and has to be extracted using a modeling approach. Topic modeling is a text-mining method that extracts information from a text by identifying latent semantic structures in the text body. One of the most widely used topic modeling methods is the Latent Dirichlet Allocation(LDA).  LDA is a hierarchical Bayesian model which assumes that each of the documents in a collection consists of a mixture of topics, and these topics are responsible for the choice of words in each document. Topics, are the latent part of the document set and one can only observe words collected in the documents. LDA uses statistical inference to discover structure given the words and documents by calculating the relative importance of topics in documents and words in topics.
+Text data contains valuable insights that is useful in many areas, such as for example content recommendation, customer care service, social media analysis, and others.  However, the information is usually hidden within the text and has to be extracted using a modeling approach. Topic modeling is a text-mining method that extracts information from a text by identifying latent semantic structures in the text body. One of the most widely used topic modeling methods is the Latent Dirichlet Allocation (LDA).  LDA is a hierarchical Bayesian model which assumes that each of the documents in a collection consists of a mixture of topics, and these topics are responsible for the choice of words in each document. Topics are the latent part of the document set and one can only observe words collected in the documents. LDA uses statistical inference to discover structure given the words and documents by calculating the relative importance of topics in documents and words in topics.
 
 
-The rapid growth in internet and telecommunication technology triggered the development of Social Network Services(SNS) platform such as Tweeter, Facebook, and blog posts. The SNS messages often include individual's perceptions, feelings, and opinions. Evaluating this data may be meaningful for policy makers, social science researchers, and business entrepreneurs. This electronic word-of-mouth heavily uses text data as the medium of communication. Thus, topic modeling including LDA may be ideal method for analyzing SNS text data for information retrieval tasks. 
+The rapid growth in internet and telecommunication technology triggered the development of Social Network Services (SNS) platform such as Tweeter, Facebook, and blog posts.  SNS messages often include individuals' perceptions, feelings, and opinions. Evaluating this data may be meaningful for policy makers, social science researchers, and business entrepreneurs. This electronic word-of-mouth heavily uses text data as the medium of communication. Thus, topic modeling including LDA is a good method for analyzing SNS text data for information retrieval tasks. 
 
-The use of emoji - a pictogram that expresses the author's feeling and emotion - mixed in with other text is a unique characteristic of SNS messages that distinguishes itself from other text data. As shown in \autoref{fig:twe}, many SNS messages can be found with emoji embedded in the content. Conventionally, emoji characters have been considered as a noise and were deleted prior to applying LDA techniques and other topic modeling methods. Nevertheless, one should focus on the richness of information that emoji characters can provide. Especially consider the emotional and symbolic representation of emoji that cannot be better expressed with alphabet characters. Therefore, in contrast to the typical topic modeling procedure, this paper proposes the idea of incorporating emoji characters to enhance the performance of the LDA method on SNS text data.
+The use of emojis - pictograms that express the author's feelings and emotions - mixed in with other text is a unique characteristic of SNS messages that distinguishes it from other text data. However, a large percentage of SNS messages include emojis (see \autoref{fig:twe} for some examples). Conventionally, emoji characters have been not been considered as useful information and are traditionally deleted during the data cleaning process prior to applying LDA techniques and other topic modeling methods. Nevertheless, one should focus on the richness of information that emoji characters can provide. Especially consider the emotional and symbolic representation of emoji that cannot be better expressed with words. Therefore, in contrast to the typical topic modeling procedure, this paper proposes the idea of incorporating emojis in the analysis to enhance the performance of the LDA method on SNS text data.
 
 
 \begin{figure}[htbp]
@@ -64,12 +61,11 @@ The use of emoji - a pictogram that expresses the author's feeling and emotion -
 \end{figure}
 
 
-The use of emoji characters has three main benefits. First, it reduces the systematic problem of LDA with data sparsity. All emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating emoji characters into English text and related keywords increases the amount of the text observed, and thus leads to better LDA results. Second, each emoji character has a set of pre-determined topic dimension assigned to it by the official organization. This information can be used as auxiliary information during the topic matching process. Lastly, the emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing emoji translation to sentiment analysis. 
+The use of emoji characters has three main benefits: (1) it helps in reducing  the systematic problem of LDA with data sparsity. All emoji characters have name and keywords associated with the contextual meaning that it conveys. By translating emoji characters into English text and related keywords increases the amount of  text observed, and thus leads to better LDA results. (2) each emoji character has a set of pre-determined topic dimension assigned to it by the Unicode Consortium. This information can be used as auxiliary information during the topic matching process. (3) the emoji character itself is an abstract of emotion and symbolic representation. Thus, it is natural to take the output of LDA containing emoji translation to sentiment analysis. 
 
 # Latent Dirichlet Allocation (LDA)
 
-At its core Latent Dirichlet Allocation is a generative statistical model, that identifies posterior probabilities of words belonging to previously unidentified topics, and topics belonging to documents. The underlying model is generally not analytically tractable, but uses a Gibbs sampling approach instead. Here, we are deriving the  posterior distributions involved in more detail.
-A graphical overview of LDA is given in \autoref{fig:LDA}.
+At its core Latent Dirichlet Allocation is a generative statistical model, that identifies posterior probabilities of words belonging to previously unidentified topics, and topics belonging to documents. The underlying model is generally not analytically tractable, but uses a Gibbs sampling approach instead. Below, we are deriving the  posterior distributions involved in more detail; a graphical overview of LDA is given in \autoref{fig:LDA}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=100mm]{"images/LDA_model".png}
@@ -80,8 +76,7 @@ Let $M$ be the total number of documents in the data set, and $N_m$ be the numbe
 
 Let $w_{mn}$ be the $n^{th}$ word in the $m^{th}$ document. We assume that the topic of $w_{mn}$ is $z_{m}$, a topic associated with document $m$.  Assume $z_m \sim Multinomial(\boldsymbol\theta_m)$, where $\boldsymbol\theta_m \sim Dirichlet(\boldsymbol\alpha)$ for all $m=1, \dots M$ and $\alpha>0$. For a given topic $z_m=k$, we assume that $w_{mn} \sim Multinomial(\boldsymbol\phi_k), n=1, \dots, n_m, m=1, \dots, M$, where $\boldsymbol\phi_k \sim Dirichlet(\boldsymbol\beta)$, $k=1, \dots, K$.
 
-The summarization of the assumptions are written below.
-
+To summarize:
 \begin{enumerate}
 \item $M$: The total number of documents in the data set
 \item $N_m$: The number of words in the $m^{th}$ document
@@ -117,13 +112,13 @@ $
 \end{enumerate}
 
 
-Then, the total probability of the model is given as the product of the conditional probabilities
+This results in a joint density of the parameters used in the model as the product of the conditional probabilities:
 $$p(W, Z, \theta; \phi, \alpha, \beta)=\prod_{i=1}^{K}P(\phi_i;\beta)\prod_{j=1}^{M}P(\theta_j;\alpha)\prod_{t=1}^{N}P(Z_{j,t}|\theta_j)P(W_{j,t}|\phi z_{j,t})$$
 
-The marginal distribution of word w given hyper parameter $\alpha$ and $\beta$ is then obtained by integrating the below equation:
+The marginal distribution of word $w$ given hyperparameters $\alpha$ and $\beta$ is then obtained by integrating the  equation below:
 $$p(w|\alpha, \beta)= \int p(\theta|\alpha) \left(\prod_{v=1}^{V} \sum_{z_{v}} p(z_v|\theta)p(w_v|z_v, \beta) \right)d\theta$$
 
-The posterior distribution is given as the following equation, however, it is intractable for exact inference and Gibbs sampling is used to infer the variables.
+While the posterior distribution can be written as shown below, it is analytically intractable for exact inference and Gibbs sampling is used to infer the variables instead.
 
 $$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, z, w | \alpha, \beta)}{p(w|\alpha, \beta)}$$
 
@@ -132,21 +127,21 @@ $$p(\boldsymbol\theta, \textbf{z} | \textbf{w}, \alpha, \beta)= \frac{p(\theta, 
 
 ## Removing Stop Words
 
-A natural language can be categorized as two distinctive set of words: content/lexical words and function/structure words. Content/lexical words are words with substantive meanings. Function/structure words on the other hand have little lexical meaning, but establish grammatical structure between other words within a sentence. 
+A natural language can be categorized as two distinctive set of words: content/lexical words and function/structure words. Content/lexical words are words with substantive meanings, while function/structure words have little lexical meaning, but establish grammatical structure between the words within a sentence. 
 
-LDA models a document as a mixture of topics, and then each word is drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA vulnerable to high frequency function/structural words. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis. This group of words is called `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the analysis done here, the `tm` package in `R` was used to delete the stop words.
+LDA models a document as a mixture of topics, assuming that each word is then drawn from one of its topic. Therefore, the method depends on the frequency of observed words in a given text data set. This makes LDA vulnerable to high frequency function/structural words. Thus, any group of non-informative words including the function/structural words should be filtered out before doing an analysis. This group of words is called `stop words`. For example, prepositions(of, at, in, without, between), determiners(the, a, that, my), conjunctions(and, that, when), pronouns(he, they, anybody, it) are common examples of the `stop words`. For the analysis done here, the `tm` package in `R` was used to delete the stop words.
 
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{rp{.4\textwidth}p{.4\textwidth}}
-  \hline
- & Original Tweet & Tweet with Stopword Removed \\ 
-  \hline
+\hline
+& Original Tweet & Tweet with Stopword Removed \\ 
+\hline
 1 & loving this misty weather this sweater and my favorite couple & loving misty weather, sweater favorite couple\\ 
-  2 & fairytale atmosphere in alberobello Let's go for a walk& fairytale atmosphere alberobello Let's go walk\\ 
-  3 & Me when ashleytisdale puts a New music session on YouTube & Me ashleytisdale puts New music session YouTube\\ 
-   \hline
+2 & fairytale atmosphere in alberobello Let's go for a walk& fairytale atmosphere alberobello Let's go walk\\ 
+3 & Me when ashleytisdale puts a New music session on YouTube & Me ashleytisdale puts New music session YouTube\\ 
+\hline
 \end{tabular}
 \caption{Example of removing stop words using the Twitter data}
 \label{tab:stopword}
@@ -164,13 +159,13 @@ Stemming has two disadvantages. First, there is the possibility of over stemming
 \begin{table}[ht]
 \centering
 \begin{tabular}{rp{.4\textwidth}p{.4\textwidth}}
-  \hline
- & Original Tweet & Tweet after Stemming \\ 
-  \hline
+\hline
+& Original Tweet & Tweet after Stemming \\ 
+\hline
 1 & loving this misty weather, this sweater and my favorite couple & love this misti weather, this sweater and my favorit coupl\\ 
-  2 & fairytale atmosphere in alberobello  Let's go for a walk & fairytal atmospher in alberobello Let go for a walk\\ 
-  3 & Me when ashleytisdale puts a New music session on YouTube & Me when ashleytisdal put a New music session on YouTub\\ 
-   \hline
+2 & fairytale atmosphere in alberobello  Let's go for a walk & fairytal atmospher in alberobello Let go for a walk\\ 
+3 & Me when ashleytisdale puts a New music session on YouTube & Me when ashleytisdal put a New music session on YouTub\\ 
+\hline
 \end{tabular}
 \caption{Before and after Stemming} 
 \label{tab:stemmed}
@@ -185,15 +180,15 @@ An example of word-level-n-gram with text "he is a nice person" is given in \aut
 \begin{table}[ht]
 \centering
 \begin{tabular}{ccccc}
-  \hline
- 1-gram (unigram) & 2-gram & 3-gram & 4-gram & 5-gram\\ 
-  \hline
+\hline
+1-gram (unigram) & 2-gram & 3-gram & 4-gram & 5-gram\\ 
+\hline
 he & he is & he is a & he is a nice & he is a nice person\\ 
 is & is a & is a nice & is a nice person &\\ 
 a & a nice & a nice person & &\\ 
 nice & nice person & & &\\ 
 person &  & & &\\ 
-   \hline
+\hline
 \end{tabular}
 \caption{Example of word-level-n-gram}
 \label{tab:ngram}
@@ -223,27 +218,27 @@ pander(prop_emoji, split.table = 180, style = 'rmarkdown', caption = "\\label{ta
 
 ```{r, eval=F, echo=F}
 filter(twitter_example_inlove, grepl("U\\+",V1)) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
-  select(word) %>%
-  filter(grepl("u\\+",word)) %>%
-  count(word, sort = TRUE) %>%
-  head(5)->inlove_uni_count
+unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
+select(word) %>%
+filter(grepl("u\\+",word)) %>%
+count(word, sort = TRUE) %>%
+head(5)->inlove_uni_count
 colnames(inlove_uni_count)<-c("#inlove","Count")
 
 filter(twitter_example_hateher, grepl("U\\+",V1)) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
-  select(word) %>%
-  filter(grepl("u\\+",word)) %>%
-  count(word, sort = TRUE) %>%
-  head(5)->hateher_uni_count
+unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
+select(word) %>%
+filter(grepl("u\\+",word)) %>%
+count(word, sort = TRUE) %>%
+head(5)->hateher_uni_count
 colnames(hateher_uni_count)<-c("#hateher","Count")
 
 filter(twitter_example_marchscience, grepl("U\\+",V1)) %>%
-  unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
-  select(word) %>%
-  filter(grepl("u\\+",word)) %>%
-  count(word, sort = TRUE) %>%
-  head(5)->marchscience_uni_count
+unnest_tokens(word, V1, token = "regex", pattern = "[\\s]") %>%
+select(word) %>%
+filter(grepl("u\\+",word)) %>%
+count(word, sort = TRUE) %>%
+head(5)->marchscience_uni_count
 colnames(marchscience_uni_count)<-c("#marchscience","Count")
 
 emoji_freq=cbind.data.frame(inlove_uni_count, hateher_uni_count, marchscience_uni_count)
@@ -259,15 +254,15 @@ Top 5 frequently used emojis per hashtag is given in \autoref{tab:EPopular}. It 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{ccccccccc}
-  \hline
-  \#inlove & emoji & Count & \#hateher & emoji & Count & \#marchscience & emoji & Count \\ 
-  \hline
+\hline
+\#inlove & emoji & Count & \#hateher & emoji & Count & \#marchscience & emoji & Count \\ 
+\hline
 U+1F60D & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F60D.png} & 297 & U+1F602 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F602.png} & 154 & U+1F52C &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F52C.png} & 13 \\ 
 U+2764 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2764.png} & 164 & U+1F644 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F644.png} & 88 & U+1F30E &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30E.png} & 11 \\ 
 U+1F495 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F495.png} & 47 & U+1F621 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F621.png} & 40 & U+1F44D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F44D.png} & 9 \\ 
 U+1F618 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F618.png} & 40 & U+1F612 &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F612.png} & 38 & U+1F680 &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F680.png} & 8 \\ 
 U+2728 & \includegraphics[width=0.03\textwidth, height=60mm]{images/U+2728.png} & 26 & U+1F62D &  \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F62D.png} & 36 & U+1F30D &   \includegraphics[width=0.03\textwidth, height=60mm]{images/U+1F30D.png} & 7 \\ 
-   \hline
+\hline
 \end{tabular}
 \caption{Five most popular emoji for each hashtag} 
 \label{tab:EPopular}
@@ -292,37 +287,37 @@ A ternary plot is a triangular graph that displays three variables with respect 
 
 ```{r application setup, echo=F, eval=T}
 dat=rbind.data.frame(
-  readRDS("../data/twitter_inlove.Rds") %>% .$V1 %>% paste0(collapse=" "),
-    # mutate(tag = "inlove"),
-  readRDS("../data/twitter_hateher.Rds")%>% .$V1 %>% paste0(collapse=" "),
-    # mutate(tag = "hateher"),
-  readRDS("../data/twitter_marchscience.Rds") %>%.$V1 %>% paste0(collapse=" "),
-  stringsAsFactors = F
-    # mutate(tag = "marchscience"), stringsAsFactors = F
-  )
+readRDS("../data/twitter_inlove.Rds") %>% .$V1 %>% paste0(collapse=" "),
+# mutate(tag = "inlove"),
+readRDS("../data/twitter_hateher.Rds")%>% .$V1 %>% paste0(collapse=" "),
+# mutate(tag = "hateher"),
+readRDS("../data/twitter_marchscience.Rds") %>%.$V1 %>% paste0(collapse=" "),
+stringsAsFactors = F
+# mutate(tag = "marchscience"), stringsAsFactors = F
+)
 names(dat)<-"V1"
 
 dat$V1 %>>% 
-  tolower() %>>%
-  clean_abb() %>>%
-  cleaning0() %>%  
-  gsub("[[:punct:]]", "", .) %>%
-  gsub("\"", "", .) %>%
-  gsub("\\s{2,}", "\\s", .) %>%
-  trimws()-> dat1
+tolower() %>>%
+clean_abb() %>>%
+cleaning0() %>%  
+gsub("[[:punct:]]", "", .) %>%
+gsub("\"", "", .) %>%
+gsub("\\s{2,}", "\\s", .) %>%
+trimws()-> dat1
 ```
 
 <!--## LDA on a raw data set MARKER-->
 
 ```{r LDAraw, echo=F, eval=T}
 stop_stem=lapply(dat1, StopNStem) %>% 
-  do.call("rbind",.) %>% 
-  as.data.frame(stringsAsFactors=F)
+do.call("rbind",.) %>% 
+as.data.frame(stringsAsFactors=F)
 
 stop_stem$V1 %>%
-  VectorSource() %>%
-  VCorpus()%>% 
-  DocumentTermMatrix() ->dtm
+VectorSource() %>%
+VCorpus()%>% 
+DocumentTermMatrix() ->dtm
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.raw=terms(lda,10)
@@ -335,19 +330,19 @@ ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
-  group_by(topic) %>%
-  top_n(10, phi) %>%
-  ungroup() %>%
-  arrange(topic, desc(phi)) #%>%View()
+group_by(topic) %>%
+top_n(10, phi) %>%
+ungroup() %>%
+arrange(topic, desc(phi)) #%>%View()
 
 # ap_top_terms<-ap_top_terms[-11,] #Two topic 1 with same phi
 # 
- # split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
- #  do.call("cbind",.) %>%
- #  select(everything(), -contains("topic")) %>%
- #  mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
- #   xtable()
- #  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic") %>%#->LDArawp
+# split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
+#  do.call("cbind",.) %>%
+#  select(everything(), -contains("topic")) %>%
+#  mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) %>%
+#   xtable()
+#  pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDArawp} Word prob. given topic") %>%#->LDArawp
 
 # plot_ea_topic=function(topic_number, y_lim){
 # ap_top_terms %>%
@@ -362,65 +357,65 @@ ap_top_terms <- ap_topics %>%
 # lapply(1:3, function(x) plot_ea_topic(x, 0.1))-> plot_raw
 # grid.arrange(plot_raw[[1]], plot_raw[[2]], plot_raw[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ap_top_terms %>%
-  mutate(order = row_number())->ap_top_terms2
+mutate(order = row_number())->ap_top_terms2
 ap_top_terms2 %>>%
-  ggplot(aes(x = order, y = phi))+ 
-  geom_bar(stat='identity', na.rm=T)+ 
-  # facet_grid(~topic, scales = "free", space = "free") +
-  facet_wrap(~topic, scales = "free") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
-  ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->raw_bar
+ggplot(aes(x = order, y = phi))+ 
+geom_bar(stat='identity', na.rm=T)+ 
+# facet_grid(~topic, scales = "free", space = "free") +
+facet_wrap(~topic, scales = "free") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+ylab(expression(phi))+
+scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->raw_bar
 ```
 
 ```{r LDAraw_ternary, eval=T, echo=F}
 ap_topics %>%
-  group_by(term) %>%
-  mutate(sum_prob=sum(phi)) %>%
-  mutate(per_word_per_topic=phi/sum_prob) %>%
-  ungroup()->ap_per_word_per_topic
+group_by(term) %>%
+mutate(sum_prob=sum(phi)) %>%
+mutate(per_word_per_topic=phi/sum_prob) %>%
+ungroup()->ap_per_word_per_topic
 
 ap_per_word_per_topic %>%
-  select(topic, term, per_word_per_topic) %>%
-  spread(topic, per_word_per_topic)->plot_this
+select(topic, term, per_word_per_topic) %>%
+spread(topic, per_word_per_topic)->plot_this
 
 plot_this %>%
-  filter(term %in% {ap_top_terms$term %>% unique()})->use_this
+filter(term %in% {ap_top_terms$term %>% unique()})->use_this
 ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  geom_point(color = 'red') +
-  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
-  # ggtitle(“LDA RAW”) +
-  theme_rgbw() +
-  theme(legend.position = c(0,1),legend.justification = c(1, 1))+
-  geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))->tern_plot_text#, z = `3`, label=term))
+geom_point(color = 'red') +
+# geom_point(aes(fill = term),size = 3,shape = 21)+ 
+# ggtitle(“LDA RAW”) +
+theme_rgbw() +
+theme(legend.position = c(0,1),legend.justification = c(1, 1))+
+geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))->tern_plot_text#, z = `3`, label=term))
 ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
-  geom_point(aes(),size = 3,shape = 21)+ 
-  # geom_point(aes(fill = term),size = 3,shape = 21)+ 
-  # ggtitle(“LDA RAW”) +
-  theme_rgbw() +
-  theme(legend.position = c(0,1),legend.justification = c(1, 1))->tern_plot_no_text
+geom_point(aes(),size = 3,shape = 21)+ 
+# geom_point(aes(fill = term),size = 3,shape = 21)+ 
+# ggtitle(“LDA RAW”) +
+theme_rgbw() +
+theme(legend.position = c(0,1),legend.justification = c(1, 1))->tern_plot_no_text
 crd=coord_tern()
 emojis=use_this[grepl("^u[[:alnum:]]{4,5}$", use_this$term),] %>% as.data.frame(stringsAsFactors=F)
 names(emojis)<-c("term", "x", "y", "z")
 emojis %>%
-  select(-term) %>%
-  tlr2xy(crd) %>%
-  cbind.data.frame(emojis,.) %>%
-  .[,c(1,5,6)]->emojis
+select(-term) %>%
+tlr2xy(crd) %>%
+cbind.data.frame(emojis,.) %>%
+.[,c(1,5,6)]->emojis
 test<-emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[2]))))]]
 ```
 
 ```{r ternary_plot_via_ggtern, eval=F}
 save_raster_tern<-tern_plot_no_text
 for(i in 1:nrow(emojis)){
-  save_raster_tern+
-  emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
-    annotation_raster_tern(
-      xmin =floor(emojis$x[i]*10)/10, 
-      xmax =ceiling(emojis$x[i]*10)/10, 
-      ymin =floor(emojis$y[i]*10)/10, 
-      ymax = ceiling(emojis$y[i]*10)/10,
-      interpolate = FALSE)->save_raster_tern
+save_raster_tern+
+emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
+annotation_raster_tern(
+xmin =floor(emojis$x[i]*10)/10, 
+xmax =ceiling(emojis$x[i]*10)/10, 
+ymin =floor(emojis$y[i]*10)/10, 
+ymax = ceiling(emojis$y[i]*10)/10,
+interpolate = FALSE)->save_raster_tern
 }
 save_raster_tern
 # tern_plot_no_text+
@@ -442,36 +437,36 @@ names(use_this2)<-c("term", "x", "y", "z")
 #   annotation_custom(g, xmin = 0.4, xmax = 0.5, ymin = 0.7, ymax = 0.8)+
 #   theme(aspect.ratio = 0.9)
 save_annotation_custom=use_this2%>%
-  select(-term) %>%
-  tlr2xy(crd)%>%
-  cbind(use_this) %>%
-  ggplot(aes(x=x, y=y))+
-  geom_point(aes(x=x, y=y), color = 'red') +
-  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
-  theme_bw()+
-  theme(aspect.ratio = 0.9,
-        axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.border=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank())
+select(-term) %>%
+tlr2xy(crd)%>%
+cbind(use_this) %>%
+ggplot(aes(x=x, y=y))+
+geom_point(aes(x=x, y=y), color = 'red') +
+ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+theme_bw()+
+theme(aspect.ratio = 0.9,
+axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank(),
+axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank(),
+panel.border=element_blank(),
+panel.grid.major=element_blank(),
+panel.grid.minor=element_blank())
 for(i in 1:nrow(emojis)){
-  save_annotation_custom+
-  emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
-    grid::rasterGrob(interpolate = T) %>%
-    annotation_custom(
-      xmin =floor(emojis$x[i]*10)/10, 
-      xmax =ceiling(emojis$x[i]*10)/10, 
-      ymin =floor(emojis$y[i]*10)/10, 
-      ymax = ceiling(emojis$y[i]*10)/10)->save_annotation_custom
+save_annotation_custom+
+emojidata$uni_png[[min(which(emojidata$uni_code %in% gsub("U","U+",toupper(emojis$term[i]))))]] %>%
+grid::rasterGrob(interpolate = T) %>%
+annotation_custom(
+xmin =floor(emojis$x[i]*10)/10, 
+xmax =ceiling(emojis$x[i]*10)/10, 
+ymin =floor(emojis$y[i]*10)/10, 
+ymax = ceiling(emojis$y[i]*10)/10)->save_annotation_custom
 }
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
-  geom_path(data=tri, aes(x, y))->fig_raw_tern
+geom_path(data=tri, aes(x, y))->fig_raw_tern
 ```
 
 
@@ -479,23 +474,23 @@ save_annotation_custom+
 
 ```{r LDA_no_uni, echo=F, eval=T}
 dat$V1 %>>% 
-  tolower() %>>%
-  cleaning_u_plus() %>>%
-  clean_abb() %>>%
-  cleaning0() %>%  
-  gsub("[[:punct:]]", "", .) %>%
-  gsub("\"", "", .) %>%
-  gsub("\\s{2,}", "\\s", .) %>%
-  trimws()->dat2
+tolower() %>>%
+cleaning_u_plus() %>>%
+clean_abb() %>>%
+cleaning0() %>%  
+gsub("[[:punct:]]", "", .) %>%
+gsub("\"", "", .) %>%
+gsub("\\s{2,}", "\\s", .) %>%
+trimws()->dat2
 
 stop_stem=lapply(dat2, StopNStem) %>% 
-  do.call("rbind",.) %>% 
-  as.data.frame(stringsAsFactors=F)
+do.call("rbind",.) %>% 
+as.data.frame(stringsAsFactors=F)
 
 stop_stem %>%
-  VectorSource() %>%
-  VCorpus()%>% 
-  DocumentTermMatrix() ->dtm
+VectorSource() %>%
+VCorpus()%>% 
+DocumentTermMatrix() ->dtm
 
 lda=LDA(dtm,k = 3, control = list(alpha=1))
 lda.no_uni=terms(lda,5)
@@ -507,45 +502,45 @@ ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
-  group_by(topic) %>%
-  top_n(10, phi) %>%
-  ungroup() %>%
-  arrange(topic, desc(phi)) #%>% View()
+group_by(topic) %>%
+top_n(10, phi) %>%
+ungroup() %>%
+arrange(topic, desc(phi)) #%>% View()
 
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
-  do.call("cbind", .) %>%
-  select(everything(), -contains("topic")) %>%
-    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) ->LDA_no_unip#%>%
-  # pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")->LDA_no_unip
+do.call("cbind", .) %>%
+select(everything(), -contains("topic")) %>%
+mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`))) ->LDA_no_unip#%>%
+# pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_no_unip} Word prob. given topic")->LDA_no_unip
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_no_uni
 # grid.arrange(plot_no_uni[[1]], plot_no_uni[[2]], plot_no_uni[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
 ap_top_terms %>%
-  mutate(order = row_number())->ap_top_terms2
+mutate(order = row_number())->ap_top_terms2
 ap_top_terms2 %>>%
-  ggplot(aes(x = order, y = phi))+ 
-  geom_bar(stat='identity', na.rm=T)+ 
-  # facet_grid(~topic, scales = "free", space = "free") +
-  facet_wrap(~topic, scales = "free") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
-  ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->no_bar
+ggplot(aes(x = order, y = phi))+ 
+geom_bar(stat='identity', na.rm=T)+ 
+# facet_grid(~topic, scales = "free", space = "free") +
+facet_wrap(~topic, scales = "free") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+ylab(expression(phi))+
+scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->no_bar
 ```
 
 
 ```{r LDA_no_uni_ternary, eval=T, echo=F}
 ap_topics %>%
-  group_by(term) %>%
-  mutate(sum_prob=sum(phi)) %>%
-  mutate(per_word_per_topic=phi/sum_prob) %>%
-  ungroup()->ap_per_word_per_topic
+group_by(term) %>%
+mutate(sum_prob=sum(phi)) %>%
+mutate(per_word_per_topic=phi/sum_prob) %>%
+ungroup()->ap_per_word_per_topic
 
 ap_per_word_per_topic %>%
-  select(topic, term, per_word_per_topic) %>%
-  spread(topic, per_word_per_topic)->plot_this
+select(topic, term, per_word_per_topic) %>%
+spread(topic, per_word_per_topic)->plot_this
 
 plot_this %>%
-  filter(term %in% {ap_top_terms$term %>% unique()})->use_this
+filter(term %in% {ap_top_terms$term %>% unique()})->use_this
 # ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
 #   # geom_point(aes(fill = term),size = 3,shape = 21)+ 
 #   # ggtitle(“LDA RAW”) +
@@ -558,26 +553,26 @@ plot_this %>%
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 save_annotation_custom=use_this2%>%
-  select(-term) %>%
-  tlr2xy(crd)%>%
-  cbind(use_this) %>%
-  ggplot(aes(x=x, y=y))+
-  geom_point(aes(x=x, y=y), color = 'red') +
-  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
-  theme_bw()+
-  theme(aspect.ratio = 0.9,
-        axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.border=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank())
+select(-term) %>%
+tlr2xy(crd)%>%
+cbind(use_this) %>%
+ggplot(aes(x=x, y=y))+
+geom_point(aes(x=x, y=y), color = 'red') +
+ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+theme_bw()+
+theme(aspect.ratio = 0.9,
+axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank(),
+axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank(),
+panel.border=element_blank(),
+panel.grid.major=element_blank(),
+panel.grid.minor=element_blank())
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
-  geom_path(data=tri, aes(x, y))->fig_no_tern
+geom_path(data=tri, aes(x, y))->fig_no_tern
 ```
 
 <!--## LDA with name translated MARKER-->
@@ -587,51 +582,51 @@ emoji_simple=read.csv("../data/all_emoji.csv", stringsAsFactors = F)
 # emoji_simple$unicode<-gsub("[[:punct:]]", "", emoji_simple$unicode)
 
 U_to_N=function(word){
-  emoji_simple %>%
-    filter(unicode==word)->see_trans
-  if(length(see_trans$trans)==0){
-    return(word)
-  }else{
-    return(see_trans$trans)
-  }
+emoji_simple %>%
+filter(unicode==word)->see_trans
+if(length(see_trans$trans)==0){
+return(word)
+}else{
+return(see_trans$trans)
+}
 }
 ```
 
 ```{r aaa, echo=F, eval=T}
 check7=NULL
 for(j in 1:length(dat$V1)){
-  string=dat$V1[j] %>% tolower()
-  words=strsplit(string, " ")
-  words=words[[1]]
-  translated=""
-  for(i in 1:length(words)){
-    translated=paste(translated, U_to_N(words[i]), collapse = " ")
-    # print(paste0(j,"-", i))
-  }
-  check7=rbind(check7, translated)
-  # print(j)
+string=dat$V1[j] %>% tolower()
+words=strsplit(string, " ")
+words=words[[1]]
+translated=""
+for(i in 1:length(words)){
+translated=paste(translated, U_to_N(words[i]), collapse = " ")
+# print(paste0(j,"-", i))
+}
+check7=rbind(check7, translated)
+# print(j)
 }
 
 check7 %>%
-  clean_abb() %>>%
-  cleaning0() %>%  
-  gsub("[[:punct:]]", "", .) %>%
-  gsub("\"", "", .) %>%
-  gsub("\\s{2,}", "\\s", .) %>%
-  trimws()-> check7
+clean_abb() %>>%
+cleaning0() %>%  
+gsub("[[:punct:]]", "", .) %>%
+gsub("\"", "", .) %>%
+gsub("\\s{2,}", "\\s", .) %>%
+trimws()-> check7
 
 # cbind.data.frame(dat, check7, stringsAsFactors=F)->check8
 # names(check8)<-c("raw_string", "emoji_present", "string_translated")
 # saveRDS(check8, "../Data/twitter_all.Rds")
 
 stop_stem=lapply(check7, StopNStem) %>% 
-  do.call("rbind",.) %>% 
-  rbind.data.frame(stringsAsFactors=F)
+do.call("rbind",.) %>% 
+rbind.data.frame(stringsAsFactors=F)
 
 stop_stem %>%
-  VectorSource() %>%
-  VCorpus()%>% 
-  DocumentTermMatrix() ->dtm
+VectorSource() %>%
+VCorpus()%>% 
+DocumentTermMatrix() ->dtm
 
 lda=LDA(dtm, k = 3, control = list(alpha=1))
 lda.t=terms(lda,5)
@@ -643,16 +638,16 @@ ap_topics <- tidy(lda, matrix = "beta")
 names(ap_topics)[3]<-"phi"
 
 ap_top_terms <- ap_topics %>%
-  group_by(topic) %>%
-  top_n(10, phi) %>%
-  ungroup() %>%
-  arrange(topic, desc(phi)) # %>% View()
+group_by(topic) %>%
+top_n(10, phi) %>%
+ungroup() %>%
+arrange(topic, desc(phi)) # %>% View()
 
 split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
-  do.call("cbind", .) %>%
-  select(everything(), -contains("topic")) %>%
-    mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`)))->LDA_Tp #%>%
-  # pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")->LDA_Tp
+do.call("cbind", .) %>%
+select(everything(), -contains("topic")) %>%
+mutate(`1.phi`=gsub("^(.{6}).*","\\1",as.character(`1.phi`)),`2.phi`=gsub("^(.{6}).*","\\1",as.character(`2.phi`)), `3.phi`=gsub("^(.{6}).*","\\1",as.character(`3.phi`)))->LDA_Tp #%>%
+# pander(split.table = 180, style = 'rmarkdown', caption = "\\label{tab:LDA_Tp} Word prob. given topic")->LDA_Tp
 
 # lapply(1:3, function(x) plot_ea_topic(x, 0.06))-> plot_t
 # grid.arrange(plot_t[[1]], plot_t[[2]], plot_t[[3]], nrow=1)#,layout_matrix=cbind(1,2,3))
@@ -660,68 +655,68 @@ split(ap_top_terms, as.factor(ap_top_terms$topic)) %>%
 
 
 ap_top_terms %>%
-  mutate(order = row_number())->ap_top_terms2
+mutate(order = row_number())->ap_top_terms2
 ap_top_terms2 %>>%
-  ggplot(aes(x = order, y = phi))+ 
-  geom_bar(stat='identity', na.rm=T)+ 
-  # facet_grid(~topic, scales = "free", space = "free") +
-  facet_wrap(~topic, scales = "free") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
-  ylab(expression(phi))+
-  scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->trans_bar
+ggplot(aes(x = order, y = phi))+ 
+geom_bar(stat='identity', na.rm=T)+ 
+# facet_grid(~topic, scales = "free", space = "free") +
+facet_wrap(~topic, scales = "free") +
+theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+ylab(expression(phi))+
+scale_x_continuous(breaks = ap_top_terms2$order, labels = ap_top_terms2$term, expand = c(0,0))->trans_bar
 ```
 
 ```{r LDA_T_ternary, eval=T, echo=F}
 ap_topics %>%
-  group_by(term) %>%
-  mutate(sum_prob=sum(phi)) %>%
-  mutate(per_word_per_topic=phi/sum_prob) %>%
-  ungroup()->ap_per_word_per_topic
+group_by(term) %>%
+mutate(sum_prob=sum(phi)) %>%
+mutate(per_word_per_topic=phi/sum_prob) %>%
+ungroup()->ap_per_word_per_topic
 # saveRDS(ap_per_word_per_topic, "ap_per_word_per_topic.rds")
 # readRDS("ap_per_word_per_topic.rds")->ap_per_word_per_topic
 
 ap_per_word_per_topic %>%
-  select(topic, term, per_word_per_topic) %>%
-  spread(topic, per_word_per_topic)->plot_this
+select(topic, term, per_word_per_topic) %>%
+spread(topic, per_word_per_topic)->plot_this
 # plot_this[complete.cases(plot_this), ]->plot_this
 # plot_this$`1`<-as.numeric(plot_this$`1`)
 # plot_this$`2`<-as.numeric(plot_this$`2`)
 # plot_this$`3`<-as.numeric(plot_this$`3`)
 
 plot_this %>%
-  filter(term %in% {ap_top_terms$term %>% unique()})->use_this
- # ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
- # geom_point(aes(fill = term),size = 3,shape = 21)+
- # ggtitle(“LDA RAW”) +
- # theme_rgbw() +
- # theme(legend.position = c(0,1),legend.justification = c(1, 1))+
- # geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
+filter(term %in% {ap_top_terms$term %>% unique()})->use_this
+# ggtern(data=use_this, aes(x = `1`, y = `2`, z = `3`)) +
+# geom_point(aes(fill = term),size = 3,shape = 21)+
+# ggtitle(“LDA RAW”) +
+# theme_rgbw() +
+# theme(legend.position = c(0,1),legend.justification = c(1, 1))+
+# geom_text(data=use_this, aes(x = `1`, y = `2`, label=term))
 ```
 
 ```{r trans_ternary_plot_via_ggplot2, echo=F, fig.pos='h', fig.cap="\\label{fig:trans_tern}"}
 use_this2<-as.data.frame(use_this)
 names(use_this2)<-c("term", "x", "y", "z")
 save_annotation_custom=use_this2%>%
-  select(-term) %>%
-  tlr2xy(crd)%>%
-  cbind(use_this) %>%
-  ggplot(aes(x=x, y=y))+
-  geom_point(aes(x=x, y=y), color = 'red') +
-  ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
-  theme_bw()+
-  theme(aspect.ratio = 0.9,
-        axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.border=element_blank(),
-        panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank())
+select(-term) %>%
+tlr2xy(crd)%>%
+cbind(use_this) %>%
+ggplot(aes(x=x, y=y))+
+geom_point(aes(x=x, y=y), color = 'red') +
+ggrepel::geom_text_repel(aes(x=x, y=y, label = term))+
+theme_bw()+
+theme(aspect.ratio = 0.9,
+axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank(),
+axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank(),
+panel.border=element_blank(),
+panel.grid.major=element_blank(),
+panel.grid.minor=element_blank())
 tri=data.frame(x=c(0, 0.5, 1, 0), y=c(0, 1, 0, 0))
 save_annotation_custom+
-  geom_path(data=tri, aes(x, y))->fig_trans_tern
+geom_path(data=tri, aes(x, y))->fig_trans_tern
 ```
 
 <!--## MARKER START-->
@@ -775,20 +770,20 @@ For the last case, LDA was performed with the data set including emoji character
 \begin{table}[ht]
 \centering
 \begin{tabular}{rllllll}
-  \hline
- & 1.term & 1.phi & 2.term & 2.phi & 3.term & 3.phi \\ 
-  \hline
+\hline
+& 1.term & 1.phi & 2.term & 2.phi & 3.term & 3.phi \\ 
+\hline
 1 & inlov & 0.0910 & sciencemarch & 0.0881 & hateh & 0.1003 \\ 
-  2 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F60D.png} & 0.0302 & scienc & 0.0322 & \includegraphics[width=0.02\textwidth, height=60mm]{images/U+1F602.png} & 0.0139 \\ 
-  3 & love & 0.0241 & march & 0.0182 & just & 0.0108 \\ 
-  4 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+2764.png} & 0.0163 & will & 0.0092 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F644.png} & 0.0085 \\ 
-  5 & beauti & 0.0073 & join & 0.0087 & get & 0.0061 \\ 
-  6 & just & 0.0062 & marchforsci & 0.0082 & like & 0.0061 \\ 
-  7 & new & 0.0060 & saturday & 0.0081 & bitch & 0.0055 \\ 
-  8 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F495.png} & 0.0049 & sign & 0.0063 & cbb & 0.0042 \\ 
-  9 & happi & 0.0045 & april & 0.0058 & one & 0.0040 \\ 
-  10 & inlove… & 0.0043 & scientist & 0.0056 & want & 0.0039 \\ 
-   \hline
+2 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F60D.png} & 0.0302 & scienc & 0.0322 & \includegraphics[width=0.02\textwidth, height=60mm]{images/U+1F602.png} & 0.0139 \\ 
+3 & love & 0.0241 & march & 0.0182 & just & 0.0108 \\ 
+4 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+2764.png} & 0.0163 & will & 0.0092 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F644.png} & 0.0085 \\ 
+5 & beauti & 0.0073 & join & 0.0087 & get & 0.0061 \\ 
+6 & just & 0.0062 & marchforsci & 0.0082 & like & 0.0061 \\ 
+7 & new & 0.0060 & saturday & 0.0081 & bitch & 0.0055 \\ 
+8 & \includegraphics[width=0.02\textwidth, height=35mm]{images/U+1F495.png} & 0.0049 & sign & 0.0063 & cbb & 0.0042 \\ 
+9 & happi & 0.0045 & april & 0.0058 & one & 0.0040 \\ 
+10 & inlove… & 0.0043 & scientist & 0.0056 & want & 0.0039 \\ 
+\hline
 \end{tabular}
 \caption{LDA output including emoji characters as unicode} 
 \label{tab:LDAraw}
@@ -809,4 +804,4 @@ The translation approach introduces new words, and even after removing stop word
 
 Moreover, deleting emoji characters will lead to information loss in the text data. Emoji are rich in contextual information, thus deleting the entire emoji characters lead to a greater information loss and consequently affected the output of the LDA. The comparison of the \ref{fig:no_tern} and \ref{fig:raw_tern} supports this claim.
 
-In conclusion, this paper provided several insights that have implication for the performance of the LDA considering emoji characters. Considering that emojis are widely used on various SNS platforms and these SNS data are becoming important as marketing and social studies, our results suggest that emoji characters should be kept as unicode characters throughout the LDA analysis. 
+In conclusion, this paper provided several insights that have implication for the performance of the LDA considering emoji characters. Considering that emojis are widely used on various SNS platforms and these SNS data are becoming important as marketing and social studies, our results suggest that emoji characters should be kept as unicode characters throughout the LDA analysis.   
