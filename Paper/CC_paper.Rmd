@@ -1,9 +1,9 @@
 ---
-  title: "Latent Dirichlet Allocation Models Considering Emojis"
+title: "Latent Dirichlet Allocation Models Considering Emojis"
 author: "Taikgun Song"
 data: 'system.time'
 header-includes:
-  - \usepackage{amsmath}
+- \usepackage{amsmath}
 - \usepackage{graphicx}
 - \usepackage{bbm}
 #- \usepackage{subcaption}
@@ -795,7 +795,7 @@ raw_bar
 
 \pagebreak
 
-# Conclusion and Discussion 
+# Discussion and Conclusion
 Using Twitter text messages of three different hastags, we examined the performance of LDA considering three different cases with emoji characters. Overall, our results from \ref{fig:TPlot} suggest that LDA with emoji characters embedded in the text data as unicode performed the best. \ref{fig:raw_tern} was not only able to assign similar words to each latent topic but also determined terms that were used among all topics such as "just", "one", and "like" and displayed at the center of the plot. <!--While the LDA when all emojis were deleted and the LDA method when all emojis were translated genertated ternary plots \autoref{fig:trans_tern} and  \autoref{fig:no_tern} where words were clusterd at the center of the graphs. This indicate that the LDA method was not able to assign words into three unknown topics.  On the other hand, \autoref{fig:raw_tern} showed that three clusters of words were plotted at each end point of the triangle for method when raw unicode characters were used for the LDA method. These plots indicate that LDA performed the best when the raw unicode characters were used for the analysis.-->
 
 One explanation of the outcome is that translating emoji characters into English affects the performance of LDA by introducing new words with sparsity issue or words that could be assigned to multiple different topics. Emoji characters aggregate -- otherwise separated -- n-gram words into a single character. For example, commonly used Unicode characters in the data set such as 'U+1F602', 'U+1F644', 'U+1F60D', 'U+1F618', 'U+2764', and 'U+1F495' can be translated to English as 'face with tears of joy', 'face with rolling eyes', 'smiling face with heart eyes', 'face blowing a kiss', 'red heart', and 'two hearts' respectively. 
